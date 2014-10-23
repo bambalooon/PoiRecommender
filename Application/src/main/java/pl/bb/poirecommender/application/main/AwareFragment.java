@@ -28,7 +28,6 @@ public class AwareFragment extends ListFragment implements Entitled {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        Log.d(TAG, "onCreate");
         super.onCreate(savedInstanceState);
         activityArrayAdapter = new ArrayAdapter<>(
                 getActivity().getApplicationContext(),
@@ -40,7 +39,6 @@ public class AwareFragment extends ListFragment implements Entitled {
 
     @Override
     public void onResume() {
-        Log.d(TAG, "onResume");
         super.onResume();
         update();
         AwareContext.getInstance().registerAwareFragment(this);
@@ -48,7 +46,6 @@ public class AwareFragment extends ListFragment implements Entitled {
 
     @Override
     public void onPause() {
-        Log.d(TAG, "onPause");
         super.onPause();
         AwareContext.getInstance().unregisterAwareFragment();
     }

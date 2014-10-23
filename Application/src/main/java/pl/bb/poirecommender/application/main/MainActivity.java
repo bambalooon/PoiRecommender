@@ -13,18 +13,26 @@ import pl.bb.poirecommender.application.R;
  */
 public class MainActivity extends ActionBarActivity {
 
-    SectionsPagerAdapter mSectionsPagerAdapter;
-    ViewPager mViewPager;
+    private SectionsPagerAdapter mSectionsPagerAdapter;
+    private ViewPager mViewPager;
+    private final Fragment[] fragments = {
+            StaticFragment.newInstance(R.layout.profiles_fragment_main, R.string.profiles_tab),
+            StaticFragment.newInstance(R.layout.rules_fragment_main, R.string.rules_tab),
+            AwareFragment.newInstance(R.string.aware_tab)
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        initializeTabs();
+    }
 
+    private void initializeTabs() {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        initializeTabs();
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), this, fragments);
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -53,14 +61,5 @@ public class MainActivity extends ActionBarActivity {
                                 }
                             }));
         }
-    }
-
-    private void initializeTabs() {
-        Fragment[] fragments = {
-                StaticFragment.newInstance(R.layout.profiles_fragment_main, R.string.profiles_tab),
-                StaticFragment.newInstance(R.layout.rules_fragment_main, R.string.rules_tab),
-                AwareFragment.newInstance(R.string.aware_tab)
-        };
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), this, fragments);
     }
 }

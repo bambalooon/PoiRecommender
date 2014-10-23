@@ -16,7 +16,6 @@ public class AwareContextReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(TAG, "Received: " + intent.toString());
         switch (intent.getAction()) {
             case "ACTION_AWARE_GOOGLE_ACTIVITY_RECOGNITION":
                 AwareContext.getInstance().addAwareNotification(
@@ -49,11 +48,13 @@ public class AwareContextReceiver extends BroadcastReceiver {
                                 intent.getDoubleExtra(Weather.WIND_GUST, 0),
                                 intent.getDoubleExtra(Weather.WIND_ANGLE, 0),
                                 intent.getDoubleExtra(Weather.RAIN, 0),
+                                intent.getDoubleExtra(Weather.CLOUDS_VALUE, 0),
+                                intent.getStringExtra(Weather.WEATHER_NAME),
                                 intent.getStringExtra(Weather.WEATHER_PROVIDER)
                         ));
                 break;
             default:
-                Log.d(TAG, "Received: " + intent.toString());
+                Log.d(TAG, "Received: " + intent.getAction());
         }
     }
 

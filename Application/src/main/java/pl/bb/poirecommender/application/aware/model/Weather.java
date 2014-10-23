@@ -11,7 +11,6 @@ import java.util.Locale;
 public class Weather {
     public static final String REQUEST_TIMESTAMP = "timestamp";
     public static final String FORECAST_TIMESTAMP = "double_forecast_timestamp";
-    public static final String DEVICE_ID = "device_id";
     public static final String LATITUDE = "double_latitude";
     public static final String LONGITUDE = "double_longitude";
     public static final String TEMPERATURE_VALUE_CURRENT = "temperature_value_current";
@@ -57,9 +56,11 @@ public class Weather {
     private final double windGust;
     private final double windAngle;
     private final double rain;
+    private final double clouds;
+    private final String weatherName;
     private final String weatherProvider;
 
-    public Weather(long forecastTimestamp, long requestTimestamp, String dateTime, String locationName, double lat, double lon, long sunrise, long sunset, double tempCurrent, double tempDay, double tempNight, double tempMax, double tempMin, double tempMorning, double tempEvening, double pressure, double humidity, double windSpeed, double windGust, double windAngle, double rain, String weatherProvider) {
+    public Weather(long forecastTimestamp, long requestTimestamp, String dateTime, String locationName, double lat, double lon, long sunrise, long sunset, double tempCurrent, double tempDay, double tempNight, double tempMax, double tempMin, double tempMorning, double tempEvening, double pressure, double humidity, double windSpeed, double windGust, double windAngle, double rain, double clouds, String weatherName, String weatherProvider) {
         this.timestamp = Calendar.getInstance(Locale.getDefault()).getTimeInMillis();
 
         this.forecastTimestamp = forecastTimestamp;
@@ -83,6 +84,8 @@ public class Weather {
         this.windGust = windGust;
         this.windAngle = windAngle;
         this.rain = rain;
+        this.clouds = clouds;
+        this.weatherName = weatherName;
         this.weatherProvider = weatherProvider;
     }
 
@@ -93,12 +96,14 @@ public class Weather {
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        return sdf.format(new Date(timestamp))
-                + "{f: " + sdf.format(new Date(forecastTimestamp)) + ", "
-                + locationName + ", "
-                + "temp: " + String.format("%.0f", getTempCurrentInCelsius()) + "\u00B0C, "
-                + "lat: " + lat + ", "
-                + "lon: " + lon + ", "
-                + "rain: " + rain + "}";
+        return String.format("%s {f: %s, %s, %s, temp: %.0f°C, lat: %.4f°, lon: %.4f°, rain: %.2f}",
+                sdf.format(new Date(timestamp)),
+                sdf.format(new Date(forecastTimestamp)),
+                locationName,
+                weatherName,
+                getTempCurrentInCelsius(),
+                lat,
+                lon,
+                rain);
     }
 }

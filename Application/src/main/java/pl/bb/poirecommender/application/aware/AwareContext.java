@@ -18,8 +18,6 @@ public class AwareContext {
         }
         return INSTANCE;
     }
-    private List<Activity> activities = new LinkedList<>();
-    private List<Weather> weathers = new LinkedList<>();
     private List<Object> awareNotifications = new LinkedList<>();
     private AwareFragment awareFragment;
 
@@ -32,24 +30,6 @@ public class AwareContext {
 
     public void unregisterAwareFragment() {
         awareFragment = null;
-    }
-
-    public void addActivity(Activity activity) {
-        activities.add(activity);
-        notifyAwareFragment();
-    }
-
-    public List<Activity> getActivities() {
-        return activities;
-    }
-
-    public void addWeather(Weather weather) {
-        weathers.add(weather);
-        notifyAwareFragment();
-    }
-
-    public List<Weather> getWeathers() {
-        return weathers;
     }
 
     public void addAwareNotification(Object notification) {

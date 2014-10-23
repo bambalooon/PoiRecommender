@@ -11,6 +11,7 @@ import java.util.Locale;
  * Created by Krzysztof Balon on 2014-10-20.
  */
 public class Activity {
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
     private final long timestamp;
     private final int activity;
     private final int confidence;
@@ -18,13 +19,15 @@ public class Activity {
     public Activity(int activity, int confidence) {
         this.activity = activity;
         this.confidence = confidence;
-        timestamp = Calendar.getInstance(Locale.getDefault()).getTimeInMillis();
+        this.timestamp = Calendar.getInstance(Locale.getDefault()).getTimeInMillis();
     }
 
     @Override
     public String toString() {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        return sdf.format(new Date(timestamp))+" {activity: "+getActivityName(activity)+", confidence: "+confidence+"}";
+        return String.format("%s {activity: %s, confidence: %d}",
+                DATE_FORMAT.format(new Date(timestamp)),
+                getActivityName(activity),
+                confidence);
     }
 
     private static String getActivityName(int type) {
