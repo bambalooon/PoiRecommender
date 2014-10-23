@@ -1,17 +1,26 @@
-package pl.bb.poirecommender.application;
+package pl.bb.poirecommender.application.main;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.util.Log;
 import android.widget.ArrayAdapter;
-import pl.bb.poirecommender.application.aware.Activity;
+import pl.bb.poirecommender.application.R;
+import pl.bb.poirecommender.application.aware.AwareContext;
 
 /**
- * Created by BamBalooon on 2014-10-19.
+ * Created by Krzysztof Balon on 2014-10-19.
  */
-public class AwareFragment extends ListFragment {
+public class AwareFragment extends ListFragment implements Entitled {
     private static final String TAG = AwareFragment.class.getName();
     private ArrayAdapter<Object> activityArrayAdapter;
+
+    public static AwareFragment newInstance(int title) {
+        AwareFragment awareFragment = new AwareFragment();
+        Bundle args = new Bundle();
+        args.putInt(TITLE, title);
+        awareFragment.setArguments(args);
+        return awareFragment;
+    }
 
     public void update() {
         activityArrayAdapter.notifyDataSetChanged();
@@ -42,5 +51,10 @@ public class AwareFragment extends ListFragment {
         Log.d(TAG, "onPause");
         super.onPause();
         AwareContext.getInstance().unregisterAwareFragment();
+    }
+
+    @Override
+    public int getTitleResource() {
+        return getArguments().getInt(TITLE);
     }
 }

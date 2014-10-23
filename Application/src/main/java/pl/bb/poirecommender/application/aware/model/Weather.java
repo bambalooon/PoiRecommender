@@ -1,4 +1,4 @@
-package pl.bb.poirecommender.application.aware;
+package pl.bb.poirecommender.application.aware.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * Created by BamBalooon on 2014-10-20.
+ * Created by Krzysztof Balon on 2014-10-20.
  */
 public class Weather {
     public static final String REQUEST_TIMESTAMP = "timestamp";

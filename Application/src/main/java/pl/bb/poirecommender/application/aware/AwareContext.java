@@ -1,13 +1,14 @@
-package pl.bb.poirecommender.application;
+package pl.bb.poirecommender.application.aware;
 
-import pl.bb.poirecommender.application.aware.Activity;
-import pl.bb.poirecommender.application.aware.Weather;
+import pl.bb.poirecommender.application.main.AwareFragment;
+import pl.bb.poirecommender.application.aware.model.Activity;
+import pl.bb.poirecommender.application.aware.model.Weather;
 
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by BamBalooon on 2014-10-19.
+ * Created by Krzysztof Balon on 2014-10-19.
  */
 public class AwareContext {
     private static AwareContext INSTANCE;

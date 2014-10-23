@@ -1,4 +1,4 @@
-package pl.bb.poirecommender.application.aware;
+package pl.bb.poirecommender.application.aware.model;
 
 import com.google.android.gms.location.DetectedActivity;
 
@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.Locale;
 
 /**
- * Created by BamBalooon on 2014-10-20.
+ * Created by Krzysztof Balon on 2014-10-20.
  */
 public class Activity {
     private final long timestamp;

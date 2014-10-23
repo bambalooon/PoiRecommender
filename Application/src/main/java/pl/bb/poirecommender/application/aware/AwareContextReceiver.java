@@ -1,15 +1,15 @@
-package pl.bb.poirecommender.application;
+package pl.bb.poirecommender.application.aware;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import com.google.android.gms.location.DetectedActivity;
-import pl.bb.poirecommender.application.aware.Activity;
-import pl.bb.poirecommender.application.aware.Weather;
+import pl.bb.poirecommender.application.aware.model.Activity;
+import pl.bb.poirecommender.application.aware.model.Weather;
 
 /**
- * Created by BamBalooon on 2014-10-19.
+ * Created by Krzysztof Balon on 2014-10-19.
  */
 public class AwareContextReceiver extends BroadcastReceiver {
     private static final String TAG = AwareContextReceiver.class.getName();
@@ -51,7 +51,6 @@ public class AwareContextReceiver extends BroadcastReceiver {
                                 intent.getDoubleExtra(Weather.RAIN, 0),
                                 intent.getStringExtra(Weather.WEATHER_PROVIDER)
                         ));
-                Log.d(TAG, "Received WEATHER");
                 break;
             default:
                 Log.d(TAG, "Received: " + intent.toString());
