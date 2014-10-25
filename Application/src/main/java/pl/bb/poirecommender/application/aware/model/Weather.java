@@ -33,6 +33,7 @@ public class Weather {
     public static final String SUNSET = "sunset";
     public static final String LOCATION_NAME = "location_name";
     public static final String DATE_TIME = "date_time";
+    private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
 
     private final long timestamp;
     private final long forecastTimestamp;
@@ -95,10 +96,10 @@ public class Weather {
 
     @Override
     public String toString() {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        return String.format("%s {f: %s, %s, temp: %.0f°C, lat: %.4f°, lon: %.4f°, rain: %.0f}",
-                sdf.format(new Date(timestamp)),
-                sdf.format(new Date(forecastTimestamp)),
+        return String.format(Locale.getDefault(),
+                "%s {f: %s, %s, temp: %.0f°C, lat: %.4f°, lon: %.4f°, rain: %.0f}",
+                DATE_FORMAT.format(new Date(timestamp)),
+                DATE_FORMAT.format(new Date(forecastTimestamp)),
                 locationName,
                 getTempCurrentInCelsius(),
                 lat,

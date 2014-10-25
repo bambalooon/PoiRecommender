@@ -4,9 +4,13 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import com.aware.providers.Locations_Provider;
 import com.google.android.gms.location.DetectedActivity;
 import pl.bb.poirecommender.application.aware.model.Activity;
+import pl.bb.poirecommender.application.aware.model.Location;
 import pl.bb.poirecommender.application.aware.model.Weather;
+
+import static com.aware.providers.Locations_Provider.Locations_Data;
 
 /**
  * Created by Krzysztof Balon on 2014-10-19.
@@ -51,6 +55,18 @@ public class AwareContextReceiver extends BroadcastReceiver {
                                 intent.getDoubleExtra(Weather.CLOUDS_VALUE, 0),
                                 intent.getStringExtra(Weather.WEATHER_NAME),
                                 intent.getStringExtra(Weather.WEATHER_PROVIDER)
+                        ));
+                break;
+            case "ACTION_AWARE_LOCATIONS":
+                AwareContext.getInstance().addAwareNotification(
+                        new Location(
+                                intent.getLongExtra(Locations_Data.TIMESTAMP, 0),
+                                intent.getDoubleExtra(Locations_Data.LATITUDE, 0),
+                                intent.getDoubleExtra(Locations_Data.LONGITUDE, 0),
+                                intent.getFloatExtra(Locations_Data.BEARING, 0),
+                                intent.getFloatExtra(Locations_Data.SPEED, 0),
+                                intent.getDoubleExtra(Locations_Data.ALTITUDE, 0),
+                                intent.getFloatExtra(Locations_Data.ACCURACY, 0)
                         ));
                 break;
             default:

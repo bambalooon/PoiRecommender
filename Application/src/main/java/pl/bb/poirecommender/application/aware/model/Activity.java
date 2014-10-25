@@ -24,7 +24,8 @@ public class Activity {
 
     @Override
     public String toString() {
-        return String.format("%s {activity: %s, confidence: %d}",
+        return String.format(Locale.getDefault(),
+                "%s {activity: %s, confidence: %d}",
                 DATE_FORMAT.format(new Date(timestamp)),
                 getActivityName(activity),
                 confidence);

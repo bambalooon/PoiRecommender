@@ -20,6 +20,7 @@
             <intent-filter>
                 <action android:name="ACTION_AWARE_GOOGLE_ACTIVITY_RECOGNITION"/>
                 <action android:name="ACTION_AWARE_WEATHER"/>
+                <action android:name="ACTION_AWARE_LOCATIONS"/>
             </intent-filter>
         </receiver>
     </application>
