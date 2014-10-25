@@ -96,11 +96,10 @@ public class Weather {
     @Override
     public String toString() {
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        return String.format("%s {f: %s, %s, %s, temp: %.0f°C, lat: %.4f°, lon: %.4f°, rain: %.2f}",
+        return String.format("%s {f: %s, %s, temp: %.0f°C, lat: %.4f°, lon: %.4f°, rain: %.0f}",
                 sdf.format(new Date(timestamp)),
                 sdf.format(new Date(forecastTimestamp)),
                 locationName,
-                weatherName,
                 getTempCurrentInCelsius(),
                 lat,
                 lon,
