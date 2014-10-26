@@ -1,8 +1,8 @@
 package pl.bb.poirecommender.application.interests.model;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.content.res.TypedArray;
-import android.util.Log;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -11,13 +11,16 @@ import java.util.List;
  * Created by Krzysztof Balon on 2014-10-26.
  */
 public class Interest {
-    public static List<Interest> getInterests(Context context, int resId) {
+    public static final String INTEREST_PREFERENCES = "INTEREST_PREFERENCES";
+    public static List<Interest> getInterests(Context context, int resId, SharedPreferences interestPreferences) {
         final TypedArray interests = context.getResources().obtainTypedArray(resId);
         List<Interest> interestList = new LinkedList<>();
         int i = 0;
         String interestName;
         while((interestName = interests.getString(i)) != null) {
-            interestList.add(new Interest(interestName));
+            final Interest interest = new Interest(interestName);
+            interest.setActive(interestPreferences.getBoolean(interestName, false));
+            interestList.add(interest);
             i++;
         }
         return interestList;

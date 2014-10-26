@@ -1,6 +1,7 @@
 package pl.bb.poirecommender.application.interests;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +20,13 @@ import java.util.List;
 public class InterestArrayAdapter extends ArrayAdapter<Interest> {
     private final Context context;
     private final List<Interest> interestList;
+    private final SharedPreferences.Editor interestPrefsEditor;
 
-    public InterestArrayAdapter(Context context, List<Interest> interestList) {
+    public InterestArrayAdapter(Context context, List<Interest> interestList, SharedPreferences.Editor interestPrefsEditor) {
         super(context, R.layout.interest_row, interestList);
         this.context = context;
         this.interestList = interestList;
+        this.interestPrefsEditor = interestPrefsEditor;
     }
 
     @Override
@@ -39,6 +42,8 @@ public class InterestArrayAdapter extends ArrayAdapter<Interest> {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 interest.setActive(b);
+                interestPrefsEditor.putBoolean(interest.getName(), b);
+                interestPrefsEditor.commit();
             }
         });
         TextView interestName = (TextView) convertView.findViewById(R.id.interest_name);
