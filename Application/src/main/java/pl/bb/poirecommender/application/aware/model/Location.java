@@ -32,7 +32,7 @@ public class Location {
     @Override
     public String toString() {
         return String.format(Locale.getDefault(),
-                "%s {lat: %.6f°, lon: %.6f°, bearing: %.1f, speed: %.1f, alt: %.1f, acc: %.1f",
+                "%s {lat: %.6f°, lon: %.6f°, bearing: %.1f, speed: %.1f, alt: %.1f, acc: %.0f}",
                 DATE_FORMAT.format(timestamp),
                 latitude,
                 longitude,

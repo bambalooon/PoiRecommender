@@ -2,7 +2,6 @@ package pl.bb.poirecommender.application.main;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.util.Log;
 import android.widget.ArrayAdapter;
 import pl.bb.poirecommender.application.R;
 import pl.bb.poirecommender.application.aware.AwareContext;
@@ -11,7 +10,6 @@ import pl.bb.poirecommender.application.aware.AwareContext;
  * Created by Krzysztof Balon on 2014-10-19.
  */
 public class AwareFragment extends ListFragment implements Entitled {
-    private static final String TAG = AwareFragment.class.getName();
     private ArrayAdapter<Object> activityArrayAdapter;
 
     public static AwareFragment newInstance(int title) {
@@ -42,6 +40,7 @@ public class AwareFragment extends ListFragment implements Entitled {
         super.onResume();
         update();
         AwareContext.getInstance().registerAwareFragment(this);
+        getListView().setStackFromBottom(true);
     }
 
     @Override
