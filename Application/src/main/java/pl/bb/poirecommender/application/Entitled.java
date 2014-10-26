@@ -1,4 +1,4 @@
-package pl.bb.poirecommender.application.main;
+package pl.bb.poirecommender.application;
 
 /**
  * Created by Krzysztof Balon on 2014-10-23.

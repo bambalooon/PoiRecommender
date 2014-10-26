@@ -5,4 +5,12 @@
     <string name="rules_tab">Reguły</string>
     <string name="action_settings">Ustawienia</string>
 
+    <!-- Interests -->
+    <string name="sport">Sport</string>
+    <string name="shopping">Zakupy</string>
+    <string name="culture">Kultura</string>
+    <string name="sightseeing">Zwiedzanie</string>
+    <string name="eating">Jedzenie</string>
+    <string name="entertainment">Rozrywka</string>
+
 </resources>

@@ -6,8 +6,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.Locale;
+import pl.bb.poirecommender.application.Entitled;
 
 /**
  * Created by Krzysztof Balon on 2014-10-19.
