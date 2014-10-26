@@ -1,8 +1,12 @@
 package pl.bb.poirecommender.application.aware.model;
 
+import com.google.common.base.Joiner;
+import com.google.common.collect.FluentIterable;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 /**
@@ -60,8 +64,9 @@ public class Weather {
     private final double clouds;
     private final String weatherName;
     private final String weatherProvider;
+    private final List<String> weatherDescription;
 
-    public Weather(long forecastTimestamp, long requestTimestamp, String dateTime, String locationName, double lat, double lon, long sunrise, long sunset, double tempCurrent, double tempDay, double tempNight, double tempMax, double tempMin, double tempMorning, double tempEvening, double pressure, double humidity, double windSpeed, double windGust, double windAngle, double rain, double clouds, String weatherName, String weatherProvider) {
+    public Weather(long forecastTimestamp, long requestTimestamp, String dateTime, String locationName, double lat, double lon, long sunrise, long sunset, double tempCurrent, double tempDay, double tempNight, double tempMax, double tempMin, double tempMorning, double tempEvening, double pressure, double humidity, double windSpeed, double windGust, double windAngle, double rain, double clouds, String weatherName, String weatherProvider, List<String> weatherDescription) {
         this.timestamp = Calendar.getInstance(Locale.getDefault()).getTimeInMillis();
 
         this.forecastTimestamp = forecastTimestamp;
@@ -88,22 +93,20 @@ public class Weather {
         this.clouds = clouds;
         this.weatherName = weatherName;
         this.weatherProvider = weatherProvider;
-    }
-
-    public double getTempCurrentInCelsius() {
-        return (tempCurrent-32)/1.8;
+        this.weatherDescription = weatherDescription;
     }
 
     @Override
     public String toString() {
         return String.format(Locale.getDefault(),
-                "%s {f: %s, %s, temp: %.0f°C, lat: %.4f°, lon: %.4f°, rain: %.0f}",
+                "%s {f: %s, %s, temp: %.0f°C, lat: %.4f°, lon: %.4f°, rain: %.0f, desc: %s}",
                 DATE_FORMAT.format(new Date(timestamp)),
                 DATE_FORMAT.format(new Date(forecastTimestamp)),
                 locationName,
-                getTempCurrentInCelsius(),
+                tempCurrent,
                 lat,
                 lon,
-                rain);
+                rain,
+                FluentIterable.from(weatherDescription).join(Joiner.on(", ")));
     }
 }
