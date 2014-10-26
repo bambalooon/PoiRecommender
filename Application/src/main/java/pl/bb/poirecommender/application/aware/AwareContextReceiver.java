@@ -54,7 +54,6 @@ public class AwareContextReceiver extends BroadcastReceiver {
                                 intent.getDoubleExtra(Weather.WIND_ANGLE, 0),
                                 intent.getDoubleExtra(Weather.RAIN, 0),
                                 intent.getDoubleExtra(Weather.CLOUDS_VALUE, 0),
-                                intent.getStringExtra(Weather.WEATHER_NAME),
                                 intent.getStringExtra(Weather.WEATHER_PROVIDER),
                                 (List<String>) intent.getSerializableExtra(Weather.WEATHER_NAME)
                         ));

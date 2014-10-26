@@ -62,11 +62,10 @@ public class Weather {
     private final double windAngle;
     private final double rain;
     private final double clouds;
-    private final String weatherName;
     private final String weatherProvider;
     private final List<String> weatherDescription;
 
-    public Weather(long forecastTimestamp, long requestTimestamp, String dateTime, String locationName, double lat, double lon, long sunrise, long sunset, double tempCurrent, double tempDay, double tempNight, double tempMax, double tempMin, double tempMorning, double tempEvening, double pressure, double humidity, double windSpeed, double windGust, double windAngle, double rain, double clouds, String weatherName, String weatherProvider, List<String> weatherDescription) {
+    public Weather(long forecastTimestamp, long requestTimestamp, String dateTime, String locationName, double lat, double lon, long sunrise, long sunset, double tempCurrent, double tempDay, double tempNight, double tempMax, double tempMin, double tempMorning, double tempEvening, double pressure, double humidity, double windSpeed, double windGust, double windAngle, double rain, double clouds, String weatherProvider, List<String> weatherDescription) {
         this.timestamp = Calendar.getInstance(Locale.getDefault()).getTimeInMillis();
 
         this.forecastTimestamp = forecastTimestamp;
@@ -91,7 +90,6 @@ public class Weather {
         this.windAngle = windAngle;
         this.rain = rain;
         this.clouds = clouds;
-        this.weatherName = weatherName;
         this.weatherProvider = weatherProvider;
         this.weatherDescription = weatherDescription;
     }
