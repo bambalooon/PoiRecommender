@@ -22,7 +22,7 @@ android {
     buildToolsVersion "20.0.0"
 
     defaultConfig {
-        applicationId "pl.bb.poirecommender.application"
+        applicationId "pl.edu.agh.eis.poirecommender"
         minSdkVersion 9
         targetSdkVersion 19
         versionCode 1

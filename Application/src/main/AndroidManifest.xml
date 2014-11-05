@@ -1,21 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="pl.bb.poirecommender.application" >
+          package="pl.edu.agh.eis.poirecommender">
 
     <application
-        android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
-        android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+            android:allowBackup="true"
+            android:icon="@drawable/ic_launcher"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme">
         <activity
-            android:name=".main.MainActivity"
-            android:label="@string/app_name" >
+                android:name=".application.main.MainActivity"
+                android:label="@string/app_name">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.MAIN"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <service
+                android:name=".service.RecommenderService"
+                android:exported="false"/>
         <receiver android:name=".aware.AwareContextReceiver">
             <intent-filter>
                 <action android:name="ACTION_AWARE_GOOGLE_ACTIVITY_RECOGNITION"/>

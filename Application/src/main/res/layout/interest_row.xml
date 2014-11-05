@@ -4,11 +4,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
-    <ToggleButton
-            android:id="@+id/active_button"
-            android:layout_width="wrap_content"
+    <SeekBar
+            android:id="@+id/certainty_bar"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"/>
+            android:layout_centerVertical="true"
+            android:max="@integer/certainty_max"/>
 
     <TextView
             android:id="@+id/interest_name"
@@ -17,8 +18,8 @@
             android:textSize="20sp"
             android:layout_marginLeft="20dp"
             android:layout_marginStart="20dp"
-            android:layout_toRightOf="@id/active_button"
-            android:layout_toEndOf="@id/active_button"
+            android:layout_toRightOf="@id/certainty_bar"
+            android:layout_toEndOf="@id/certainty_bar"
             android:layout_centerVertical="true"/>
 
 </RelativeLayout>

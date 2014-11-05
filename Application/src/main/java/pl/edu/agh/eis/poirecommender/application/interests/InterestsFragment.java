@@ -1,13 +1,14 @@
-package pl.bb.poirecommender.application.interests;
+package pl.edu.agh.eis.poirecommender.application.interests;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.widget.ArrayAdapter;
-import pl.bb.poirecommender.application.Entitled;
-import pl.bb.poirecommender.application.R;
-import pl.bb.poirecommender.application.interests.model.Interest;
+import pl.edu.agh.eis.poirecommender.R;
+import pl.edu.agh.eis.poirecommender.application.Entitled;
+import pl.edu.agh.eis.poirecommender.interests.InterestPreferences;
+import pl.edu.agh.eis.poirecommender.interests.model.Interest;
 
 import java.util.List;
 
@@ -16,7 +17,6 @@ import java.util.List;
  */
 public class InterestsFragment extends ListFragment implements Entitled {
     private ArrayAdapter<Interest> interestArrayAdapter;
-    private SharedPreferences interestPreferences;
 
     public static InterestsFragment newInstance(int title) {
         InterestsFragment fragment = new InterestsFragment();
@@ -29,12 +29,7 @@ public class InterestsFragment extends ListFragment implements Entitled {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        interestPreferences = getActivity()
-                .getSharedPreferences(Interest.INTEREST_PREFERENCES, Context.MODE_PRIVATE);
-        List<Interest> interestList = Interest
-                .getInterests(getActivity().getApplicationContext(), R.array.interests, interestPreferences);
-        interestArrayAdapter =
-                new InterestArrayAdapter(getActivity().getApplicationContext(), interestList, interestPreferences.edit());
+        interestArrayAdapter = InterestArrayAdapter.newInstance(getActivity().getApplicationContext());
         setListAdapter(interestArrayAdapter);
     }
 

@@ -1,4 +1,4 @@
-package pl.bb.poirecommender.application.main;
+package pl.edu.agh.eis.poirecommender.application.main;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,9 +6,10 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
-import pl.bb.poirecommender.application.R;
-import pl.bb.poirecommender.application.aware.AwareFragment;
-import pl.bb.poirecommender.application.interests.InterestsFragment;
+import pl.edu.agh.eis.poirecommender.R;
+import pl.edu.agh.eis.poirecommender.application.StaticFragment;
+import pl.edu.agh.eis.poirecommender.debug.AwareFragment;
+import pl.edu.agh.eis.poirecommender.application.interests.InterestsFragment;
 
 /**
  * Created by Krzysztof Balon on 2014-10-19.

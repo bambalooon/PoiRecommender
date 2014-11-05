@@ -1,6 +1,4 @@
-package pl.bb.poirecommender.application.aware.model;
-
-import android.util.Log;
+package pl.edu.agh.eis.poirecommender.aware.model;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;
@@ -27,6 +25,34 @@ public class Location {
         this.speed = speed;
         this.altitude = altitude;
         this.accuracy = accuracy;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public float getBearing() {
+        return bearing;
+    }
+
+    public float getSpeed() {
+        return speed;
+    }
+
+    public double getAltitude() {
+        return altitude;
+    }
+
+    public float getAccuracy() {
+        return accuracy;
     }
 
     @Override

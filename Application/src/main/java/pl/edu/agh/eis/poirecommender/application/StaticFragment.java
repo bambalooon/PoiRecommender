@@ -1,4 +1,4 @@
-package pl.bb.poirecommender.application.main;
+package pl.edu.agh.eis.poirecommender.application;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -6,7 +6,6 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import pl.bb.poirecommender.application.Entitled;
 
 /**
  * Created by Krzysztof Balon on 2014-10-19.

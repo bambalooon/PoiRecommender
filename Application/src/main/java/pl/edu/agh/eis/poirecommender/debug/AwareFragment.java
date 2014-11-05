@@ -1,10 +1,10 @@
-package pl.bb.poirecommender.application.aware;
+package pl.edu.agh.eis.poirecommender.debug;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.widget.ArrayAdapter;
-import pl.bb.poirecommender.application.Entitled;
-import pl.bb.poirecommender.application.R;
+import pl.edu.agh.eis.poirecommender.R;
+import pl.edu.agh.eis.poirecommender.application.Entitled;
 
 /**
  * Created by Krzysztof Balon on 2014-10-19.
@@ -31,7 +31,7 @@ public class AwareFragment extends ListFragment implements Entitled {
                 getActivity().getApplicationContext(),
                 R.layout.aware_row,
                 R.id.aware_row_text,
-                AwareContext.getInstance().getAwareNotifications());
+                AwareDebugContext.getInstance().getAwareNotifications());
         setListAdapter(notificationArrayAdapter);
     }
 
@@ -39,14 +39,14 @@ public class AwareFragment extends ListFragment implements Entitled {
     public void onResume() {
         super.onResume();
         update();
-        AwareContext.getInstance().registerAwareFragment(this);
+        AwareDebugContext.getInstance().registerAwareFragment(this);
         getListView().setStackFromBottom(true);
     }
 
     @Override
     public void onPause() {
         super.onPause();
-        AwareContext.getInstance().unregisterAwareFragment();
+        AwareDebugContext.getInstance().unregisterAwareFragment();
     }
 
     @Override

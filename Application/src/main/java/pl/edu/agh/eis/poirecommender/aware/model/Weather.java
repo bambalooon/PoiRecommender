@@ -1,4 +1,4 @@
-package pl.bb.poirecommender.application.aware.model;
+package pl.edu.agh.eis.poirecommender.aware.model;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
@@ -92,6 +92,106 @@ public class Weather {
         this.clouds = clouds;
         this.weatherProvider = weatherProvider;
         this.weatherDescription = weatherDescription;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
+    }
+
+    public long getForecastTimestamp() {
+        return forecastTimestamp;
+    }
+
+    public long getRequestTimestamp() {
+        return requestTimestamp;
+    }
+
+    public String getDateTime() {
+        return dateTime;
+    }
+
+    public String getLocationName() {
+        return locationName;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public double getLon() {
+        return lon;
+    }
+
+    public long getSunrise() {
+        return sunrise;
+    }
+
+    public long getSunset() {
+        return sunset;
+    }
+
+    public double getTempCurrent() {
+        return tempCurrent;
+    }
+
+    public double getTempDay() {
+        return tempDay;
+    }
+
+    public double getTempNight() {
+        return tempNight;
+    }
+
+    public double getTempMax() {
+        return tempMax;
+    }
+
+    public double getTempMin() {
+        return tempMin;
+    }
+
+    public double getTempMorning() {
+        return tempMorning;
+    }
+
+    public double getTempEvening() {
+        return tempEvening;
+    }
+
+    public double getPressure() {
+        return pressure;
+    }
+
+    public double getHumidity() {
+        return humidity;
+    }
+
+    public double getWindSpeed() {
+        return windSpeed;
+    }
+
+    public double getWindGust() {
+        return windGust;
+    }
+
+    public double getWindAngle() {
+        return windAngle;
+    }
+
+    public double getRain() {
+        return rain;
+    }
+
+    public double getClouds() {
+        return clouds;
+    }
+
+    public String getWeatherProvider() {
+        return weatherProvider;
+    }
+
+    public List<String> getWeatherDescription() {
+        return weatherDescription;
     }
 
     @Override

@@ -1,10 +1,10 @@
-package pl.bb.poirecommender.application.main;
+package pl.edu.agh.eis.poirecommender.application.main;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import pl.bb.poirecommender.application.Entitled;
+import pl.edu.agh.eis.poirecommender.application.Entitled;
 
 import java.util.Locale;
 
