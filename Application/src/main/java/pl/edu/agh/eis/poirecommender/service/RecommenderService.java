@@ -1,14 +1,11 @@
 package pl.edu.agh.eis.poirecommender.service;
 
 import android.app.IntentService;
-import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.*;
 import android.util.Log;
 import android.widget.Toast;
-import com.aware.Aware;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
 import pl.edu.agh.eis.poirecommender.aware.AwarePreferences;
@@ -47,20 +44,22 @@ public class RecommenderService extends IntentService {
 
     @Override
     protected void onHandleIntent(final Intent intent) {
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-                Toast.makeText(
-                        getApplicationContext(),
-                        intent.getAction(),
-                        Toast.LENGTH_SHORT).show();
-            }
-        });
         if(CONTEXT_REFRESH_ACTION.equals(intent.getAction())) {
             Log.d(TAG, awarePreferences.areAllPreferencesSet() ? "All preferences set!" : "Not all preferences set...");
             Log.d(TAG, awarePreferences.getActivity() + ":" + awarePreferences.getWeather() + ":"
                     + awarePreferences.getLatitude() + "x" + awarePreferences.getLongitude());
             Log.d(TAG, FluentIterable.from(interestPreferences.getInterests()).join(Joiner.on("; ")));
+            if(awarePreferences.areAllPreferencesSet()) {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(
+                                getApplicationContext(),
+                                intent.getAction(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
         }
     }
 }

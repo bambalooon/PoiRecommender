@@ -12,14 +12,20 @@ import java.util.List;
  */
 public class Interest {
     private final String name;
+    private final String value;
     private int certainty;
 
-    public Interest(String name) {
+    public Interest(String name, String value) {
         this.name = name;
+        this.value = value;
     }
 
     public String getName() {
         return name;
+    }
+
+    public String getValue() {
+        return value;
     }
 
     public int getCertainty() {

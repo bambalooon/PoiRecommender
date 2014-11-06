@@ -57,7 +57,7 @@ public class InterestArrayAdapter extends ArrayAdapter<Interest> {
             }
         });
         TextView interestName = (TextView) convertView.findViewById(R.id.interest_name);
-        interestName.setText(interest.getName());
+        interestName.setText(interest.getValue());
         return convertView;
     }
 }
