@@ -11,8 +11,6 @@ import com.google.common.collect.FluentIterable;
 import pl.edu.agh.eis.poirecommender.aware.AwarePreferences;
 import pl.edu.agh.eis.poirecommender.interests.InterestPreferences;
 
-import java.io.FileDescriptor;
-
 /**
  * Created by Krzysztof Balon on 2014-10-30.
  */

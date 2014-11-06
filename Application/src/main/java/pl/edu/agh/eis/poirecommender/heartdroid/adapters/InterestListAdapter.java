@@ -7,11 +7,11 @@ import java.util.List;
 /**
  * Created by Krzysztof Balon on 2014-11-06.
  */
-public class InterestAdapter extends StateListAdapter<Interest> {
+public class InterestListAdapter extends StateListAdapter<Interest> {
     private static final String ATTRIBUTE_INTEREST = "interest";
     private static final float INTEREST_MAX_CERTAINTY = 100;
 
-    protected InterestAdapter(List<Interest> interests) {
+    public InterestListAdapter(List<Interest> interests) {
         super(interests);
     }
 
