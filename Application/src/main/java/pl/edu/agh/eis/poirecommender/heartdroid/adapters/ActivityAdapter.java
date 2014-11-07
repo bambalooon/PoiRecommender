@@ -20,7 +20,7 @@ public class ActivityAdapter extends AbstractStateAdapter<Activity> {
 
     @Override
     protected String adaptValue() {
-        return getAdaptee().getActivity();
+        return getAdaptee().getActivityName();
     }
 
     @Override

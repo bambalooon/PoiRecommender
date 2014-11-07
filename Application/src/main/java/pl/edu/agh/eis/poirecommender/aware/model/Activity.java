@@ -1,7 +1,5 @@
 package pl.edu.agh.eis.poirecommender.aware.model;
 
-import com.google.android.gms.location.DetectedActivity;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -14,11 +12,11 @@ public class Activity implements SignificantlyDifferent<Activity> {
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
     private static final int CONFIDENCE_SIGNIFICANTLY_DIFFERENT = 5;
     private final long timestamp;
-    private final String activity;
+    private final String activityName;
     private final int confidence;
 
-    public Activity(String activity, int confidence) {
-        this.activity = activity;
+    public Activity(String activityName, int confidence) {
+        this.activityName = activityName;
         this.confidence = confidence;
         this.timestamp = Calendar.getInstance(Locale.getDefault()).getTimeInMillis();
     }
@@ -27,8 +25,8 @@ public class Activity implements SignificantlyDifferent<Activity> {
         return timestamp;
     }
 
-    public String getActivity() {
-        return activity;
+    public String getActivityName() {
+        return activityName;
     }
 
     public int getConfidence() {
@@ -40,7 +38,7 @@ public class Activity implements SignificantlyDifferent<Activity> {
         return String.format(Locale.getDefault(),
                 "%s {activity: %s, confidence: %d}",
                 DATE_FORMAT.format(new Date(timestamp)),
-                activity,
+                activityName,
                 confidence);
     }
 
@@ -48,7 +46,7 @@ public class Activity implements SignificantlyDifferent<Activity> {
     public boolean isSignificantlyDifferent(Activity other) {
         return other == null
                 ? true
-                : !activity.equals(other.getActivity())
+                : !activityName.equals(other.getActivityName())
                 || Math.abs(confidence - other.getConfidence()) >= CONFIDENCE_SIGNIFICANTLY_DIFFERENT;
     }
 }
