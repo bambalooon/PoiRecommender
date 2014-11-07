@@ -5,7 +5,7 @@ import pl.edu.agh.eis.poirecommender.aware.model.Activity;
 /**
  * Created by Krzysztof Balon on 2014-11-06.
  */
-public class ActivityAdapter extends StateAdapter<Activity> {
+public class ActivityAdapter extends AbstractStateAdapter<Activity> {
     private static final String ACTIVITY_ATTRIBUTE = "activity";
     private static final float CONFIDENCE_MAX = 100;
 

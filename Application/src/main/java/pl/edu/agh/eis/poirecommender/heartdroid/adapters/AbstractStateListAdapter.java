@@ -13,10 +13,10 @@ import java.util.List;
  * Created by Krzysztof Balon on 2014-11-06.
  * @param <T> type of list items adapted from
  */
-public abstract class StateListAdapter<T> implements StateAdaptable {
+public abstract class AbstractStateListAdapter<T> implements StateAdapter {
     private final List<T> adaptee;
 
-    protected StateListAdapter(List<T> adaptee) {
+    protected AbstractStateListAdapter(List<T> adaptee) {
         this.adaptee = adaptee;
     }
 

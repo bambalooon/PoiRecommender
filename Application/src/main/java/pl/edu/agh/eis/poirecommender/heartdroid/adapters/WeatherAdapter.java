@@ -1,7 +1,5 @@
 package pl.edu.agh.eis.poirecommender.heartdroid.adapters;
 
-import heart.alsvfd.SimpleSymbolic;
-import heart.xtt.StateElement;
 import pl.edu.agh.eis.poirecommender.aware.model.Weather;
 
 import java.util.Date;
@@ -9,7 +7,7 @@ import java.util.Date;
 /**
  * Created by Krzysztof Balon on 2014-11-06.
  */
-public class WeatherAdapter extends StateAdapter<Weather> {
+public class WeatherAdapter extends AbstractStateAdapter<Weather> {
     private static final String WEATHER_ATTRIBUTE = "weather";
     private static final long HOUR = 3600000L;
     private static final float FORECAST_OLDEST = 10;
