@@ -37,7 +37,7 @@ public class AwarePreferences {
     public Activity getActivity() {
         final String activityJson = awarePreferences.getString(ACTIVITY_PREFERENCE, null);
         final Activity activity = GSON_SERIALIZER.fromJson(activityJson, Activity.class);
-        if(activity != null && getNow() - activity.getTimestamp() > ACTIVITY_EXPIRATION) {
+        if(activity != null && (getNow() - activity.getTimestamp()) > ACTIVITY_EXPIRATION) {
             setActivity(null);
             return null;
         }
@@ -47,7 +47,7 @@ public class AwarePreferences {
     public Weather getWeather() {
         final String weatherJson = awarePreferences.getString(WEATHER_PREFERENCE, null);
         final Weather weather = GSON_SERIALIZER.fromJson(weatherJson, Weather.class);
-        if(weather != null && getNow() - weather.getForecastTimestamp() > WEATHER_EXPIRATION) {
+        if(weather != null && (getNow() - weather.getForecastTimestamp()) > WEATHER_EXPIRATION) {
             setWeather(null);
             return null;
         }
@@ -57,7 +57,7 @@ public class AwarePreferences {
     public Location getLocation() {
         final String locationJson = awarePreferences.getString(LOCATION_PREFERENCE, null);
         final Location location = GSON_SERIALIZER.fromJson(locationJson, Location.class);
-        if(location != null && getNow() - location.getTimestamp() > LOCATION_EXPIRATION) {
+        if(location != null && (getNow() - location.getTimestamp()) > LOCATION_EXPIRATION) {
             setLocation(null);
             return null;
         }
