@@ -2,24 +2,28 @@ package pl.edu.agh.eis.poirecommender.aware;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import pl.edu.agh.eis.poirecommender.interests.model.Interest;
+import com.google.gson.Gson;
+import pl.edu.agh.eis.poirecommender.aware.model.Activity;
+import pl.edu.agh.eis.poirecommender.aware.model.Location;
+import pl.edu.agh.eis.poirecommender.aware.model.Weather;
 
-import static java.lang.Math.pow;
-import static java.lang.Math.sqrt;
+import java.util.Date;
 
 /**
  * Created by Krzysztof Balon on 2014-10-31.
  */
 public class AwarePreferences {
+    private static final Gson GSON_SERIALIZER = new Gson();
     private static final String AWARE_PREFERENCES = "AWARE_PREFERENCES";
     private static final String ACTIVITY_PREFERENCE = "ACTIVITY";
     private static final String WEATHER_PREFERENCE = "WEATHER";
-    private static final String LATITUDE_PREFERENCE = "LATITUDE";
-    private static final String LONGITUDE_PREFERENCE = "LONGITUDE";
-    private static final long NO_LATITUDE = Double.doubleToRawLongBits(100);
-    private static final long NO_LONGITUDE = Double.doubleToLongBits(400);
-    private static final int ACTIVITY_MIN_CONFIDENCE = 70;
-    private static final double LOCATION_MIN_DISTANCE = 0.005;
+    private static final String LOCATION_PREFERENCE = "LOCATION";
+    private static final int MINUTE = 60 * 1000;
+    private static final int HOUR = 60 * MINUTE;
+    private static final int ACTIVITY_EXPIRATION = 5 * MINUTE;
+    private static final int WEATHER_EXPIRATION = 6 * HOUR;
+    private static final int LOCATION_EXPIRATION = 5 * MINUTE;
+
     private SharedPreferences awarePreferences;
 
     public AwarePreferences(Context context) {
@@ -27,66 +31,49 @@ public class AwarePreferences {
     }
 
     public boolean areAllPreferencesSet() {
-        return getActivity() != null && getWeather() != null && getLatitude() != null && getLongitude() != null;
+        long now = new Date().getTime();
+        if(getActivity() != null && (now - getActivity().getTimestamp()) > ACTIVITY_EXPIRATION) {
+            setActivity(null);
+        }
+        if(getWeather() != null && (now - getWeather().getForecastTimestamp()) > WEATHER_EXPIRATION) {
+            setWeather(null);
+        }
+        if(getLocation() != null && (now - getLocation().getTimestamp()) > LOCATION_EXPIRATION) {
+            setLocation(null);
+        }
+        return getActivity() != null && getWeather() != null && getLocation() != null;
     }
 
-    public String getActivity() {
-        return awarePreferences.getString(ACTIVITY_PREFERENCE, null);
+    public Activity getActivity() {
+        final String activityJson = awarePreferences.getString(ACTIVITY_PREFERENCE, null);
+        return activityJson != null ? GSON_SERIALIZER.fromJson(activityJson, Activity.class) : null;
     }
 
-    public String getWeather() {
-        return awarePreferences.getString(WEATHER_PREFERENCE, null);
+    public Weather getWeather() {
+        final String weatherJson = awarePreferences.getString(WEATHER_PREFERENCE, null);
+        return weatherJson != null ? GSON_SERIALIZER.fromJson(weatherJson, Weather.class) : null;
     }
 
-    public Double getLatitude() {
-        long latitudeRaw = awarePreferences.getLong(LATITUDE_PREFERENCE, NO_LATITUDE);
-        return latitudeRaw == NO_LATITUDE ? null : Double.longBitsToDouble(latitudeRaw);
+    public Location getLocation() {
+        final String locationJson = awarePreferences.getString(LOCATION_PREFERENCE, null);
+        return locationJson != null ? GSON_SERIALIZER.fromJson(locationJson, Location.class) : null;
     }
 
-    public Double getLongitude() {
-        long longitudeRaw = awarePreferences.getLong(LONGITUDE_PREFERENCE, NO_LONGITUDE);
-        return longitudeRaw == NO_LONGITUDE ? null : Double.longBitsToDouble(longitudeRaw);
-    }
-
-    public boolean setActivity(String activity) {
+    public boolean setActivity(Activity activity) {
         return awarePreferences.edit()
-                .putString(ACTIVITY_PREFERENCE, activity)
+                .putString(ACTIVITY_PREFERENCE, GSON_SERIALIZER.toJson(activity))
                 .commit();
     }
 
-    public boolean setWeather(String weather) {
+    public boolean setWeather(Weather weather) {
         return awarePreferences.edit()
-                .putString(WEATHER_PREFERENCE, weather)
+                .putString(WEATHER_PREFERENCE, GSON_SERIALIZER.toJson(weather))
                 .commit();
     }
 
-    public boolean setLatitude(double latitude) {
+    public boolean setLocation(Location location) {
         return awarePreferences.edit()
-                .putLong(LATITUDE_PREFERENCE, Double.doubleToRawLongBits(latitude))
+                .putString(LOCATION_PREFERENCE, GSON_SERIALIZER.toJson(location))
                 .commit();
-    }
-
-    public boolean setLongitude(double longitude) {
-        return awarePreferences.edit()
-                .putLong(LONGITUDE_PREFERENCE, Double.doubleToRawLongBits(longitude))
-                .commit();
-    }
-
-    public boolean isActivityDifferent(String activity, int confidence) {
-        return confidence >= ACTIVITY_MIN_CONFIDENCE && !activity.equals(getActivity());
-    }
-
-    public boolean isWeatherDifferent(String weather) {
-        return !weather.equals(getWeather());
-    }
-
-    public boolean isLocationDifferent(double latitude, double longitude, float accuracy) {
-        //TODO: add accuracy to equation
-        return getLatitude() == null || getLongitude() == null ||
-                getApproxDistance(latitude, getLatitude(), longitude, getLongitude()) > LOCATION_MIN_DISTANCE;
-    }
-
-    private double getApproxDistance(double lat1, double lat2, double lon1, double lon2) {
-        return sqrt(pow(lat1 - lat2, 2.0) + pow(lon1 - lon2, 2.0));
     }
 }

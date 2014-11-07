@@ -44,8 +44,7 @@ public class RecommenderService extends IntentService {
     protected void onHandleIntent(final Intent intent) {
         if(CONTEXT_REFRESH_ACTION.equals(intent.getAction())) {
             Log.d(TAG, awarePreferences.areAllPreferencesSet() ? "All preferences set!" : "Not all preferences set...");
-            Log.d(TAG, awarePreferences.getActivity() + ":" + awarePreferences.getWeather() + ":"
-                    + awarePreferences.getLatitude() + "x" + awarePreferences.getLongitude());
+            Log.d(TAG, awarePreferences.getActivity() + "\n" + awarePreferences.getWeather() + "\n" + awarePreferences.getLocation());
             Log.d(TAG, FluentIterable.from(interestPreferences.getInterests()).join(Joiner.on("; ")));
             if(awarePreferences.areAllPreferencesSet()) {
                 handler.post(new Runnable() {

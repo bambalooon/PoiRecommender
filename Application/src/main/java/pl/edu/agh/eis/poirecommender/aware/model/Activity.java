@@ -10,8 +10,9 @@ import java.util.Locale;
 /**
  * Created by Krzysztof Balon on 2014-10-20.
  */
-public class Activity {
+public class Activity implements SignificantlyDifferent<Activity> {
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
+    private static final int CONFIDENCE_SIGNIFICANTLY_DIFFERENT = 5;
     private final long timestamp;
     private final String activity;
     private final int confidence;
@@ -41,5 +42,13 @@ public class Activity {
                 DATE_FORMAT.format(new Date(timestamp)),
                 activity,
                 confidence);
+    }
+
+    @Override
+    public boolean isSignificantlyDifferent(Activity other) {
+        return other == null
+                ? true
+                : !activity.equals(other.getActivity())
+                || Math.abs(confidence - other.getConfidence()) >= CONFIDENCE_SIGNIFICANTLY_DIFFERENT;
     }
 }

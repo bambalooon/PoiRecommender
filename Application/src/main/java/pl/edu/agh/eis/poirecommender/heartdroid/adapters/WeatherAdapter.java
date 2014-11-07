@@ -10,7 +10,7 @@ import java.util.Date;
 public class WeatherAdapter extends AbstractStateAdapter<Weather> {
     private static final String WEATHER_ATTRIBUTE = "weather";
     private static final long HOUR = 3600000L;
-    private static final float FORECAST_OLDEST = 10;
+    private static final float FORECAST_OLDEST = 6;
 
     public WeatherAdapter(Weather weather) {
         super(weather);

@@ -52,5 +52,6 @@ dependencies {
     compile 'heart:heartdroid:0.8.0'
     compile 'com.google.android.gms:play-services:6.1.11'
     compile 'com.google.guava:guava:18.0'
+    compile 'com.google.code.gson:gson:2.3'
     compile 'com.aware:awareframework:2.0@aar'
 }

@@ -19,30 +19,20 @@ public class AwareContext {
     }
 
     public void updateActivity(Activity activity) {
-        final String activityName = activity.getActivity();
-        final int confidence = activity.getConfidence();
-        if(awarePreferences.isActivityDifferent(activityName, confidence) &&
-                awarePreferences.setActivity(activityName)) {
+        if(activity.isSignificantlyDifferent(awarePreferences.getActivity()) && awarePreferences.setActivity(activity)) {
             RecommenderService.notifyRecommender(context);
         }
     }
 
     public void updateWeather(Weather weather) {
-        final String weatherName = weather.getWeatherDescription().get(0);
-        if(awarePreferences.isWeatherDifferent(weatherName) && awarePreferences.setWeather(weatherName)) {
+        if(weather.isSignificantlyDifferent(awarePreferences.getWeather()) && awarePreferences.setWeather(weather)) {
             RecommenderService.notifyRecommender(context);
         }
     }
 
     public void updateLocation(Location location) {
-        final double latitude = location.getLatitude();
-        final double longitude = location.getLongitude();
-        final float accuracy = location.getAccuracy();
-        if(awarePreferences.isLocationDifferent(latitude, longitude, accuracy)
-                && awarePreferences.setLatitude(latitude)
-                && awarePreferences.setLongitude(longitude)) {
+        if(location.isSignificantlyDifferent(awarePreferences.getLocation()) && awarePreferences.setLocation(location)) {
             RecommenderService.notifyRecommender(context);
         }
     }
-
 }

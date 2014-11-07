@@ -12,7 +12,7 @@ import java.util.Locale;
 /**
  * Created by Krzysztof Balon on 2014-10-20.
  */
-public class Weather {
+public class Weather implements SignificantlyDifferent<Weather> {
     public static final String REQUEST_TIMESTAMP = "timestamp";
     public static final String FORECAST_TIMESTAMP = "double_forecast_timestamp";
     public static final String LATITUDE = "double_latitude";
@@ -206,5 +206,13 @@ public class Weather {
                 lon,
                 rain,
                 FluentIterable.from(weatherDescription).join(Joiner.on(", ")));
+    }
+
+    @Override
+    public boolean isSignificantlyDifferent(Weather other) {
+        return other == null
+                ? true
+                : forecastTimestamp != other.getForecastTimestamp()
+                || !locationName.equals(other.getLocationName());
     }
 }

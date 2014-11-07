@@ -3,11 +3,15 @@ package pl.edu.agh.eis.poirecommender.aware.model;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import static java.lang.Math.pow;
+import static java.lang.Math.sqrt;
+
 /**
  * Created by Krzysztof Balon on 2014-10-25.
  */
-public class Location {
+public class Location implements SignificantlyDifferent<Location> {
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
+    private static final double SIGNIFICANTLY_GREAT_DISTANCE = 0.005;
 
     private final long timestamp;
     private final double latitude;
@@ -66,5 +70,17 @@ public class Location {
                 speed,
                 altitude,
                 accuracy);
+    }
+
+    @Override
+    public boolean isSignificantlyDifferent(Location other) {
+        return other == null
+                ? true
+                : timestamp != other.getTimestamp()
+                && calculateAproxDistance(latitude, other.getLatitude(), longitude, getLongitude()) >= SIGNIFICANTLY_GREAT_DISTANCE;
+    }
+
+    private double calculateAproxDistance(double lat1, double lat2, double lon1, double lon2) {
+        return sqrt(pow(lat1 - lat2, 2) + pow(lon1 - lon2, 2));
     }
 }
