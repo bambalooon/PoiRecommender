@@ -31,32 +31,37 @@ public class AwarePreferences {
     }
 
     public boolean areAllPreferencesSet() {
-        long now = new Date().getTime();
-        if(getActivity() != null && (now - getActivity().getTimestamp()) > ACTIVITY_EXPIRATION) {
-            setActivity(null);
-        }
-        if(getWeather() != null && (now - getWeather().getForecastTimestamp()) > WEATHER_EXPIRATION) {
-            setWeather(null);
-        }
-        if(getLocation() != null && (now - getLocation().getTimestamp()) > LOCATION_EXPIRATION) {
-            setLocation(null);
-        }
         return getActivity() != null && getWeather() != null && getLocation() != null;
     }
 
     public Activity getActivity() {
         final String activityJson = awarePreferences.getString(ACTIVITY_PREFERENCE, null);
-        return activityJson != null ? GSON_SERIALIZER.fromJson(activityJson, Activity.class) : null;
+        final Activity activity = GSON_SERIALIZER.fromJson(activityJson, Activity.class);
+        if(activity != null && getNow() - activity.getTimestamp() > ACTIVITY_EXPIRATION) {
+            setActivity(null);
+            return null;
+        }
+        return activity;
     }
 
     public Weather getWeather() {
         final String weatherJson = awarePreferences.getString(WEATHER_PREFERENCE, null);
-        return weatherJson != null ? GSON_SERIALIZER.fromJson(weatherJson, Weather.class) : null;
+        final Weather weather = GSON_SERIALIZER.fromJson(weatherJson, Weather.class);
+        if(weather != null && getNow() - weather.getForecastTimestamp() > WEATHER_EXPIRATION) {
+            setWeather(null);
+            return null;
+        }
+        return weather;
     }
 
     public Location getLocation() {
         final String locationJson = awarePreferences.getString(LOCATION_PREFERENCE, null);
-        return locationJson != null ? GSON_SERIALIZER.fromJson(locationJson, Location.class) : null;
+        final Location location = GSON_SERIALIZER.fromJson(locationJson, Location.class);
+        if(location != null && getNow() - location.getTimestamp() > LOCATION_EXPIRATION) {
+            setLocation(null);
+            return null;
+        }
+        return location;
     }
 
     public boolean setActivity(Activity activity) {
@@ -75,5 +80,9 @@ public class AwarePreferences {
         return awarePreferences.edit()
                 .putString(LOCATION_PREFERENCE, GSON_SERIALIZER.toJson(location))
                 .commit();
+    }
+
+    private long getNow() {
+        return new Date().getTime();
     }
 }
