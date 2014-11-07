@@ -1,6 +1,8 @@
 package pl.edu.agh.eis.poirecommender.heartdroid.adapters;
 
+import heart.alsvfd.Null;
 import heart.alsvfd.SimpleSymbolic;
+import heart.alsvfd.Value;
 import heart.xtt.StateElement;
 
 /**
@@ -18,7 +20,9 @@ public abstract class AbstractStateAdapter<T> implements StateAdapter {
     public StateElement getStateElement() {
         StateElement stateElement = new StateElement();
         stateElement.setAttributeName(getAttributeName());
-        SimpleSymbolic value = new SimpleSymbolic(adaptValue(), null, calculateCertainty());
+        Value value = adaptValue() == null
+                ? new Null()
+                : new SimpleSymbolic(adaptValue(), null, calculateCertainty());
         stateElement.setValue(value);
         return stateElement;
     }
