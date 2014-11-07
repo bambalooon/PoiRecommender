@@ -8,8 +8,14 @@ import android.util.Log;
 import android.widget.Toast;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
+import heart.HeaRT;
+import heart.exceptions.NotInTheDomainException;
+import heart.xtt.Attribute;
+import heart.xtt.State;
 import heart.xtt.StateElement;
+import heart.xtt.XTTModel;
 import pl.edu.agh.eis.poirecommender.aware.AwarePreferences;
+import pl.edu.agh.eis.poirecommender.heartdroid.HeartPreferences;
 import pl.edu.agh.eis.poirecommender.heartdroid.adapters.ActivityAdapter;
 import pl.edu.agh.eis.poirecommender.heartdroid.adapters.InterestListAdapter;
 import pl.edu.agh.eis.poirecommender.heartdroid.adapters.WeatherAdapter;
@@ -25,6 +31,7 @@ public class RecommenderService extends IntentService {
     private final Handler handler;
     private AwarePreferences awarePreferences;
     private InterestPreferences interestPreferences;
+    private HeartPreferences heartPreferences;
 
     public static void notifyRecommender(Context context) {
         Intent notificationIntent = new Intent(context, RecommenderService.class);
@@ -42,6 +49,7 @@ public class RecommenderService extends IntentService {
         super.onCreate();
         awarePreferences = new AwarePreferences(getApplicationContext());
         interestPreferences = new InterestPreferences(getApplicationContext());
+        heartPreferences = new HeartPreferences(getApplicationContext());
     }
 
     @Override
@@ -50,23 +58,40 @@ public class RecommenderService extends IntentService {
             Log.d(TAG, awarePreferences.areAllPreferencesSet() ? "All preferences set!" : "Not all preferences set...");
             Log.d(TAG, "\n" + awarePreferences.getActivity() + "\n" + awarePreferences.getWeather() + "\n" + awarePreferences.getLocation());
             Log.d(TAG, FluentIterable.from(interestPreferences.getInterests()).join(Joiner.on("; ")));
-            if(awarePreferences.areAllPreferencesSet()) {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        Toast.makeText(
-                                getApplicationContext(),
-                                intent.getAction(),
-                                Toast.LENGTH_SHORT).show();
+            try {
+                final XTTModel xttModel = heartPreferences.getXttModel();
+
+                StateElement activityState = new ActivityAdapter(awarePreferences.getActivity()).getStateElement();
+                StateElement weatherState = new WeatherAdapter(awarePreferences.getWeather()).getStateElement();
+                StateElement interestsState = new InterestListAdapter(interestPreferences.getInterests()).getStateElement();
+
+                State xttState = new State();
+                xttState.addStateElement(activityState);
+                xttState.addStateElement(weatherState);
+                xttState.addStateElement(interestsState);
+                xttModel.setCurrentState(xttState);
+
+                HeaRT.fixedOrderInference(xttModel, new String[]{"Recommendations"});
+
+                for (final Attribute attribute : xttModel.getAttributes()) {
+                    Log.d(TAG, attribute.getName() + " = " + attribute.getValue());
+                    if("poi".equals(attribute.getName())) {
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(
+                                        getApplicationContext(),
+                                        attribute.getValue().toString(),
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
-                });
+                }
+            } catch (NotInTheDomainException e) {
+            } catch (NullPointerException e) {
+                Log.d(TAG, "No rule to fire...");
             }
-            StateElement activityState = new ActivityAdapter(awarePreferences.getActivity()).getStateElement();
-            StateElement weatherState = new WeatherAdapter(awarePreferences.getWeather()).getStateElement();
-            StateElement interestsState = new InterestListAdapter(interestPreferences.getInterests()).getStateElement();
-            Log.d(TAG, activityState.getAttributeName() + " : " + activityState.getValue() + " : " + activityState.getValue().getCertaintyFactor());
-            Log.d(TAG, weatherState.getAttributeName() + ": " + weatherState.getValue() + " : " + weatherState.getValue().getCertaintyFactor());
-            Log.d(TAG, interestsState.getAttributeName() + ": " + interestsState.getValue() + " : " + interestsState.getValue().getCertaintyFactor());
+
         }
     }
 }
