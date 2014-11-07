@@ -8,6 +8,7 @@ import pl.edu.agh.eis.poirecommender.aware.model.Activity;
 public class ActivityAdapter extends AbstractStateAdapter<Activity> {
     private static final String ACTIVITY_ATTRIBUTE = "activity";
     private static final float CONFIDENCE_MAX = 100;
+    private static final int NO_CONFIDENCE = 0;
 
     public ActivityAdapter(Activity activity) {
         super(activity);
@@ -20,11 +21,17 @@ public class ActivityAdapter extends AbstractStateAdapter<Activity> {
 
     @Override
     protected String adaptValue() {
-        return getAdaptee().getActivityName();
+        final Activity activity = getAdaptee();
+        return activity != null
+                ? activity.getActivityName()
+                : null;
     }
 
     @Override
     protected float calculateCertainty() {
-        return getAdaptee().getConfidence()/CONFIDENCE_MAX;
+        final Activity activity = getAdaptee();
+        return activity != null
+                ? activity.getConfidence()/CONFIDENCE_MAX
+                : NO_CONFIDENCE;
     }
 }

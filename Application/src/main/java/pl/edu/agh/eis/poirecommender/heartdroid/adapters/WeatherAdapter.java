@@ -11,6 +11,7 @@ public class WeatherAdapter extends AbstractStateAdapter<Weather> {
     private static final String WEATHER_ATTRIBUTE = "weather";
     private static final long HOUR = 3600000L;
     private static final float FORECAST_OLDEST = 6;
+    private static final int NO_CERTAINTY = 0;
 
     public WeatherAdapter(Weather weather) {
         super(weather);
@@ -23,15 +24,26 @@ public class WeatherAdapter extends AbstractStateAdapter<Weather> {
 
     @Override
     protected String adaptValue() {
-        return getAdaptee().getWeatherDescription().get(0);
+        final Weather weather = getAdaptee();
+        return weather != null && weather.getWeatherDescription() != null && !weather.getWeatherDescription().isEmpty()
+                ? weather.getWeatherDescription().get(0)
+                : null;
     }
 
     @Override
     protected float calculateCertainty() {
-        float forecastAge = (new Date().getTime() - getAdaptee().getForecastTimestamp()) / HOUR;
+        final Weather weather = getAdaptee();
+        if(weather == null) {
+            return NO_CERTAINTY;
+        }
+        float forecastAge = (getNow() - weather.getForecastTimestamp()) / HOUR;
         return forecastAge >= FORECAST_OLDEST
-                ? 0
+                ? NO_CERTAINTY
                 : (FORECAST_OLDEST - forecastAge)
                         /FORECAST_OLDEST;
+    }
+
+    private long getNow() {
+        return new Date().getTime();
     }
 }

@@ -8,7 +8,11 @@ import android.util.Log;
 import android.widget.Toast;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
+import heart.xtt.StateElement;
 import pl.edu.agh.eis.poirecommender.aware.AwarePreferences;
+import pl.edu.agh.eis.poirecommender.heartdroid.adapters.ActivityAdapter;
+import pl.edu.agh.eis.poirecommender.heartdroid.adapters.InterestListAdapter;
+import pl.edu.agh.eis.poirecommender.heartdroid.adapters.WeatherAdapter;
 import pl.edu.agh.eis.poirecommender.interests.InterestPreferences;
 
 /**
@@ -57,6 +61,12 @@ public class RecommenderService extends IntentService {
                     }
                 });
             }
+            StateElement activityState = new ActivityAdapter(awarePreferences.getActivity()).getStateElement();
+            StateElement weatherState = new WeatherAdapter(awarePreferences.getWeather()).getStateElement();
+            StateElement interestsState = new InterestListAdapter(interestPreferences.getInterests()).getStateElement();
+            Log.d(TAG, activityState.getAttributeName() + " : " + activityState.getValue() + " : " + activityState.getValue().getCertaintyFactor());
+            Log.d(TAG, weatherState.getAttributeName() + ": " + weatherState.getValue() + " : " + weatherState.getValue().getCertaintyFactor());
+            Log.d(TAG, interestsState.getAttributeName() + ": " + interestsState.getValue() + " : " + interestsState.getValue().getCertaintyFactor());
         }
     }
 }
