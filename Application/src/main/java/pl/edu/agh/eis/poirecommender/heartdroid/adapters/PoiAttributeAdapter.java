@@ -1,23 +1,25 @@
 package pl.edu.agh.eis.poirecommender.heartdroid.adapters;
 
 import heart.xtt.Attribute;
+import pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType;
 
 /**
  * Created by Krzysztof Balon on 2014-11-08.
  */
-public class PoiAttributeAdapter implements PoiType {
+public class PoiAttributeAdapter implements WithPoiType {
     private final Attribute poiAttribute;
-    private final String poiTypeName;
+    private final PoiType poiType;
 
     public PoiAttributeAdapter(Attribute poiAttribute) {
+        pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType.valueOf("indoor-eating");
         this.poiAttribute = poiAttribute;
-        this.poiTypeName = poiAttribute == null || poiAttribute.getValue() == null
+        this.poiType = poiAttribute == null || poiAttribute.getValue() == null
                 ? null
-                : poiAttribute.getValue().toString();
+                : PoiType.fromString(poiAttribute.getValue().toString());
     }
 
     @Override
-    public String getPoiTypeName() {
-        return poiTypeName;
+    public PoiType getPoiType() {
+        return poiType;
     }
 }

@@ -59,8 +59,8 @@
                 <value is="outdoor-sports"/>
                 <value is="theatre-cinema"/>
                 <value is="monuments"/>
-                <value is="indoor-concert"/>
-                <value is="outdoor-concert"/>
+                <value is="indoor-entertainment"/>
+                <value is="outdoor-entertainment"/>
                 <value is="museum"/>
                 <value is="shopping-center"/>
             </domain>

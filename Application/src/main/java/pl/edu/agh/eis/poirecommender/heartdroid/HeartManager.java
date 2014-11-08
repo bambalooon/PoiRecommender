@@ -11,7 +11,7 @@ import heart.xtt.Attribute;
 import heart.xtt.State;
 import heart.xtt.XTTModel;
 import pl.edu.agh.eis.poirecommender.heartdroid.adapters.PoiAttributeAdapter;
-import pl.edu.agh.eis.poirecommender.heartdroid.adapters.PoiType;
+import pl.edu.agh.eis.poirecommender.heartdroid.adapters.WithPoiType;
 import pl.edu.agh.eis.poirecommender.heartdroid.adapters.WithStateElement;
 
 import java.util.List;
@@ -30,7 +30,7 @@ public class HeartManager {
         this.heartPreferences = new HeartPreferences(context);
     }
 
-    public PoiType inferencePreferredPoiType(List<WithStateElement> stateElements) {
+    public WithPoiType inferencePreferredPoiType(List<WithStateElement> stateElements) {
         final XTTModel xttModel = heartPreferences.getXttModel();
         try {
             xttModel.setCurrentState(generateCurrentState(stateElements));
@@ -53,7 +53,7 @@ public class HeartManager {
         return currentState;
     }
 
-    private PoiType adaptPoiTypeFromAttribute(Attribute poiAttribute) {
+    private WithPoiType adaptPoiTypeFromAttribute(Attribute poiAttribute) {
         return new PoiAttributeAdapter(poiAttribute);
     }
 }

@@ -12,6 +12,7 @@ import com.google.common.collect.ImmutableList;
 import pl.edu.agh.eis.poirecommender.aware.AwarePreferences;
 import pl.edu.agh.eis.poirecommender.heartdroid.HeartManager;
 import pl.edu.agh.eis.poirecommender.heartdroid.adapters.*;
+import pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType;
 import pl.edu.agh.eis.poirecommender.interests.InterestPreferences;
 
 /**
@@ -56,15 +57,16 @@ public class RecommenderService extends IntentService {
                     new WeatherAdapter(awarePreferences.getWeather()),
                     new InterestListAdapter(interestPreferences.getInterests()));
 
-            final PoiType recommendedPoiType = heartManager.inferencePreferredPoiType(stateElements);
+            final PoiType recommendedPoiType = heartManager.inferencePreferredPoiType(stateElements)
+                    .getPoiType();
 
-            Log.d(TAG, "Recommendation poi type: " + recommendedPoiType.getPoiTypeName());
+            Log.d(TAG, "Recommendation poi type: " + recommendedPoiType.getText());
             handler.post(new Runnable() {
                 @Override
                 public void run() {
                     Toast.makeText(
                             getApplicationContext(),
-                            recommendedPoiType.getPoiTypeName(),
+                            recommendedPoiType.getText(),
                             Toast.LENGTH_SHORT).show();
                 }
             });
