@@ -18,7 +18,7 @@ public class AroundArea implements Area {
     }
 
     @Override
-    public String createRequestPart() {
+    public String createQueryPart() {
         return String.format(Locale.US, "%c%s%.2f%c%.6f%c%.6f%c",
                 AREA_REQUEST_PART_START,
                 AROUND_RESTRICTOR,

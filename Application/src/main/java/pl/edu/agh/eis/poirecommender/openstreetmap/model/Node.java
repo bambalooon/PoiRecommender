@@ -9,9 +9,8 @@ import java.util.List;
 /**
  * Created by Krzysztof Balon on 2014-11-08.
  */
-public class Node implements RequestPart {
-    private static final char NODE_REQUEST_PART_START = '(';
-    private static final char NODE_REQUEST_PART_END = ')';
+public class Node implements Query {
+    private static final char NODE_REQUEST_PART_END = ';';
     private static final String NODE_REQUEST = "node";
     private static final Joiner CONSTRAINTS_JOINER = Joiner.on("");
     private final Area area;
@@ -23,15 +22,14 @@ public class Node implements RequestPart {
     }
 
     @Override
-    public String createRequestPart() {
-        return String.format("%c%s%s%s%c",
-                NODE_REQUEST_PART_START,
+    public String createQuery() {
+        return String.format("%s%s%s%c",
                 NODE_REQUEST,
-                area.createRequestPart(),
+                area.createQueryPart(),
                 FluentIterable.from(constraints).transform(new Function<Constraint, String>() {
                     @Override
                     public String apply(Constraint constraint) {
-                        return constraint.createRequestPart();
+                        return constraint.createQueryPart();
                     }
                 }).join(CONSTRAINTS_JOINER),
                 NODE_REQUEST_PART_END);
