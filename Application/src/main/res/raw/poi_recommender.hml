@@ -53,7 +53,7 @@
             <desc>Different points of interests</desc>
             <domain ordered="no">
                 <value is="indoor-eating"/>
-                <value is="outdor-eating"/>
+                <value is="outdoor-eating"/>
                 <value is="drivethrough-eating"/>
                 <value is="indoor-sports"/>
                 <value is="outdoor-sports"/>
@@ -117,7 +117,7 @@
                     <trans>
                         <attref ref="att_xtt_4"/>
                         <set>
-                            <value is="outdor-eating"/>
+                            <value is="outdoor-eating"/>
                         </set>
                     </trans>
                 </decision>
