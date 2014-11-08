@@ -5,6 +5,6 @@ import heart.xtt.StateElement;
 /**
  * Created by Krzysztof Balon on 2014-11-06.
  */
-public interface StateAdapter {
+public interface WithStateElement {
     StateElement getStateElement();
 }

@@ -9,7 +9,7 @@ import heart.xtt.StateElement;
  * Created by Krzysztof Balon on 2014-11-06.
  * @param <T> type adapted from
  */
-public abstract class AbstractStateAdapter<T> implements StateAdapter {
+public abstract class AbstractStateAdapter<T> implements WithStateElement {
     private final T adaptee;
 
     protected AbstractStateAdapter(T adaptee) {
