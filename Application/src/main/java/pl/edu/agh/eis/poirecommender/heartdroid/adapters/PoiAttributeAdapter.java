@@ -11,7 +11,6 @@ public class PoiAttributeAdapter implements WithPoiType {
     private final PoiType poiType;
 
     public PoiAttributeAdapter(Attribute poiAttribute) {
-        pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType.valueOf("indoor-eating");
         this.poiAttribute = poiAttribute;
         this.poiType = poiAttribute == null || poiAttribute.getValue() == null
                 ? null

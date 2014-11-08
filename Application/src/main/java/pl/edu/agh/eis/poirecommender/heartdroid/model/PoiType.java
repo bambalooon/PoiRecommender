@@ -1,5 +1,7 @@
 package pl.edu.agh.eis.poirecommender.heartdroid.model;
 
+import heart.alsvfd.Value;
+
 /**
  * Created by Krzysztof Balon on 2014-11-08.
  */
@@ -19,11 +21,14 @@ public enum PoiType {
     }
 
     public static PoiType fromString(String text) {
+        if (text == null || text.equalsIgnoreCase(Value.NULL)) {
+            return null;
+        }
         for (PoiType poiType : values()) {
             if(poiType.getText().equalsIgnoreCase(text)) {
                 return poiType;
             }
         }
-        throw new IllegalArgumentException("Trying to get PoiType from wrong text: " + text);
+        throw new IllegalArgumentException(text + " is not a constant in PoiType");
     }
 }

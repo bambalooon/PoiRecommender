@@ -60,16 +60,18 @@ public class RecommenderService extends IntentService {
             final PoiType recommendedPoiType = heartManager.inferencePreferredPoiType(stateElements)
                     .getPoiType();
 
-            Log.d(TAG, "Recommendation poi type: " + recommendedPoiType.getText());
-            handler.post(new Runnable() {
-                @Override
-                public void run() {
-                    Toast.makeText(
-                            getApplicationContext(),
-                            recommendedPoiType.getText(),
-                            Toast.LENGTH_SHORT).show();
-                }
-            });
+            if(recommendedPoiType != null) {
+                Log.d(TAG, "Recommendation poi type: " + recommendedPoiType.getText());
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(
+                                getApplicationContext(),
+                                recommendedPoiType.getText(),
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
         }
     }
 }
