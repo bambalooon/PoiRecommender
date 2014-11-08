@@ -2,6 +2,9 @@ package pl.edu.agh.eis.poirecommender.heartdroid;
 
 import android.content.Context;
 import android.util.Log;
+import com.google.common.base.Joiner;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableList;
 import heart.HeaRT;
 import heart.exceptions.NotInTheDomainException;
 import heart.xtt.Attribute;
@@ -36,7 +39,8 @@ public class HeartManager {
         } catch (NotInTheDomainException e) {
             throw new IllegalStateException(e);
         } catch (NullPointerException e) {
-            Log.d(TAG, e.getMessage() + "\n" + e.getStackTrace().toString());
+            Log.d(TAG, e.getMessage() + "\n" +
+                    FluentIterable.from(ImmutableList.copyOf(e.getStackTrace())).join(Joiner.on("\n")));
             return adaptPoiTypeFromAttribute(null);
         }
     }
