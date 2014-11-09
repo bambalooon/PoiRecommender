@@ -1,8 +1,9 @@
-package pl.edu.agh.eis.poirecommender.openstreetmap.model;
+package pl.edu.agh.eis.poirecommender.openstreetmap;
 
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType;
+import pl.edu.agh.eis.poirecommender.openstreetmap.model.*;
 
 import java.util.Map;
 
