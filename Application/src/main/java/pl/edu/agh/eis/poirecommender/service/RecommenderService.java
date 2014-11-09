@@ -10,10 +10,14 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import pl.edu.agh.eis.poirecommender.aware.AwarePreferences;
+import pl.edu.agh.eis.poirecommender.aware.model.Location;
 import pl.edu.agh.eis.poirecommender.heartdroid.HeartManager;
 import pl.edu.agh.eis.poirecommender.heartdroid.adapters.*;
 import pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType;
 import pl.edu.agh.eis.poirecommender.interests.InterestPreferences;
+import pl.edu.agh.eis.poirecommender.openstreetmap.OsmExecutor;
+import pl.edu.agh.eis.poirecommender.openstreetmap.OsmRequest;
+import pl.edu.agh.eis.poirecommender.openstreetmap.PoiTypeToConstraintMap;
 
 /**
  * Created by Krzysztof Balon on 2014-10-30.
@@ -60,8 +64,13 @@ public class RecommenderService extends IntentService {
             final PoiType recommendedPoiType = heartManager.inferencePreferredPoiType(stateElements)
                     .getPoiType();
 
+            Location location = awarePreferences.getLocation();
             if(recommendedPoiType != null) {
                 Log.d(TAG, "Recommendation poi type: " + recommendedPoiType.getText());
+                if(location != null) {
+                    String response = new OsmExecutor().execute(new OsmRequest(PoiTypeToConstraintMap.get(recommendedPoiType), location));
+                    Log.d(TAG, response);
+                }
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
