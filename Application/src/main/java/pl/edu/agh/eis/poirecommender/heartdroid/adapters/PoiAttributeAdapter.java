@@ -1,5 +1,6 @@
 package pl.edu.agh.eis.poirecommender.heartdroid.adapters;
 
+import heart.alsvfd.Value;
 import heart.xtt.Attribute;
 import pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType;
 
@@ -12,9 +13,14 @@ public class PoiAttributeAdapter implements WithPoiType {
 
     public PoiAttributeAdapter(Attribute poiAttribute) {
         this.poiAttribute = poiAttribute;
-        this.poiType = poiAttribute == null || poiAttribute.getValue() == null
+        String poiTypeText;
+        Value poiTypeValue;
+        this.poiType = poiAttribute == null
+                || (poiTypeValue = poiAttribute.getValue()) == null
+                || (poiTypeText = poiTypeValue.toString()) == null
+                || poiTypeText.equals(Value.NULL)
                 ? null
-                : PoiType.fromString(poiAttribute.getValue().toString());
+                : PoiType.fromString(poiTypeText);
     }
 
     @Override
