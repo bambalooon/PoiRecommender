@@ -1,4 +1,4 @@
-package pl.edu.agh.eis.poirecommender.openstreetmap.model;
+package pl.edu.agh.eis.poirecommender.openstreetmap.model.request;
 
 import java.util.LinkedList;
 import java.util.List;

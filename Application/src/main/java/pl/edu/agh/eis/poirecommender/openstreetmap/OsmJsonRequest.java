@@ -1,7 +1,7 @@
 package pl.edu.agh.eis.poirecommender.openstreetmap;
 
 import pl.edu.agh.eis.poirecommender.aware.model.Location;
-import pl.edu.agh.eis.poirecommender.openstreetmap.model.CompositeConstraint;
+import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.CompositeConstraint;
 
 /**
  * Created by Krzysztof Balon on 2014-11-09.

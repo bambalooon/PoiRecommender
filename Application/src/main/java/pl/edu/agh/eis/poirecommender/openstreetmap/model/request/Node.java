@@ -1,10 +1,4 @@
-package pl.edu.agh.eis.poirecommender.openstreetmap.model;
-
-import com.google.common.base.Function;
-import com.google.common.base.Joiner;
-import com.google.common.collect.FluentIterable;
-
-import java.util.List;
+package pl.edu.agh.eis.poirecommender.openstreetmap.model.request;
 
 /**
  * Created by Krzysztof Balon on 2014-11-08.

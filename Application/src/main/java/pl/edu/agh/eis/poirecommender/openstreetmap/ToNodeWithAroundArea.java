@@ -2,10 +2,10 @@ package pl.edu.agh.eis.poirecommender.openstreetmap;
 
 import com.google.common.base.Function;
 import pl.edu.agh.eis.poirecommender.aware.model.Location;
-import pl.edu.agh.eis.poirecommender.openstreetmap.model.AroundArea;
-import pl.edu.agh.eis.poirecommender.openstreetmap.model.Constraint;
-import pl.edu.agh.eis.poirecommender.openstreetmap.model.Node;
-import pl.edu.agh.eis.poirecommender.openstreetmap.model.Query;
+import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.AroundArea;
+import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.Constraint;
+import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.Node;
+import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.Query;
 
 /**
  * Created by Krzysztof Balon on 2014-11-09.

@@ -4,7 +4,8 @@ import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
 import pl.edu.agh.eis.poirecommender.aware.model.Location;
-import pl.edu.agh.eis.poirecommender.openstreetmap.model.*;
+import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.CompositeConstraint;
+import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.Query;
 
 import java.util.List;
 

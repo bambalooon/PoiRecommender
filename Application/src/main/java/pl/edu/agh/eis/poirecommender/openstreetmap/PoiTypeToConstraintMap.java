@@ -3,7 +3,7 @@ package pl.edu.agh.eis.poirecommender.openstreetmap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType;
-import pl.edu.agh.eis.poirecommender.openstreetmap.model.*;
+import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.*;
 
 import java.util.Map;
 

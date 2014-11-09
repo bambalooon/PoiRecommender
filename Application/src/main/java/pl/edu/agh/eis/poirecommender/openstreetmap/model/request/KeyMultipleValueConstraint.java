@@ -1,6 +1,5 @@
-package pl.edu.agh.eis.poirecommender.openstreetmap.model;
+package pl.edu.agh.eis.poirecommender.openstreetmap.model.request;
 
-import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
 
