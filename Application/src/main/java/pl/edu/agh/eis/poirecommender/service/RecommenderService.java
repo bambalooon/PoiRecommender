@@ -16,7 +16,8 @@ import pl.edu.agh.eis.poirecommender.heartdroid.adapters.*;
 import pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType;
 import pl.edu.agh.eis.poirecommender.interests.InterestPreferences;
 import pl.edu.agh.eis.poirecommender.openstreetmap.OsmExecutor;
-import pl.edu.agh.eis.poirecommender.openstreetmap.OsmRequest;
+import pl.edu.agh.eis.poirecommender.openstreetmap.OsmJsonRequest;
+import pl.edu.agh.eis.poirecommender.openstreetmap.OsmXmlRequest;
 import pl.edu.agh.eis.poirecommender.openstreetmap.PoiTypeToConstraintMap;
 
 /**
@@ -68,7 +69,7 @@ public class RecommenderService extends IntentService {
             if(recommendedPoiType != null) {
                 Log.d(TAG, "Recommendation poi type: " + recommendedPoiType.getText());
                 if(location != null) {
-                    String response = new OsmExecutor().execute(new OsmRequest(PoiTypeToConstraintMap.get(recommendedPoiType), location));
+                    String response = new OsmExecutor().execute(new OsmJsonRequest(PoiTypeToConstraintMap.get(recommendedPoiType), location));
                     Log.d(TAG, response);
                 }
                 handler.post(new Runnable() {

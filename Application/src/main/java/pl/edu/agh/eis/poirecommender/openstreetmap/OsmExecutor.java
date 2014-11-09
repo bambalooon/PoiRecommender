@@ -1,10 +1,12 @@
 package pl.edu.agh.eis.poirecommender.openstreetmap;
 
-import android.accounts.NetworkErrorException;
 import android.util.Log;
 import com.google.common.io.CharStreams;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
