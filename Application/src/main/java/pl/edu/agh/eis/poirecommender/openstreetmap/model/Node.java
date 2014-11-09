@@ -12,13 +12,12 @@ import java.util.List;
 public class Node implements Query {
     private static final char NODE_REQUEST_PART_END = ';';
     private static final String NODE_REQUEST = "node";
-    private static final Joiner CONSTRAINTS_JOINER = Joiner.on("");
     private final Area area;
-    private final List<Constraint> constraints;
+    private final Constraint constraint;
 
-    public Node(Area area, List<Constraint> constraints) {
+    public Node(Area area, Constraint constraint) {
         this.area = area;
-        this.constraints = constraints;
+        this.constraint = constraint;
     }
 
     @Override
@@ -26,12 +25,7 @@ public class Node implements Query {
         return String.format("%s%s%s%c",
                 NODE_REQUEST,
                 area.createQueryPart(),
-                FluentIterable.from(constraints).transform(new Function<Constraint, String>() {
-                    @Override
-                    public String apply(Constraint constraint) {
-                        return constraint.createQueryPart();
-                    }
-                }).join(CONSTRAINTS_JOINER),
+                constraint.createQueryPart(),
                 NODE_REQUEST_PART_END);
     }
 }
