@@ -1,5 +1,6 @@
 package pl.edu.agh.eis.poirecommender.openstreetmap.model;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -8,8 +9,12 @@ import java.util.List;
 public class CompositeConstraint {
     private final List<Constraint> constraints;
 
-    public CompositeConstraint(List<Constraint> constraints) {
-        this.constraints = constraints;
+    public CompositeConstraint() {
+        constraints = new LinkedList<>();
+    }
+
+    public void addConstraint(Constraint constraint) {
+        constraints.add(constraint);
     }
 
     public List<Constraint> getConstraints() {

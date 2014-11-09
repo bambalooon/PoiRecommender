@@ -1,43 +1,44 @@
 package pl.edu.agh.eis.poirecommender.openstreetmap.model;
 
-import heart.xtt.State;
-
-import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.Stack;
 
 /**
  * Created by Krzysztof Balon on 2014-11-09.
  */
 public class CompositeConstraintBuilder {
-    private final List<Constraint> constraints = new LinkedList<>();
-    private List<Constraint> andConstraints = new LinkedList<>();
+    private final CompositeConstraint compositeConstraint;
+    private LinkedList<Constraint> constraints;
 
     public CompositeConstraintBuilder(Constraint constraint) {
-        andConstraints.add(constraint);
+        compositeConstraint = new CompositeConstraint();
+        constraints = newList(constraint);
     }
 
     public CompositeConstraintBuilder and(Constraint constraint) {
-        andConstraints.add(constraint);
+        constraints.add(constraint);
         return this;
     }
 
     public CompositeConstraintBuilder or(Constraint constraint) {
-        constraints.add(buildCompoundConstraint());
-        andConstraints = new LinkedList<>();
-        andConstraints.add(constraint);
+        compositeConstraint.addConstraint(buildCompoundConstraint());
+        constraints = newList(constraint);
         return this;
     }
 
     public CompositeConstraint build() {
-        constraints.add(buildCompoundConstraint());
-        return new CompositeConstraint(constraints);
+        compositeConstraint.addConstraint(buildCompoundConstraint());
+        return compositeConstraint;
     }
 
     private Constraint buildCompoundConstraint() {
-        return andConstraints.size() > 1
-                ? new CompoundConstraint(andConstraints)
-                : andConstraints.get(0);
+        return constraints.size() > 1
+                ? new CompoundConstraint(constraints)
+                : constraints.getFirst();
+    }
+
+    private static LinkedList<Constraint> newList(Constraint constraint) {
+        LinkedList<Constraint> constraints = new LinkedList<>();
+        constraints.add(constraint);
+        return constraints;
     }
 }
