@@ -280,6 +280,36 @@
                     </trans>
                 </decision>
             </rule>
+            <rule id="rul_8">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="att_xtt_1"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="sim">
+                        <attref ref="att_xtt_2"/>
+                        <set>
+                            <value is="shopping"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="att_xtt_3"/>
+                        <set>
+                            <value is="still"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="att_xtt_4"/>
+                        <set>
+                            <value is="shopping-center"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
         </table>
     </xtt>
     <callbacks/>
