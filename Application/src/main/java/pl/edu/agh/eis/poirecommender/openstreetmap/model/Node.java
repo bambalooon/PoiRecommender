@@ -10,7 +10,6 @@ import java.util.List;
  * Created by Krzysztof Balon on 2014-11-08.
  */
 public class Node implements Query {
-    private static final char NODE_REQUEST_PART_END = ';';
     private static final String NODE_REQUEST = "node";
     private final Area area;
     private final Constraint constraint;
@@ -22,10 +21,9 @@ public class Node implements Query {
 
     @Override
     public String createQuery() {
-        return String.format("%s%s%s%c",
+        return String.format("%s%s%s",
                 NODE_REQUEST,
                 area.createQueryPart(),
-                constraint.createQueryPart(),
-                NODE_REQUEST_PART_END);
+                constraint.createQueryPart());
     }
 }
