@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- App -->
+    <string name="settings_name">PoiRecommender::Ustawienia</string>
+
     <!-- Menu -->
     <string name="action_settings">Ustawienia</string>
 
