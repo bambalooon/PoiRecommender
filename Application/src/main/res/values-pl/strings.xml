@@ -11,6 +11,9 @@
     <string name="profiles_tab">Profile</string>
     <string name="rules_tab">Reguły</string>
 
+    <!-- Recommendation -->
+    <string name="emptyRecommendationList">Brak rekomendacji…</string>
+
     <!-- Interests -->
     <string name="sport">Sport</string>
     <string name="shopping">Zakupy</string>

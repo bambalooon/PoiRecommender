@@ -13,6 +13,9 @@
     <string name="rules_tab">Rules</string>
     <string name="aware_tab">Aware</string>
 
+    <!-- Recommendation -->
+    <string name="emptyRecommendationList">Nothing to recommend…</string>
+
     <!-- Interests -->
     <string name="sport">Sport</string>
     <string name="shopping">Shopping</string>
