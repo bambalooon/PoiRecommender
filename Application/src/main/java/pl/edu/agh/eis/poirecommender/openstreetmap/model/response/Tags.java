@@ -58,4 +58,64 @@ public class Tags {
         this.houseName = houseName;
         this.postCode = postCode;
     }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getLayer() {
+        return layer;
+    }
+
+    public String getOpeningHours() {
+        return openingHours;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public String getWebsite() {
+        return website;
+    }
+
+    public String getOperator() {
+        return operator;
+    }
+
+    public String getAmenity() {
+        return amenity;
+    }
+
+    public String getTourism() {
+        return tourism;
+    }
+
+    public String getShop() {
+        return shop;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getHouseNumber() {
+        return houseNumber;
+    }
+
+    public String getHouseName() {
+        return houseName;
+    }
+
+    public String getPostCode() {
+        return postCode;
+    }
 }

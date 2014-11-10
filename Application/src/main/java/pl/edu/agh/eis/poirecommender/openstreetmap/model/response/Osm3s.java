@@ -14,4 +14,12 @@ public class Osm3s {
         this.timestamp = timestamp;
         this.copyright = copyright;
     }
+
+    public String getTimestamp() {
+        return timestamp;
+    }
+
+    public String getCopyright() {
+        return copyright;
+    }
 }

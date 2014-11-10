@@ -24,4 +24,24 @@ public class Element {
         this.lon = lon;
         this.tags = tags;
     }
+
+    public String getType() {
+        return type;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public double getLon() {
+        return lon;
+    }
+
+    public Tags getTags() {
+        return tags;
+    }
 }

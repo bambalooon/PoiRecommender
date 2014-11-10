@@ -21,4 +21,20 @@ public class OsmResponse {
         this.osm3s = osm3s;
         this.elements = elements;
     }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public String getGenerator() {
+        return generator;
+    }
+
+    public Osm3s getOsm3s() {
+        return osm3s;
+    }
+
+    public Element[] getElements() {
+        return elements;
+    }
 }
