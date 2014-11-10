@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- App -->
     <string name="app_name">PoiRecommender</string>
+    <string name="settings_name">PoiRecommender::Settings</string>
+
+    <!-- Menu -->
+    <string name="action_settings">Settings</string>
+
+    <!-- Tabs -->
     <string name="profiles_tab">Profiles</string>
     <string name="rules_tab">Rules</string>
-    <string name="action_settings">Settings</string>
     <string name="aware_tab">Aware</string>
 
     <!-- Interests -->

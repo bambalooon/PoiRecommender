@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <!-- Menu -->
+    <string name="action_settings">Ustawienia</string>
+
+    <!-- Tabs -->
     <string name="profiles_tab">Profile</string>
     <string name="rules_tab">Reguły</string>
-    <string name="action_settings">Ustawienia</string>
 
     <!-- Interests -->
     <string name="sport">Sport</string>
