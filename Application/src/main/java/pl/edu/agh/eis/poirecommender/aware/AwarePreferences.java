@@ -24,7 +24,7 @@ public class AwarePreferences {
     private static final int WEATHER_EXPIRATION = 6 * HOUR;
     private static final int LOCATION_EXPIRATION = 5 * MINUTE;
 
-    private SharedPreferences awarePreferences;
+    private final SharedPreferences awarePreferences;
 
     public AwarePreferences(Context context) {
         this.awarePreferences = context.getSharedPreferences(AWARE_PREFERENCES, Context.MODE_PRIVATE);
