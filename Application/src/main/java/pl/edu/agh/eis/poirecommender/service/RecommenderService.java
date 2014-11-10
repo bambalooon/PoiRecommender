@@ -70,7 +70,7 @@ public class RecommenderService extends IntentService {
                 Log.d(TAG, "Recommendation poi type: " + recommendedPoiType.getText());
                 if(location != null) {
                     OsmResponse response = new OsmExecutor().execute(new OsmJsonRequest(PoiTypeToConstraintMap.get(recommendedPoiType), location));
-                    Log.d(TAG, response.toString());
+                    Log.d(TAG, response == null ? null : response.toString());
                 }
                 handler.post(new Runnable() {
                     @Override
