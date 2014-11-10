@@ -26,6 +26,7 @@ public class WeatherAdapter extends AbstractStateAdapter<Weather> {
             .put("snow", "rainy")
             .put("mist", "rainy")
             .put("fog", "rainy")
+            .put("sky is clear", "sunny")
             .build();
 
     public WeatherAdapter(Weather weather) {
