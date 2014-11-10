@@ -1,5 +1,8 @@
 package pl.edu.agh.eis.poirecommender.openstreetmap;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.util.Log;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
@@ -25,6 +28,14 @@ public class OsmExecutor {
     private static final String REQUEST_METHOD = "GET";
     private static final int READ_TIMEOUT = 30 * 1000;
     private static final int CONNECTION_TIMEOUT = 10 * 1000;
+
+    public OsmResponse execute(OsmRequest osmRequest, Context context) {
+        ConnectivityManager connectivityManager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        final NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
+        return networkInfo != null && networkInfo.isConnectedOrConnecting()
+                ? execute(osmRequest)
+                : null;
+    }
 
     public OsmResponse execute(OsmRequest osmRequest) {
         InputStream in = null;
