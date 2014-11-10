@@ -1,4 +1,4 @@
-package pl.edu.agh.eis.poirecommender.application.main;
+package pl.edu.agh.eis.poirecommender.application.settings;
 
 import android.app.Activity;
 import android.support.v4.app.Fragment;

@@ -1,4 +1,4 @@
-package pl.edu.agh.eis.poirecommender.application.main;
+package pl.edu.agh.eis.poirecommender.application.settings;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -14,7 +14,7 @@ import pl.edu.agh.eis.poirecommender.application.interests.InterestsFragment;
 /**
  * Created by Krzysztof Balon on 2014-10-19.
  */
-public class MainActivity extends ActionBarActivity {
+public class SettingsActivity extends ActionBarActivity {
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
