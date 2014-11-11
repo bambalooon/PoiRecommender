@@ -3,13 +3,11 @@ package pl.edu.agh.eis.poirecommender.pois;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableList;
 import pl.edu.agh.eis.poirecommender.aware.model.Location;
 import pl.edu.agh.eis.poirecommender.openstreetmap.model.response.Element;
 import pl.edu.agh.eis.poirecommender.openstreetmap.model.response.OsmResponse;
-import pl.edu.agh.eis.poirecommender.pois.model.AtDistance;
-import pl.edu.agh.eis.poirecommender.pois.model.BasicPoi;
-import pl.edu.agh.eis.poirecommender.pois.model.Poi;
-import pl.edu.agh.eis.poirecommender.pois.model.PoiAtDistance;
+import pl.edu.agh.eis.poirecommender.pois.model.*;
 
 import java.util.Comparator;
 import java.util.List;
@@ -18,22 +16,23 @@ import java.util.List;
  * Created by Krzysztof Balon on 2014-11-11.
  */
 public class PoiStorage {
-    private List<PoiAtDistance> poiList;
+    private List<PoiAtDistanceWithDirection> poiList;
 
     public static PoiStorage fromOsmResponse(OsmResponse osmResponse, Location location) {
-        final List<PoiAtDistance> poiList = FluentIterable.from(osmResponse.getElements())
+        final List<PoiAtDistanceWithDirection> poiList = FluentIterable.from(osmResponse.getElements())
                 .transform(OSM_ELEMENT_TO_BASIC_POI)
                 .transform(new AttachLocationToPoi(location))
+                .transform(POI_AT_DISTANCE_TO_POI_AT_DISTANCE_WITH_DIRECTION)
                 .filter(HAS_NAME_FILTER)
                 .toSortedList(DISTANCE_COMPARATOR);
         return new PoiStorage(poiList);
     }
 
-    public PoiStorage(List<PoiAtDistance> poiList) {
+    public PoiStorage(List<PoiAtDistanceWithDirection> poiList) {
         this.poiList = poiList;
     }
 
-    public List<PoiAtDistance> getPoiList() {
+    public List<PoiAtDistanceWithDirection> getPoiList() {
         return poiList;
     }
 
@@ -55,6 +54,13 @@ public class PoiStorage {
             return BasicPoi.fromOsmElement(element);
         }
     };
+    private static final Function<PoiAtDistance, PoiAtDistanceWithDirection> POI_AT_DISTANCE_TO_POI_AT_DISTANCE_WITH_DIRECTION =
+            new Function<PoiAtDistance, PoiAtDistanceWithDirection>() {
+                @Override
+                public PoiAtDistanceWithDirection apply(PoiAtDistance poi) {
+                    return new PoiAtDistanceWithDirection(poi);
+                }
+            };
     private static final Predicate<Poi> HAS_NAME_FILTER = new Predicate<Poi>() {
         @Override
         public boolean apply(Poi poi) {
