@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.*;
 import android.util.Log;
 import android.widget.Toast;
+import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
@@ -19,7 +20,13 @@ import pl.edu.agh.eis.poirecommender.openstreetmap.OsmExecutor;
 import pl.edu.agh.eis.poirecommender.openstreetmap.OsmJsonRequest;
 import pl.edu.agh.eis.poirecommender.openstreetmap.OsmRequest;
 import pl.edu.agh.eis.poirecommender.openstreetmap.PoiTypeToConstraintMap;
+import pl.edu.agh.eis.poirecommender.openstreetmap.model.response.Element;
 import pl.edu.agh.eis.poirecommender.openstreetmap.model.response.OsmResponse;
+import pl.edu.agh.eis.poirecommender.pois.PoiManager;
+import pl.edu.agh.eis.poirecommender.pois.model.BasicPoi;
+import pl.edu.agh.eis.poirecommender.pois.model.PoiAtDistance;
+
+import java.util.List;
 
 /**
  * Created by Krzysztof Balon on 2014-10-30.
@@ -32,6 +39,7 @@ public class RecommenderService extends IntentService {
     private AwarePreferences awarePreferences;
     private InterestPreferences interestPreferences;
     private HeartManager heartManager;
+    private PoiManager poiManager;
 
     public static void notifyRecommender(Context context) {
         Intent notificationIntent = new Intent(context, RecommenderService.class);
@@ -50,6 +58,7 @@ public class RecommenderService extends IntentService {
         awarePreferences = new AwarePreferences(getApplicationContext());
         interestPreferences = new InterestPreferences(getApplicationContext());
         heartManager = new HeartManager(getApplicationContext());
+        poiManager = new PoiManager(getApplicationContext());
     }
 
     @Override
@@ -66,13 +75,24 @@ public class RecommenderService extends IntentService {
             final PoiType recommendedPoiType = heartManager.inferencePreferredPoiType(stateElements)
                     .getPoiType();
 
-            Location location = awarePreferences.getLocation();
+            final Location location = awarePreferences.getLocation();
             if(recommendedPoiType != null) {
                 Log.d(TAG, "Recommendation poi type: " + recommendedPoiType.getText());
                 if(location != null) {
                     final OsmRequest osmRequest = new OsmJsonRequest(PoiTypeToConstraintMap.get(recommendedPoiType), location);
-                    OsmResponse response = new OsmExecutor().execute(osmRequest, getApplicationContext());
-                    Log.d(TAG, response == null ? "null" : response.toString());
+                    OsmResponse osmResponse = new OsmExecutor().execute(osmRequest, getApplicationContext());
+                    if(osmResponse != null) {
+                        final List<PoiAtDistance> poiList = FluentIterable.from(osmResponse.getElements())
+                                .transform(new Function<Element, PoiAtDistance>() {
+                                    @Override
+                                    public PoiAtDistance apply(Element poiElement) {
+                                        return new PoiAtDistance(BasicPoi.fromOsmElement(poiElement), location);
+                                    }
+                                }).toList();
+                        this.poiManager.setPoiList(poiList);
+                        Log.d(TAG, "PoiList size: " + poiList.size());
+                        Log.d(TAG, osmResponse.toString());
+                    }
                 }
                 handler.post(new Runnable() {
                     @Override
