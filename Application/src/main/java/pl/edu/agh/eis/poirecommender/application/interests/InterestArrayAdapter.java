@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.google.common.base.Preconditions;
 import pl.edu.agh.eis.poirecommender.R;
 import pl.edu.agh.eis.poirecommender.interests.InterestPreferences;
+import pl.edu.agh.eis.poirecommender.interests.InterestStorage;
 import pl.edu.agh.eis.poirecommender.interests.model.Interest;
 import pl.edu.agh.eis.poirecommender.service.RecommenderService;
 
@@ -20,17 +21,17 @@ import java.util.List;
  */
 public class InterestArrayAdapter extends ArrayAdapter<Interest> {
     private final InterestPreferences interestPreferences;
-    private final List<Interest> interestList;
+    private final InterestStorage interestStorage;
 
     public static InterestArrayAdapter newInstance(Context context) {
         InterestPreferences interestPreferences = new InterestPreferences(context);
-        return new InterestArrayAdapter(context, interestPreferences, interestPreferences.getInterests());
+        return new InterestArrayAdapter(context, interestPreferences, interestPreferences.getInterestStorage());
     }
 
-    protected InterestArrayAdapter(Context context, InterestPreferences interestPreferences, List<Interest> interests) {
-        super(context, R.layout.interest_row, interests);
+    protected InterestArrayAdapter(Context context, InterestPreferences interestPreferences, InterestStorage interestStorage) {
+        super(context, R.layout.interest_row, interestStorage.getInterests());
         this.interestPreferences = interestPreferences;
-        this.interestList = interests;
+        this.interestStorage = interestStorage;
     }
 
     @Override
@@ -39,7 +40,7 @@ public class InterestArrayAdapter extends ArrayAdapter<Interest> {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.interest_row, parent, false);
         }
-        final Interest interest = interestList.get(position);
+        final Interest interest = interestStorage.getInterests().get(position);
         SeekBar certaintyBar = (SeekBar) convertView.findViewById(R.id.certainty_bar);
         certaintyBar.setProgress(interest.getCertainty());
         certaintyBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
@@ -50,8 +51,9 @@ public class InterestArrayAdapter extends ArrayAdapter<Interest> {
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
                 interest.setCertainty(seekBar.getProgress());
+                interestStorage.modifyInterest(interest);
                 Preconditions.checkState(
-                        interestPreferences.modifyInterest(interest),
+                        interestPreferences.setInterestStorage(interestStorage),
                         "Interest preference modification fail!");
                 RecommenderService.notifyRecommender(getContext());
             }

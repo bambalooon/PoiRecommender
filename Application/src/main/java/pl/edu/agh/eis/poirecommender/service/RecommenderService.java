@@ -62,7 +62,7 @@ public class RecommenderService extends IntentService {
             final ImmutableList<WithStateElement> stateElements = ImmutableList.of(
                     new ActivityAdapter(awarePreferences.getActivity()),
                     new WeatherAdapter(awarePreferences.getWeather()),
-                    new InterestListAdapter(interestPreferences.getInterests()));
+                    new InterestListAdapter(interestPreferences.getInterestStorage().getInterests()));
 
             final PoiType recommendedPoiType = heartManager.inferencePreferredPoiType(stateElements)
                     .getPoiType();
@@ -84,6 +84,6 @@ public class RecommenderService extends IntentService {
     private void debugInfo() {
         Log.d(TAG, awarePreferences.areAllPreferencesSet() ? "All preferences set!" : "Not all preferences set...");
         Log.d(TAG, "\n" + awarePreferences.getActivity() + "\n" + awarePreferences.getWeather() + "\n" + awarePreferences.getLocation());
-        Log.d(TAG, FluentIterable.from(interestPreferences.getInterests()).join(Joiner.on("; ")));
+        Log.d(TAG, FluentIterable.from(interestPreferences.getInterestStorage().getInterests()).join(Joiner.on("; ")));
     }
 }
