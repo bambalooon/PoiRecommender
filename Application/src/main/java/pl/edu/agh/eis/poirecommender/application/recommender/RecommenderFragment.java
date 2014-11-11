@@ -7,11 +7,10 @@ import android.view.*;
 import android.widget.ArrayAdapter;
 import pl.edu.agh.eis.poirecommender.R;
 import pl.edu.agh.eis.poirecommender.application.settings.SettingsActivity;
-import pl.edu.agh.eis.poirecommender.pois.model.PoiAtDistance;
 
 
 public class RecommenderFragment extends ListFragment {
-    private ArrayAdapter<PoiAtDistance> poiArrayAdapter;
+    private ArrayAdapter<?> poiArrayAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
