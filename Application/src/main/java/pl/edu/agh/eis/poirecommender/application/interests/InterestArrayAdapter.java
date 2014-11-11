@@ -24,13 +24,13 @@ public class InterestArrayAdapter extends ArrayAdapter<Interest> {
 
     public static InterestArrayAdapter newInstance(Context context) {
         InterestPreferences interestPreferences = new InterestPreferences(context);
-        return new InterestArrayAdapter(context, interestPreferences);
+        return new InterestArrayAdapter(context, interestPreferences, interestPreferences.getInterests());
     }
 
-    protected InterestArrayAdapter(Context context, InterestPreferences interestPreferences) {
-        super(context, R.layout.interest_row, interestPreferences.getInterests());
+    protected InterestArrayAdapter(Context context, InterestPreferences interestPreferences, List<Interest> interests) {
+        super(context, R.layout.interest_row, interests);
         this.interestPreferences = interestPreferences;
-        this.interestList = interestPreferences.getInterests();
+        this.interestList = interests;
     }
 
     @Override
