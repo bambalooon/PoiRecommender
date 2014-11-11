@@ -80,7 +80,7 @@ public class Location implements SignificantlyDifferent<Location> {
                 && calculateAproxDistance(latitude, other.getLatitude(), longitude, getLongitude()) >= SIGNIFICANTLY_GREAT_DISTANCE;
     }
 
-    private double calculateAproxDistance(double lat1, double lat2, double lon1, double lon2) {
+    public static double calculateAproxDistance(double lat1, double lat2, double lon1, double lon2) {
         return sqrt(pow(lat1 - lat2, 2) + pow(lon1 - lon2, 2));
     }
 }
