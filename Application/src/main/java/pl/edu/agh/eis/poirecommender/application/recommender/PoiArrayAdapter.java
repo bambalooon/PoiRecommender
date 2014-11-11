@@ -8,8 +8,10 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 import pl.edu.agh.eis.poirecommender.R;
 import pl.edu.agh.eis.poirecommender.pois.PoiManager;
+import pl.edu.agh.eis.poirecommender.pois.PoiStorage;
 import pl.edu.agh.eis.poirecommender.pois.model.PoiAtDistance;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -23,12 +25,18 @@ public class PoiArrayAdapter extends ArrayAdapter<PoiAtDistance> {
     public PoiArrayAdapter(Context context) {
         super(context, R.layout.poi_row);
         this.poiManager = new PoiManager(context);
-        this.poiList = poiManager.getPoiList();
+        PoiStorage poiStorage = poiManager.getPoiStorage();
+        this.poiList = poiStorage == null
+                ? Collections.<PoiAtDistance>emptyList()
+                : poiStorage.getPoiList();
     }
 
     @Override
     public void notifyDataSetChanged() {
-        this.poiList = poiManager.getPoiList();
+        PoiStorage poiStorage = poiManager.getPoiStorage();
+        this.poiList = poiStorage == null
+                ? Collections.<PoiAtDistance>emptyList()
+                : poiStorage.getPoiList();
         super.notifyDataSetChanged();
     }
 

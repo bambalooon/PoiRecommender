@@ -13,7 +13,7 @@ import static pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType.*;
  * Created by Krzysztof Balon on 2014-11-09.
  */
 public class PoiTypeToConstraintMap {
-    public static CompositeConstraint get(PoiType poiType) {
+    public static CompositeConstraint getConstraint(PoiType poiType) {
         return MAP.get(poiType);
     }
     private static final Map<PoiType, CompositeConstraint> MAP = ImmutableMap.<PoiType, CompositeConstraint>builder()
