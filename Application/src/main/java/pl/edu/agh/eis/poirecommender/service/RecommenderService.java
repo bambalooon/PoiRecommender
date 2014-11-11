@@ -3,17 +3,21 @@ package pl.edu.agh.eis.poirecommender.service;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
-import android.os.*;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
+import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import pl.edu.agh.eis.poirecommender.aware.AwarePreferences;
 import pl.edu.agh.eis.poirecommender.aware.model.Location;
 import pl.edu.agh.eis.poirecommender.heartdroid.HeartManager;
-import pl.edu.agh.eis.poirecommender.heartdroid.adapters.*;
+import pl.edu.agh.eis.poirecommender.heartdroid.adapters.ActivityAdapter;
+import pl.edu.agh.eis.poirecommender.heartdroid.adapters.InterestListAdapter;
+import pl.edu.agh.eis.poirecommender.heartdroid.adapters.WeatherAdapter;
+import pl.edu.agh.eis.poirecommender.heartdroid.adapters.WithStateElement;
 import pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType;
 import pl.edu.agh.eis.poirecommender.interests.InterestPreferences;
 import pl.edu.agh.eis.poirecommender.openstreetmap.OsmExecutor;
@@ -87,6 +91,12 @@ public class RecommenderService extends IntentService {
                                     @Override
                                     public PoiAtDistance apply(Element poiElement) {
                                         return new PoiAtDistance(BasicPoi.fromOsmElement(poiElement), location);
+                                    }
+                                }).filter(new Predicate<PoiAtDistance>() {
+                                    @Override
+                                    public boolean apply(PoiAtDistance poi) {
+                                        final String poiName = poi.getName();
+                                        return poiName != null && !poiName.trim().isEmpty();
                                     }
                                 }).toList();
                         this.poiManager.setPoiList(poiList);
