@@ -30,7 +30,6 @@ public class PoiAtDistance implements Poi, AtDistance {
 
     @Override
     public double getDistance() {
-        return Location.degreesToKiloMeters(
-                Location.calculateAproxDistance(location.getLatitude(), poi.getLatitude(), location.getLongitude(), poi.getLongitude()));
+        return location.getDistanceToPointInMeters(poi.getLatitude(), poi.getLongitude());
     }
 }

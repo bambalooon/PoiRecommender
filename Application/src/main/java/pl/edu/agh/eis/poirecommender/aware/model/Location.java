@@ -12,7 +12,7 @@ import static java.lang.Math.sqrt;
 public class Location implements SignificantlyDifferent<Location> {
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
     private static final double SIGNIFICANTLY_GREAT_DISTANCE = 0.005;
-    public static final double DEGREES_TO_KM_FACTOR = 111.32;
+    private static final double DEGREES_TO_KM_FACTOR = 111.32;
 
     private final long timestamp;
     private final double latitude;
@@ -78,14 +78,22 @@ public class Location implements SignificantlyDifferent<Location> {
         return other == null
                 ? true
                 : timestamp != other.getTimestamp()
-                && calculateAproxDistance(latitude, other.getLatitude(), longitude, getLongitude()) >= SIGNIFICANTLY_GREAT_DISTANCE;
+                && getDistanceToPointInDegrees(other.getLatitude(), other.getLongitude()) >= SIGNIFICANTLY_GREAT_DISTANCE;
     }
 
-    public static double calculateAproxDistance(double lat1, double lat2, double lon1, double lon2) {
+    public double getDistanceToPointInDegrees(double latitude, double longitude) {
+        return calculateApproxDistance(getLatitude(), latitude, getLongitude(), longitude);
+    }
+
+    public double getDistanceToPointInMeters(double latitude, double longitude) {
+        return degreesToKiloMeters(getDistanceToPointInDegrees(latitude, longitude));
+    }
+
+    private static double calculateApproxDistance(double lat1, double lat2, double lon1, double lon2) {
         return sqrt(pow(lat1 - lat2, 2) + pow(lon1 - lon2, 2));
     }
-    
-    public static double degreesToKiloMeters(double degree) {
+
+    private static double degreesToKiloMeters(double degree) {
         return degree * DEGREES_TO_KM_FACTOR;
     }
 }
