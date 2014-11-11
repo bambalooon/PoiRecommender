@@ -12,6 +12,7 @@ import static java.lang.Math.sqrt;
 public class Location implements SignificantlyDifferent<Location> {
     private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("HH:mm:ss");
     private static final double SIGNIFICANTLY_GREAT_DISTANCE = 0.005;
+    public static final double DEGREES_TO_KM_FACTOR = 111.32;
 
     private final long timestamp;
     private final double latitude;
@@ -82,5 +83,9 @@ public class Location implements SignificantlyDifferent<Location> {
 
     public static double calculateAproxDistance(double lat1, double lat2, double lon1, double lon2) {
         return sqrt(pow(lat1 - lat2, 2) + pow(lon1 - lon2, 2));
+    }
+    
+    public static double degreesToKiloMeters(double degree) {
+        return degree * DEGREES_TO_KM_FACTOR;
     }
 }
