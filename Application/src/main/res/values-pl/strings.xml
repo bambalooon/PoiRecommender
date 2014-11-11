@@ -6,6 +6,7 @@
 
     <!-- Menu -->
     <string name="action_settings">Ustawienia</string>
+    <string name="action_refresh">Odśwież</string>
 
     <!-- Tabs -->
     <string name="profiles_tab">Profile</string>
