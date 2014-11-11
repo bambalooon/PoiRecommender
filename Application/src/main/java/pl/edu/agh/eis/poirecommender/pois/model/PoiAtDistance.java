@@ -7,10 +7,10 @@ import pl.edu.agh.eis.poirecommender.aware.model.Location;
  */
 public class PoiAtDistance implements Poi, AtDistance {
     private final BasicPoi poi;
-    private final Location location;
+    private final Location currentLocation;
     public PoiAtDistance(BasicPoi poi, Location location) {
         this.poi = poi;
-        this.location = location;
+        this.currentLocation = location;
     }
 
     @Override
@@ -30,6 +30,10 @@ public class PoiAtDistance implements Poi, AtDistance {
 
     @Override
     public double getDistance() {
-        return location.getDistanceToPointInMeters(poi.getLatitude(), poi.getLongitude());
+        return currentLocation.getDistanceToPointInMeters(poi.getLatitude(), poi.getLongitude());
+    }
+
+    public Location getCurrentLocation() {
+        return currentLocation;
     }
 }
