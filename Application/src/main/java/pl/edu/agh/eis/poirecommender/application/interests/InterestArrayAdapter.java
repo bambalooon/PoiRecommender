@@ -51,7 +51,7 @@ public class InterestArrayAdapter extends ArrayAdapter<Interest> {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 interest.setCertainty(seekBar.getProgress());
                 Preconditions.checkState(
-                        interestPreferences.modifyCertainty(interest),
+                        interestPreferences.modifyInterest(interest),
                         "Interest preference modification fail!");
                 RecommenderService.notifyRecommender(getContext());
             }
