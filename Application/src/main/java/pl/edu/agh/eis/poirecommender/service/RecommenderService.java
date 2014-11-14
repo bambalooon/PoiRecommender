@@ -74,7 +74,7 @@ public class RecommenderService extends IntentService {
                 final OsmRequest osmRequest = new OsmJsonRequest(PoiTypeToConstraintMap.getConstraint(recommendedPoiType), location);
                 OsmResponse osmResponse = new OsmExecutor().execute(osmRequest, getApplicationContext());
                 if(osmResponse != null) {
-                    final PoiStorage poiStorage = PoiStorage.fromOsmResponse(osmResponse, location);
+                    final PoiStorage poiStorage = PoiStorage.fromOsmResponse(osmResponse);
                     this.poiManager.setPoiStorage(poiStorage);
                 }
             }

@@ -6,9 +6,9 @@ import pl.edu.agh.eis.poirecommender.aware.model.Location;
  * Created by Krzysztof Balon on 2014-11-11.
  */
 public class PoiAtDistance implements Poi, AtDistance {
-    private final BasicPoi poi;
+    private final Poi poi;
     private final Location currentLocation;
-    public PoiAtDistance(BasicPoi poi, Location location) {
+    public PoiAtDistance(Poi poi, Location location) {
         this.poi = poi;
         this.currentLocation = location;
     }
