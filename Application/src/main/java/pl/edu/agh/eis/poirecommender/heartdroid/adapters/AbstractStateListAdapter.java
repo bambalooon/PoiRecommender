@@ -2,10 +2,10 @@ package pl.edu.agh.eis.poirecommender.heartdroid.adapters;
 
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
+import heart.StateElement;
 import heart.alsvfd.SetValue;
 import heart.alsvfd.SimpleSymbolic;
 import heart.alsvfd.Value;
-import heart.xtt.StateElement;
 
 import java.util.List;
 

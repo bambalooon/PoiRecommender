@@ -1,9 +1,9 @@
 package pl.edu.agh.eis.poirecommender.heartdroid.adapters;
 
+import heart.StateElement;
 import heart.alsvfd.Null;
 import heart.alsvfd.SimpleSymbolic;
 import heart.alsvfd.Value;
-import heart.xtt.StateElement;
 
 /**
  * Created by Krzysztof Balon on 2014-11-06.
