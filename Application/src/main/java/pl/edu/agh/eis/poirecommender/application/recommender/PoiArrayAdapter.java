@@ -34,12 +34,12 @@ public class PoiArrayAdapter extends ArrayAdapter<PoiAtDistanceWithDirection> {
         super(context, R.layout.poi_row);
         this.awarePreferences = new AwarePreferences(context);
         this.poiManager = new PoiManager(context);
-        this.poiList = setUpPoiList();
+        updatePoiList();
     }
 
     @Override
     public void notifyDataSetChanged() {
-        this.poiList = setUpPoiList();
+        updatePoiList();
         super.notifyDataSetChanged();
     }
 
@@ -67,10 +67,10 @@ public class PoiArrayAdapter extends ArrayAdapter<PoiAtDistanceWithDirection> {
         return convertView;
     }
 
-    private List<PoiAtDistanceWithDirection> setUpPoiList() {
+    private void updatePoiList() {
         final PoiStorage poiStorage = poiManager.getPoiStorage();
         final Location location = awarePreferences.getLocation();
-        return poiStorage == null || location == null
+        this.poiList = poiStorage == null || location == null
                 ? Collections.<PoiAtDistanceWithDirection>emptyList()
                 : FluentIterable.from(poiStorage.getPoiList())
                     .transform(new AttachLocationToPoi(location))

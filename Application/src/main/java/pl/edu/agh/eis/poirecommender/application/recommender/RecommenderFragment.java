@@ -41,13 +41,13 @@ public class RecommenderFragment extends ListFragment {
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
-        poiArrayAdapter.notifyDataSetChanged();
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_recommender, container, false);
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_recommender, container, false);
+    public void onResume() {
+        super.onResume();
+        poiArrayAdapter.notifyDataSetChanged();
     }
 }
