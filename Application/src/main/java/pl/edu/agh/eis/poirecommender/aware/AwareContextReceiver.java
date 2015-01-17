@@ -28,7 +28,7 @@ public class AwareContextReceiver extends BroadcastReceiver {
             case ACTIVITY_RECOGNITION_ACTION:
                 final Activity activity = new Activity(
                         intent.getStringExtra("activity"),
-                        intent.getIntExtra("confidence", DetectedActivity.UNKNOWN)
+                        intent.getIntExtra("confidence", 0)
                 );
                 AwareDebugContext.getInstance().addAwareNotification(activity);
                 awareContext.updateActivity(activity);
