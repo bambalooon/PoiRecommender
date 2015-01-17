@@ -20,8 +20,8 @@ import java.util.List;
  * Created by Krzysztof Balon on 2014-11-08.
  */
 public class HeartManager {
-    private static final String RECOMMENDATION_TABLE_NAME = "Recommendations";
-    private static final String[] XTT_TABLE_NAMES = new String[] { RECOMMENDATION_TABLE_NAME };
+    public static final String RECOMMENDATIONS_TABLE_NAME = "RECOMMENDATIONS";
+    private static final String[] XTT_TABLE_NAMES = new String[] {"WIND_STR", "PRECIP", "TEMPERATURE", "KIND_OF_SPACE", RECOMMENDATIONS_TABLE_NAME};
     private static final String POI_ATTRIBUTE_NAME = "poi";
     private HeartPreferences heartPreferences;
 

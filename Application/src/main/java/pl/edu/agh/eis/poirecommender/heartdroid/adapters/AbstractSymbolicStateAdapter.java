@@ -9,10 +9,10 @@ import heart.alsvfd.Value;
  * Created by Krzysztof Balon on 2014-11-06.
  * @param <T> type adapted from
  */
-public abstract class AbstractStateAdapter<T> implements WithStateElement {
+public abstract class AbstractSymbolicStateAdapter<T> implements WithStateElement {
     private final T adaptee;
 
-    protected AbstractStateAdapter(T adaptee) {
+    protected AbstractSymbolicStateAdapter(T adaptee) {
         this.adaptee = adaptee;
     }
 

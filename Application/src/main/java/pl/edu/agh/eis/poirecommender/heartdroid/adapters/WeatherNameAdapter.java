@@ -9,7 +9,7 @@ import java.util.Map;
 /**
  * Created by Krzysztof Balon on 2014-11-06.
  */
-public class WeatherAdapter extends AbstractStateAdapter<Weather> {
+public class WeatherNameAdapter extends AbstractSymbolicStateAdapter<Weather> {
     private static final String WEATHER_ATTRIBUTE = "weather";
     private static final long HOUR = 3600000L;
     private static final float FORECAST_OLDEST = 6;
@@ -29,7 +29,7 @@ public class WeatherAdapter extends AbstractStateAdapter<Weather> {
             .put("sky is clear", "sunny")
             .build();
 
-    public WeatherAdapter(Weather weather) {
+    public WeatherNameAdapter(Weather weather) {
         super(weather);
     }
 

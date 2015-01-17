@@ -10,10 +10,7 @@ import com.google.common.collect.ImmutableList;
 import pl.edu.agh.eis.poirecommender.aware.AwarePreferences;
 import pl.edu.agh.eis.poirecommender.aware.model.Location;
 import pl.edu.agh.eis.poirecommender.heartdroid.HeartManager;
-import pl.edu.agh.eis.poirecommender.heartdroid.adapters.ActivityAdapter;
-import pl.edu.agh.eis.poirecommender.heartdroid.adapters.InterestListAdapter;
-import pl.edu.agh.eis.poirecommender.heartdroid.adapters.WeatherAdapter;
-import pl.edu.agh.eis.poirecommender.heartdroid.adapters.WithStateElement;
+import pl.edu.agh.eis.poirecommender.heartdroid.adapters.*;
 import pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType;
 import pl.edu.agh.eis.poirecommender.interests.InterestPreferences;
 import pl.edu.agh.eis.poirecommender.openstreetmap.OsmExecutor;
@@ -23,6 +20,8 @@ import pl.edu.agh.eis.poirecommender.openstreetmap.PoiTypeToConstraintMap;
 import pl.edu.agh.eis.poirecommender.openstreetmap.model.response.OsmResponse;
 import pl.edu.agh.eis.poirecommender.pois.PoiManager;
 import pl.edu.agh.eis.poirecommender.pois.PoiStorage;
+
+import java.util.Date;
 
 /**
  * Created by Krzysztof Balon on 2014-10-30.
@@ -61,7 +60,10 @@ public class RecommenderService extends IntentService {
             debugInfo();
             final ImmutableList<WithStateElement> stateElements = ImmutableList.of(
                     new ActivityAdapter(awarePreferences.getActivity()),
-                    new WeatherAdapter(awarePreferences.getWeather()),
+                    new WeatherRainAdapter(awarePreferences.getWeather()),
+                    new WeatherWindAdapter(awarePreferences.getWeather()),
+                    new WeatherTemperatureAdapter(awarePreferences.getWeather()),
+                    new TimeHourAdapter(new Date()),
                     new InterestListAdapter(interestPreferences.getInterestStorage().getInterests()));
 
             final PoiType recommendedPoiType = heartManager.inferencePreferredPoiType(stateElements)
