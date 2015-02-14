@@ -2,6 +2,7 @@
 <resources>
 
     <!-- App -->
+    <string name="app_name">PoiRecommender</string>
     <string name="settings_name">PoiRecommender::Ustawienia</string>
 
     <!-- Menu -->
@@ -11,6 +12,7 @@
     <!-- Tabs -->
     <string name="profiles_tab">Profile</string>
     <string name="rules_tab">Reguły</string>
+    <string name="aware_tab">Aware</string>
 
     <!-- Recommendation -->
     <string name="emptyRecommendationList">Brak rekomendacji…</string>
