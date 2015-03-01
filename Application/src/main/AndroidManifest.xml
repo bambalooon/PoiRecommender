@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
     package="pl.edu.agh.eis.poirecommender" >
 
+    <!--suppress AndroidDomInspection -->
+    <uses-permission tools:node="removeAll"/>
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
+    <uses-feature tools:node="removeAll"/>
+    
+    <!--suppress AndroidDomInspection -->
+    <permission tools:node="removeAll"/>
+    <!-- TODO: after AwareFramework upgrade - merge option to remove -->
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        tools:node="replace">
 
         <activity
                 android:name=".application.recommender.RecommenderActivity"
