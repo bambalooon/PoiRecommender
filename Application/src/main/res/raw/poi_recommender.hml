@@ -88,7 +88,7 @@
         </type>
         <type id="tpe_11" name="double_pos" base="numeric">
             <domain>
-                <value from="0.000" to="2147483647.000"/>
+                <value from="-2147483647.000" to="2147483647.000"/>
             </domain>
         </type>
     </types>
