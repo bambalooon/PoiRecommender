@@ -3,7 +3,6 @@ package pl.edu.agh.eis.poirecommender.aware;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
-import com.google.android.gms.location.DetectedActivity;
 import pl.edu.agh.eis.poirecommender.aware.model.Activity;
 import pl.edu.agh.eis.poirecommender.aware.model.Location;
 import pl.edu.agh.eis.poirecommender.aware.model.Weather;

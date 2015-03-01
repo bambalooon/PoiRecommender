@@ -1,11 +1,3 @@
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:1.0.0'
-    }
-}
 apply plugin: 'com.android.application'
 
 repositories {
@@ -18,13 +10,13 @@ repositories {
 }
 
 android {
-    compileSdkVersion 19
-    buildToolsVersion "20.0.0"
+    compileSdkVersion 21
+    buildToolsVersion "21.1.2"
 
     defaultConfig {
         applicationId "pl.edu.agh.eis.poirecommender"
-        minSdkVersion 9
-        targetSdkVersion 19
+        minSdkVersion 10
+        targetSdkVersion 21
         versionCode 1
         versionName "0.1"
     }
@@ -42,12 +34,11 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:20.0.0'
-    compile 'com.android.support:support-v4:21.0.0'
+    compile 'com.android.support:appcompat-v7:21.0.3'
+    compile 'com.android.support:gridlayout-v7:21.0.3' //to remove
     compile 'heart:heartdroid:0.9.0'
-    compile 'com.google.android.gms:play-services:6.1.11'
     compile 'com.google.guava:guava:18.0'
     compile 'com.google.code.gson:gson:2.3'
-    compile 'com.aware:awareframework:2.0@aar'
+    compile 'com.awareframework:aware-cdm:0.1@aar'
+    compile 'com.awareframework:aware-core:3.2.8@aar' //to remove
 }
