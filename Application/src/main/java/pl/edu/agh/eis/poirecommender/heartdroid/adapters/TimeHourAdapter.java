@@ -7,7 +7,7 @@ import java.util.Date;
  * Created by Krzysztof Balon on 2015-01-17.
  */
 public class TimeHourAdapter extends AbstractNumericStateAdapter<Date> {
-    private static final String HOUR_ATTRIBUTE = "hour";
+    public static final String HOUR_ATTRIBUTE = "hour";
     private static final float TIME_CERTAINTY = 1.0f;
 
     public TimeHourAdapter(Date adaptee) {
