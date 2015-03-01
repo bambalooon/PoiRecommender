@@ -3,11 +3,14 @@
 
     <!-- App -->
     <string name="app_name">PoiRecommender</string>
-    <string name="settings_name">PoiRecommender::Ustawienia</string>
+    <string name="settings_name">Ustawienia</string>
 
     <!-- Menu -->
     <string name="action_settings">Ustawienia</string>
     <string name="action_refresh">Odśwież</string>
+    <string name="action_add">Dodaj</string>
+    <string name="action_save">Zapisz</string>
+    <string name="action_cancel">Anuluj</string>
 
     <!-- Tabs -->
     <string name="profiles_tab">Profile</string>
@@ -24,5 +27,12 @@
     <string name="sightseeing">Zwiedzanie</string>
     <string name="eating">Jedzenie</string>
     <string name="entertainment">Rozrywka</string>
+
+    <!-- Dialogs -->
+    <string name="ok">ok</string>
+    <string name="select_single_item_dialog">Wybierz jeden element z listy:</string>
+    <string name="select_items_dialog">Wybierz elementy z listy:</string>
+    <string name="enter_number_dialog">Wprowadź liczbę:</string>
+    <string name="enter_range_dialog">Wprowadź zakres:</string>
 
 </resources>

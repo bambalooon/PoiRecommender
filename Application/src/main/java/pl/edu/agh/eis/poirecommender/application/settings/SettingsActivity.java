@@ -7,7 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import pl.edu.agh.eis.poirecommender.R;
-import pl.edu.agh.eis.poirecommender.application.StaticFragment;
+import pl.edu.agh.eis.poirecommender.application.rules.RulesFragment;
 import pl.edu.agh.eis.poirecommender.debug.AwareFragment;
 import pl.edu.agh.eis.poirecommender.application.interests.InterestsFragment;
 
@@ -20,7 +20,7 @@ public class SettingsActivity extends ActionBarActivity {
     private ViewPager mViewPager;
     private final Fragment[] fragments = {
             InterestsFragment.newInstance(R.string.profiles_tab),
-            StaticFragment.newInstance(R.layout.rules_fragment_main, R.string.rules_tab),
+            RulesFragment.newInstance(R.string.rules_tab),
             AwareFragment.newInstance(R.string.aware_tab)
     };
 
