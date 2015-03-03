@@ -1,10 +1,10 @@
 package pl.edu.agh.eis.poirecommender.application.recommender;
 
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.ActionBarActivity;
 import pl.edu.agh.eis.poirecommender.R;
 
-public class RecommenderActivity extends FragmentActivity {
+public class RecommenderActivity extends ActionBarActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
