@@ -16,7 +16,6 @@ import java.util.List;
  * Created by Krzysztof Balon on 2014-10-26.
  */
 public class InterestsFragment extends ListFragment implements Entitled {
-    private ArrayAdapter<Interest> interestArrayAdapter;
 
     public static InterestsFragment newInstance(int title) {
         InterestsFragment fragment = new InterestsFragment();
@@ -29,8 +28,7 @@ public class InterestsFragment extends ListFragment implements Entitled {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        interestArrayAdapter = InterestArrayAdapter.newInstance(getActivity().getApplicationContext());
-        setListAdapter(interestArrayAdapter);
+        setListAdapter(InterestArrayAdapter.newInstance(getActivity().getApplicationContext()));
     }
 
     @Override
