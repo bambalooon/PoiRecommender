@@ -32,7 +32,7 @@ public class RecommenderFragment extends ListFragment {
                 poiArrayAdapter.notifyDataSetChanged();
                 return true;
             case R.id.action_settings:
-                Intent intent = new Intent(getActivity(), SettingsActivity.class);
+                Intent intent = new Intent(getActivity().getApplicationContext(), SettingsActivity.class);
                 startActivity(intent);
                 return true;
             default:

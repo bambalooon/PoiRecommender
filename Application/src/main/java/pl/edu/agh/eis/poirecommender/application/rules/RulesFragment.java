@@ -1,5 +1,6 @@
 package pl.edu.agh.eis.poirecommender.application.rules;
 
+import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -40,8 +41,9 @@ public class RulesFragment extends ListFragment implements Entitled {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        ruleArrayAdapter = new RuleArrayAdapter(getActivity());
-        heartPreferences = new HeartPreferences(getActivity());
+        Context context = getActivity().getApplicationContext();
+        ruleArrayAdapter = new RuleArrayAdapter(context);
+        heartPreferences = new HeartPreferences(context);
         setListAdapter(ruleArrayAdapter);
     }
 

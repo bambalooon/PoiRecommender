@@ -35,7 +35,7 @@ public class SettingsActivity extends ActionBarActivity {
         final ActionBar actionBar = getSupportActionBar();
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), this, fragments);
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), getApplicationContext(), fragments);
 
         mViewPager = (ViewPager) findViewById(R.id.pager);
         mViewPager.setAdapter(mSectionsPagerAdapter);

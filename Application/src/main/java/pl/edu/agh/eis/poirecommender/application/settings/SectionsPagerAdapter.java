@@ -1,6 +1,6 @@
 package pl.edu.agh.eis.poirecommender.application.settings;
 
-import android.app.Activity;
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -14,12 +14,12 @@ import java.util.Locale;
  * @param <T> not existing type extending Fragment and Entitled
  */
 public class SectionsPagerAdapter<T extends Fragment & Entitled> extends FragmentPagerAdapter {
-    private final Activity activity;
+    private final Context context;
     private final T[] fragments;
 
-    public SectionsPagerAdapter(FragmentManager fm, Activity activity, T[] fragments) {
+    public SectionsPagerAdapter(FragmentManager fm, Context context, T[] fragments) {
         super(fm);
-        this.activity = activity;
+        this.context = context;
         this.fragments = fragments;
     }
 
@@ -35,7 +35,7 @@ public class SectionsPagerAdapter<T extends Fragment & Entitled> extends Fragmen
 
     @Override
     public CharSequence getPageTitle(int position) {
-        return activity.getString(fragments[position].getTitleResource())
+        return context.getString(fragments[position].getTitleResource())
                 .toUpperCase(Locale.getDefault());
     }
 }
