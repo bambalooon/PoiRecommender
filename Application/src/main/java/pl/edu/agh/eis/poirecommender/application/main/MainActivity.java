@@ -20,10 +20,10 @@ import java.util.List;
 public class MainActivity extends ActionBarActivity {
     private static final int STARTUP_ITEM = 0;
     private final List<NavigationDrawerItem> drawerItems = ImmutableList.<NavigationDrawerItem>builder()
-            .add(new NavigationDrawerItem(new RecommenderFragment(), R.string.recommendations_fragment, R.drawable.ic_action_download))
-            .add(new NavigationDrawerItem(new InterestsFragment(), R.string.interests_fragment, R.drawable.ic_action_download))
-            .add(new NavigationDrawerItem(new RulesFragment(), R.string.rules_fragment, R.drawable.ic_action_download))
-            .add(new NavigationDrawerItem(new AwareFragment(), R.string.aware_fragment, R.drawable.ic_action_download))
+            .add(new NavigationDrawerItem(new RecommenderFragment(), R.string.recommendations_fragment, R.drawable.ic_launcher))
+            .add(new NavigationDrawerItem(new InterestsFragment(), R.string.interests_fragment, R.drawable.ic_action_interests))
+            .add(new NavigationDrawerItem(new RulesFragment(), R.string.rules_fragment, R.drawable.ic_action_rules))
+            .add(new NavigationDrawerItem(new AwareFragment(), R.string.aware_fragment, R.drawable.ic_action_debug))
             .build();
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;

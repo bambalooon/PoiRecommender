@@ -10,10 +10,10 @@ public enum CardinalDirection {
     E(R.drawable.ic_arrow_right),
     S(R.drawable.ic_arrow_down),
     W(R.drawable.ic_arrow_left),
-    NE(R.drawable.ic_arrow_right_up),
-    SE(R.drawable.ic_arrow_right_down),
-    SW(R.drawable.ic_arrow_left_down),
-    NW(R.drawable.ic_arrow_left_up);
+    NE(R.drawable.ic_arrow_up_right),
+    SE(R.drawable.ic_arrow_down_right),
+    SW(R.drawable.ic_arrow_down_left),
+    NW(R.drawable.ic_arrow_up_left);
 
     private final int iconResource;
 
