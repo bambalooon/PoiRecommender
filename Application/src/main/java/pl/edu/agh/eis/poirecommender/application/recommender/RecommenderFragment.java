@@ -1,12 +1,10 @@
 package pl.edu.agh.eis.poirecommender.application.recommender;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.*;
 import android.widget.ArrayAdapter;
 import pl.edu.agh.eis.poirecommender.R;
-import pl.edu.agh.eis.poirecommender.application.settings.SettingsActivity;
 
 
 public class RecommenderFragment extends ListFragment {
@@ -30,10 +28,6 @@ public class RecommenderFragment extends ListFragment {
         switch (item.getItemId()) {
             case R.id.action_refresh:
                 poiArrayAdapter.notifyDataSetChanged();
-                return true;
-            case R.id.action_settings:
-                Intent intent = new Intent(getActivity().getApplicationContext(), SettingsActivity.class);
-                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

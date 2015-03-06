@@ -6,7 +6,7 @@ import android.content.Intent;
 import pl.edu.agh.eis.poirecommender.aware.model.Activity;
 import pl.edu.agh.eis.poirecommender.aware.model.Location;
 import pl.edu.agh.eis.poirecommender.aware.model.Weather;
-import pl.edu.agh.eis.poirecommender.debug.AwareDebugContext;
+import pl.edu.agh.eis.poirecommender.application.debug.AwareDebugContext;
 
 import java.util.List;
 

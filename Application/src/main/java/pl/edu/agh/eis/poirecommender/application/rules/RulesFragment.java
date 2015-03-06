@@ -16,7 +16,6 @@ import heart.xtt.Rule;
 import heart.xtt.Table;
 import heart.xtt.XTTModel;
 import pl.edu.agh.eis.poirecommender.R;
-import pl.edu.agh.eis.poirecommender.application.Entitled;
 import pl.edu.agh.eis.poirecommender.heartdroid.HeartManager;
 import pl.edu.agh.eis.poirecommender.heartdroid.HeartPreferences;
 
@@ -25,24 +24,16 @@ import java.util.LinkedList;
 /**
  * Created by Krzysztof Balon on 2014-11-16.
  */
-public class RulesFragment extends ListFragment implements Entitled {
+public class RulesFragment extends ListFragment {
     private RuleArrayAdapter ruleArrayAdapter;
     private HeartPreferences heartPreferences;
-
-    public static RulesFragment newInstance(int title) {
-        RulesFragment fragment = new RulesFragment();
-        Bundle args = new Bundle();
-        args.putInt(TITLE, title);
-        fragment.setArguments(args);
-        return fragment;
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
         Context context = getActivity().getApplicationContext();
-        ruleArrayAdapter = new RuleArrayAdapter(context);
+        ruleArrayAdapter = new RuleArrayAdapter(getActivity()); //TODO: leakage possible?
         heartPreferences = new HeartPreferences(context);
         setListAdapter(ruleArrayAdapter);
     }
@@ -108,11 +99,6 @@ public class RulesFragment extends ListFragment implements Entitled {
                 return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    @Override
-    public int getTitleResource() {
-        return getArguments().getInt(TITLE);
     }
 
     private class TemporaryXttModelSaveTask extends AsyncTask<XTTModel, Void, Void> {

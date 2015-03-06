@@ -1,4 +1,4 @@
-package pl.edu.agh.eis.poirecommender.debug;
+package pl.edu.agh.eis.poirecommender.application.debug;
 
 import java.util.LinkedList;
 import java.util.List;

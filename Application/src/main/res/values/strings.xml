@@ -12,10 +12,11 @@
     <string name="action_save">Save</string>
     <string name="action_cancel">Cancel</string>
 
-    <!-- Tabs -->
-    <string name="profiles_tab">Profiles</string>
-    <string name="rules_tab">Rules</string>
-    <string name="aware_tab">Aware</string>
+    <!-- Fragment titles -->
+    <string name="recommendations_fragment">Recommendations</string>
+    <string name="interests_fragment">Interests</string>
+    <string name="rules_fragment">Rules</string>
+    <string name="aware_fragment">Aware</string>
 
     <!-- Recommendation -->
     <string name="emptyRecommendationList">Nothing to recommend…</string>
