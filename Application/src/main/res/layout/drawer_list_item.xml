@@ -9,4 +9,5 @@
         android:textColor="#de000000"
         android:gravity="center_vertical"
         android:drawablePadding="20dp"
+        android:background="?android:activatedBackgroundIndicator"
         />
