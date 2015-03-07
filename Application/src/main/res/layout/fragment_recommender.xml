@@ -2,7 +2,7 @@
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                tools:context="pl.edu.agh.eis.poirecommender.application.recommender.RecommenderFragment">
+                tools:context=".application.recommender.RecommenderFragment">
     <ListView
             android:id="@id/android:list"
             android:layout_width="match_parent"
