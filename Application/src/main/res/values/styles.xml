@@ -5,4 +5,8 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="NavDrawerFont" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:paddingLeft">@dimen/nav_drawer_item_padding</item>
+    </style>
+
 </resources>

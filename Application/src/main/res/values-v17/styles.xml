@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="NavDrawerFont" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:fontFamily">@string/nav_drawer_font_family</item>
+        <item name="android:paddingStart">@dimen/nav_drawer_item_padding</item>
+    </style>
+</resources>

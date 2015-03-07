@@ -6,4 +6,5 @@
     <dimen name="rule_attribute_row_vertical_margin">8dp</dimen>
     <dimen name="poi_row_direction_icon_left_margin">4dp</dimen>
     <dimen name="poi_row_direction_width">24dp</dimen>
+    <dimen name="nav_drawer_item_padding">8dp</dimen>
 </resources>

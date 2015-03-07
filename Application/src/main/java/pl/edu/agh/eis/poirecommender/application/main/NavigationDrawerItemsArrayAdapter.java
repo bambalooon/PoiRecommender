@@ -1,11 +1,11 @@
 package pl.edu.agh.eis.poirecommender.application.main;
 
 import android.content.Context;
+import android.os.Build;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 import pl.edu.agh.eis.poirecommender.R;
 
@@ -25,10 +25,13 @@ public class NavigationDrawerItemsArrayAdapter extends ArrayAdapter<NavigationDr
         if(convertView == null) {
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.drawer_list_item, parent, false);
         }
-        TextView titleText = (TextView) convertView.findViewById(R.id.item_title);
-        ImageView iconImage = (ImageView) convertView.findViewById(R.id.item_icon);
-        titleText.setText(item.getTitleResource());
-        iconImage.setImageResource(item.getIconResource());
+        TextView itemTextView = (TextView) convertView.findViewById(R.id.drawer_item);
+        itemTextView.setText(item.getTitleResource());
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            itemTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(item.getIconResource(), 0, 0, 0);
+        } else {
+            itemTextView.setCompoundDrawablesWithIntrinsicBounds(item.getIconResource(), 0, 0, 0);
+        }
         return convertView;
     }
 }
