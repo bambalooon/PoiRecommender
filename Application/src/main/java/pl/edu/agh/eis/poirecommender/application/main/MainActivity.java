@@ -8,6 +8,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,6 +23,7 @@ import pl.edu.agh.eis.poirecommender.application.rules.RulesFragment;
 import java.util.List;
 
 public class MainActivity extends ActionBarActivity {
+    private static final String SAVED_FRAGMENT_TITLE = "SAVED_FRAGMENT_TITLE";
     private static final int STARTUP_ITEM = 0;
     private final List<NavigationDrawerItem> drawerItems = ImmutableList.<NavigationDrawerItem>builder()
             .add(new NavigationDrawerItem(new RecommenderFragment(), R.string.recommendations_fragment, R.drawable.ic_launcher))
@@ -33,12 +35,14 @@ public class MainActivity extends ActionBarActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerList;
     private int mTitle;
+    private CharSequence mDrawerTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recommender);
 
+        mDrawerTitle = getTitle();
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.recommender_toolbar);
@@ -57,8 +61,25 @@ public class MainActivity extends ActionBarActivity {
         actionBar.setHomeButtonEnabled(true);
         actionBar.setIcon(R.drawable.ic_launcher);
 
-        selectItem(STARTUP_ITEM);
-        actionBar.setTitle(mTitle);
+        if (savedInstanceState == null) {
+            selectItem(STARTUP_ITEM);
+            actionBar.setTitle(mTitle);
+        }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(SAVED_FRAGMENT_TITLE, mTitle);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        mTitle = savedInstanceState.getInt(SAVED_FRAGMENT_TITLE);
+        if(!mDrawerLayout.isDrawerOpen(mDrawerList)) {
+            getSupportActionBar().setTitle(mTitle);
+        }
     }
 
     @Override
@@ -78,8 +99,16 @@ public class MainActivity extends ActionBarActivity {
         if (mDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        boolean isDrawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+        for (int i=0; i<menu.size(); i++) {
+            menu.getItem(i).setVisible(!isDrawerOpen);
+        }
+        return super.onPrepareOptionsMenu(menu);
     }
 
     private void selectItem(int position) {
@@ -110,13 +139,15 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public void onDrawerOpened(View drawerView) {
             super.onDrawerOpened(drawerView);
-            getSupportActionBar().setTitle(R.string.app_name);
+            getSupportActionBar().setTitle(mDrawerTitle);
+            invalidateOptionsMenu();
         }
 
         @Override
         public void onDrawerClosed(View drawerView) {
             super.onDrawerClosed(drawerView);
             getSupportActionBar().setTitle(mTitle);
+            invalidateOptionsMenu();
         }
     }
 }
