@@ -34,7 +34,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_recommender);
 
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.left_drawer);
+        mDrawerList = (ListView) findViewById(R.id.navigation_drawer);
 
         mDrawerList.setAdapter(new NavigationDrawerItemsArrayAdapter(this, drawerItems));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
@@ -55,6 +55,7 @@ public class MainActivity extends ActionBarActivity {
 
         mDrawerList.setItemChecked(position, true);
         setTitle(item.getTitleResource());
+        getSupportActionBar().setIcon(item.getIconResource());
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
