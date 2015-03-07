@@ -3,6 +3,7 @@ package pl.edu.agh.eis.poirecommender.application.main;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
@@ -54,8 +55,9 @@ public class MainActivity extends ActionBarActivity {
                 .commit();
 
         mDrawerList.setItemChecked(position, true);
-        setTitle(item.getTitleResource());
-        getSupportActionBar().setIcon(item.getIconResource());
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle(item.getTitleResource());
+        actionBar.setIcon(item.getIconResource());
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
