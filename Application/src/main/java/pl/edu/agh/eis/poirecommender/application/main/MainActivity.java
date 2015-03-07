@@ -2,6 +2,7 @@ package pl.edu.agh.eis.poirecommender.application.main;
 
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
@@ -74,7 +75,7 @@ public class MainActivity extends ActionBarActivity {
     }
 
     @Override
-    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mTitle = savedInstanceState.getInt(SAVED_FRAGMENT_TITLE);
         if(!mDrawerLayout.isDrawerOpen(mDrawerList)) {
