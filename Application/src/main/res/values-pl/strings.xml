@@ -36,4 +36,8 @@
     <string name="enter_number_dialog">Wprowadź liczbę:</string>
     <string name="enter_range_dialog">Wprowadź zakres:</string>
 
+    <!-- Drawer -->
+    <string name="drawer_open">Otwarte</string>
+    <string name="drawer_close">Zamknięte</string>
+
 </resources>
