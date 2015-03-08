@@ -1,6 +1,6 @@
 package pl.edu.agh.eis.poirecommender.application.rules;
 
-import android.content.Context;
+import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
@@ -32,9 +32,9 @@ public class RulesFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        Context context = getActivity().getApplicationContext();
-        ruleArrayAdapter = new RuleArrayAdapter(getActivity()); //TODO: leakage possible?
-        heartPreferences = new HeartPreferences(context);
+        Activity activity = getActivity();
+        heartPreferences = new HeartPreferences(activity.getApplicationContext());
+        ruleArrayAdapter = new RuleArrayAdapter(activity, heartPreferences);
         setListAdapter(ruleArrayAdapter);
     }
 

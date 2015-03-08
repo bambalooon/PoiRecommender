@@ -19,7 +19,7 @@ public class AwareFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         notificationArrayAdapter = new ArrayAdapter<>(
-                getActivity().getApplicationContext(),
+                getActivity(),
                 R.layout.aware_row,
                 R.id.aware_row_text,
                 AwareDebugContext.getInstance().getAwareNotifications());

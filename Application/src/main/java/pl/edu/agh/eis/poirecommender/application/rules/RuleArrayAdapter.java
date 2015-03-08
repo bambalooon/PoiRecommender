@@ -1,7 +1,7 @@
 package pl.edu.agh.eis.poirecommender.application.rules;
 
+import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.AsyncTask;
@@ -28,7 +28,6 @@ import pl.edu.agh.eis.poirecommender.heartdroid.HeartPreferences;
 import pl.edu.agh.eis.poirecommender.heartdroid.adapters.TimeHourAdapter;
 
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -42,9 +41,9 @@ public class RuleArrayAdapter extends ArrayAdapter<Rule> {
     private XTTModel temporaryXttModel;
     private List<Rule> ruleList;
 
-    public RuleArrayAdapter(Context context) {
-        super(context, R.layout.rule_row);
-        this.heartPreferences = new HeartPreferences(context);
+    public RuleArrayAdapter(Activity activity, HeartPreferences heartPreferences) {
+        super(activity, R.layout.rule_row);
+        this.heartPreferences = heartPreferences;
         updateRuleList();
     }
 

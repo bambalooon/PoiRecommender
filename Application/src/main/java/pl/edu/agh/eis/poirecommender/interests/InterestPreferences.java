@@ -21,10 +21,10 @@ public class InterestPreferences {
         this.context = context;
     }
 
-    public boolean setInterestStorage(InterestStorage interestStorage) {
-        return interestPreferences.edit()
+    public void setInterestStorage(InterestStorage interestStorage) {
+        interestPreferences.edit()
                 .putString(INTEREST_STORAGE_PREFERENCE, GSON_SERIALIZER.toJson(interestStorage))
-                .commit();
+                .apply();
     }
 
     public InterestStorage getInterestStorage() {

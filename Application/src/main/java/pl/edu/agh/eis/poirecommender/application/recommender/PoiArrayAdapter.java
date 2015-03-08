@@ -1,5 +1,6 @@
 package pl.edu.agh.eis.poirecommender.application.recommender;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,8 +31,9 @@ public class PoiArrayAdapter extends ArrayAdapter<PoiAtDistanceWithDirection> {
     private final AwarePreferences awarePreferences;
     private List<PoiAtDistanceWithDirection> poiList;
 
-    public PoiArrayAdapter(Context context) {
-        super(context, R.layout.poi_row);
+    public PoiArrayAdapter(Activity activity) {
+        super(activity, R.layout.poi_row);
+        Context context = activity.getApplicationContext();
         this.awarePreferences = new AwarePreferences(context);
         this.poiManager = new PoiManager(context);
         updatePoiList();

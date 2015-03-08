@@ -1,5 +1,6 @@
 package pl.edu.agh.eis.poirecommender.application.interests;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -7,14 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.SeekBar;
 import android.widget.TextView;
-import com.google.common.base.Preconditions;
 import pl.edu.agh.eis.poirecommender.R;
 import pl.edu.agh.eis.poirecommender.interests.InterestPreferences;
 import pl.edu.agh.eis.poirecommender.interests.InterestStorage;
 import pl.edu.agh.eis.poirecommender.interests.model.Interest;
 import pl.edu.agh.eis.poirecommender.service.RecommenderService;
-
-import java.util.List;
 
 /**
  * Created by Krzysztof Balon on 2014-10-26.
@@ -23,13 +21,13 @@ public class InterestArrayAdapter extends ArrayAdapter<Interest> {
     private final InterestPreferences interestPreferences;
     private final InterestStorage interestStorage;
 
-    public static InterestArrayAdapter newInstance(Context context) {
-        InterestPreferences interestPreferences = new InterestPreferences(context);
-        return new InterestArrayAdapter(context, interestPreferences, interestPreferences.getInterestStorage());
+    public static InterestArrayAdapter newInstance(Activity activity) {
+        InterestPreferences interestPreferences = new InterestPreferences(activity.getApplicationContext());
+        return new InterestArrayAdapter(activity, interestPreferences, interestPreferences.getInterestStorage());
     }
 
-    protected InterestArrayAdapter(Context context, InterestPreferences interestPreferences, InterestStorage interestStorage) {
-        super(context, R.layout.interest_row, interestStorage.getInterests());
+    protected InterestArrayAdapter(Activity activity, InterestPreferences interestPreferences, InterestStorage interestStorage) {
+        super(activity, R.layout.interest_row, interestStorage.getInterests());
         this.interestPreferences = interestPreferences;
         this.interestStorage = interestStorage;
     }
@@ -52,10 +50,8 @@ public class InterestArrayAdapter extends ArrayAdapter<Interest> {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 interest.setCertainty(seekBar.getProgress());
                 interestStorage.modifyInterest(interest);
-                Preconditions.checkState(
-                        interestPreferences.setInterestStorage(interestStorage),
-                        "Interest preference modification fail!");
-                RecommenderService.notifyRecommender(getContext());
+                interestPreferences.setInterestStorage(interestStorage);
+                RecommenderService.notifyRecommender(getContext().getApplicationContext());
             }
         });
         TextView interestName = (TextView) convertView.findViewById(R.id.interest_name);

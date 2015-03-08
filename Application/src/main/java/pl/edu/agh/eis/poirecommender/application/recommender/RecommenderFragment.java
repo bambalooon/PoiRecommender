@@ -14,7 +14,7 @@ public class RecommenderFragment extends ListFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        poiArrayAdapter = new PoiArrayAdapter(getActivity().getApplicationContext());
+        poiArrayAdapter = new PoiArrayAdapter(getActivity());
         setListAdapter(poiArrayAdapter);
     }
 
