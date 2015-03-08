@@ -19,19 +19,22 @@ public class AwareContext {
     }
 
     public void updateActivity(Activity activity) {
-        if(activity.isSignificantlyDifferent(awarePreferences.getActivity()) && awarePreferences.setActivity(activity)) {
+        if(activity.isSignificantlyDifferent(awarePreferences.getActivity())) {
+            awarePreferences.setActivity(activity);
             RecommenderService.notifyRecommender(context);
         }
     }
 
     public void updateWeather(Weather weather) {
-        if(weather.isSignificantlyDifferent(awarePreferences.getWeather()) && awarePreferences.setWeather(weather)) {
+        if(weather.isSignificantlyDifferent(awarePreferences.getWeather())) {
+            awarePreferences.setWeather(weather);
             RecommenderService.notifyRecommender(context);
         }
     }
 
     public void updateLocation(Location location) {
-        if(location.isSignificantlyDifferent(awarePreferences.getLocation()) && awarePreferences.setLocation(location)) {
+        if(location.isSignificantlyDifferent(awarePreferences.getLocation())) {
+            awarePreferences.setLocation(location);
             RecommenderService.notifyRecommender(context);
         }
     }
