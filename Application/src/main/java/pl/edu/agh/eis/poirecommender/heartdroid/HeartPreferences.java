@@ -14,7 +14,7 @@ import heart.exceptions.RangeFormatException;
 import heart.parser.hml.HMLParser;
 import heart.xtt.XTTModel;
 import pl.edu.agh.eis.poirecommender.R;
-import pl.edu.agh.eis.poirecommender.heartdroid.gson.GsonInterfaceAdapter;
+import pl.edu.agh.eis.poirecommender.utils.gson.GsonInterfaceAdapter;
 
 import java.io.IOException;
 import java.io.InputStream;

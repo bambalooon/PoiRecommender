@@ -4,14 +4,16 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import pl.edu.agh.eis.poirecommender.pois.gson.GsonPoiAdapter;
 import pl.edu.agh.eis.poirecommender.pois.model.Poi;
+import pl.edu.agh.eis.poirecommender.utils.gson.GsonInterfaceAdapter;
 
 /**
  * Created by Krzysztof Balon on 2014-11-11.
  */
 public class PoiManager {
-    private static final Gson GSON_SERIALIZER = new GsonBuilder().registerTypeAdapter(Poi.class, new GsonPoiAdapter()).create();
+    private static final Gson GSON_SERIALIZER = new GsonBuilder()
+            .registerTypeAdapter(Poi.class, new GsonInterfaceAdapter<Poi>())
+            .create();
     private static final String POI_PREFERENCES = "POI_PREFERENCES";
     private static final String POI_STORAGE_PREFERENCE = "POI_STORAGE_PREFERENCE";
     private final SharedPreferences poiPreferences;
@@ -20,10 +22,10 @@ public class PoiManager {
         this.poiPreferences = context.getSharedPreferences(POI_PREFERENCES, Context.MODE_PRIVATE);
     }
 
-    public boolean setPoiStorage(PoiStorage poiStorage) {
-        return poiPreferences.edit()
+    public void setPoiStorage(PoiStorage poiStorage) {
+        poiPreferences.edit()
                 .putString(POI_STORAGE_PREFERENCE, GSON_SERIALIZER.toJson(poiStorage))
-                .commit();
+                .apply();
     }
 
     public PoiStorage getPoiStorage() {

@@ -1,4 +1,4 @@
-package pl.edu.agh.eis.poirecommender.heartdroid.gson;
+package pl.edu.agh.eis.poirecommender.utils.gson;
 
 import com.google.gson.*;
 
