@@ -3,6 +3,7 @@ package pl.edu.agh.eis.poirecommender.heartdroid;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import heart.alsvfd.Value;
@@ -22,6 +23,7 @@ import java.io.InputStream;
  * Created by Krzysztof Balon on 2014-11-07.
  */
 public class HeartPreferences {
+    private static final String TAG = HeartPreferences.class.getSimpleName();
     public static final int BASIC_POI_RECOMMENDER_CONFIG = R.raw.poi_recommender;
     private static final Gson GSON_SERIALIZER = new GsonBuilder()
             .registerTypeAdapter(Value.class, new GsonInterfaceAdapter<Value>())
@@ -56,8 +58,7 @@ public class HeartPreferences {
 
     public XTTModel getTemporaryXttModel() {
         final String modelJson = heartPreferences.getString(TEMPORARY_XTT_MODEL_PREFERENCE, null);
-        final XTTModel xttModel = GSON_SERIALIZER.fromJson(modelJson, XTTModel.class);
-        return xttModel;
+        return GSON_SERIALIZER.fromJson(modelJson, XTTModel.class);
     }
 
     public void setTemporaryXttModel(XTTModel xttModel) {
@@ -77,11 +78,14 @@ public class HeartPreferences {
         try {
             return HMLParser.parseHML(poiRecommenderStream);
         } catch (BuilderException | NotInTheDomainException | RangeFormatException e) {
+            Log.e(TAG, "Could not load XttModel.", e);
             return null;
         } finally {
             try {
                 poiRecommenderStream.close();
-            } catch (IOException e) {}
+            } catch (IOException e) {
+                Log.e(TAG, "IOException when closing XttModel stream.", e);
+            }
         }
     }
 }
