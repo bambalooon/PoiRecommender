@@ -26,7 +26,7 @@ public class NavigationDrawerItemsArrayAdapter extends ArrayAdapter<NavigationDr
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.drawer_list_item, parent, false);
         }
         TextView itemTextView = (TextView) convertView.findViewById(R.id.drawer_item);
-        itemTextView.setText(item.getTitleResource());
+        itemTextView.setText(item.getTitle());
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
             itemTextView.setCompoundDrawablesRelativeWithIntrinsicBounds(item.getIconResource(), 0, 0, 0);
         } else {

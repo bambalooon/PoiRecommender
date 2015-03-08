@@ -1,41 +1,40 @@
 package pl.edu.agh.eis.poirecommender.application.main;
 
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import com.google.common.collect.ImmutableList;
 import pl.edu.agh.eis.poirecommender.R;
 import pl.edu.agh.eis.poirecommender.application.debug.AwareFragment;
 import pl.edu.agh.eis.poirecommender.application.interests.InterestsFragment;
 import pl.edu.agh.eis.poirecommender.application.recommender.RecommenderFragment;
 import pl.edu.agh.eis.poirecommender.application.rules.RulesFragment;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends ActionBarActivity {
+    private static final String TAG = MainActivity.class.getSimpleName();
     private static final String SAVED_FRAGMENT_TITLE = "SAVED_FRAGMENT_TITLE";
     private static final int STARTUP_ITEM = 0;
-    private final List<NavigationDrawerItem> drawerItems = ImmutableList.<NavigationDrawerItem>builder()
-            .add(new NavigationDrawerItem(new RecommenderFragment(), R.string.recommendations_fragment, R.drawable.ic_launcher))
-            .add(new NavigationDrawerItem(new InterestsFragment(), R.string.interests_fragment, R.drawable.ic_action_interests))
-            .add(new NavigationDrawerItem(new RulesFragment(), R.string.rules_fragment, R.drawable.ic_action_rules))
-            .add(new NavigationDrawerItem(new AwareFragment(), R.string.aware_fragment, R.drawable.ic_action_debug))
-            .build();
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerList;
-    private int mTitle;
+    private List<NavigationDrawerItem> mDrawerItems;
+    private String mTitle;
     private CharSequence mDrawerTitle;
 
     @Override
@@ -44,6 +43,15 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_recommender);
 
         mDrawerTitle = getTitle();
+        String[] navMenuTitles = getResources().getStringArray(R.array.navigation_drawer_titles);
+        TypedArray navMenuIcons = getResources().obtainTypedArray(R.array.navigation_drawer_icons);
+
+        mDrawerItems = new ArrayList<>();
+        for (int i=0; i<navMenuTitles.length; i++) {
+            mDrawerItems.add(new NavigationDrawerItem(navMenuTitles[i], navMenuIcons.getResourceId(i, -1)));
+        }
+        navMenuIcons.recycle();
+
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.recommender_toolbar);
@@ -53,7 +61,7 @@ public class MainActivity extends ActionBarActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         mDrawerList = (ListView) findViewById(R.id.navigation_drawer);
-        mDrawerList.setAdapter(new NavigationDrawerItemsArrayAdapter(this, drawerItems));
+        mDrawerList.setAdapter(new NavigationDrawerItemsArrayAdapter(this, mDrawerItems));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         ActionBar actionBar = getSupportActionBar();
@@ -70,14 +78,14 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putInt(SAVED_FRAGMENT_TITLE, mTitle);
+        outState.putString(SAVED_FRAGMENT_TITLE, mTitle);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        mTitle = savedInstanceState.getInt(SAVED_FRAGMENT_TITLE);
+        mTitle = savedInstanceState.getString(SAVED_FRAGMENT_TITLE);
         if(!mDrawerLayout.isDrawerOpen(mDrawerList)) {
             getSupportActionBar().setTitle(mTitle);
         }
@@ -122,16 +130,36 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void selectItem(int position) {
-        NavigationDrawerItem item = drawerItems.get(position);
+        NavigationDrawerItem item = mDrawerItems.get(position);
+        Fragment fragment = null;
 
-        FragmentManager fm = getSupportFragmentManager();
-        fm.beginTransaction()
-                .replace(R.id.content_frame, item.getFragment())
-                .commit();
+        switch (position) {
+            case 0:
+                fragment = new RecommenderFragment();
+                break;
+            case 1:
+                fragment = new InterestsFragment();
+                break;
+            case 2:
+                fragment = new RulesFragment();
+                break;
+            case 3:
+                fragment = new AwareFragment();
+                break;
+        }
 
-        mDrawerList.setItemChecked(position, true);
-        mTitle = item.getTitleResource();
-        mDrawerLayout.closeDrawer(mDrawerList);
+        if (fragment != null) {
+            FragmentManager fm = getSupportFragmentManager();
+            fm.beginTransaction()
+                    .replace(R.id.content_frame, fragment)
+                    .commit();
+
+            mDrawerList.setItemChecked(position, true);
+            mTitle = item.getTitle();
+            mDrawerLayout.closeDrawer(mDrawerList);
+        } else {
+            Log.e(TAG, "Error in creating fragment.");
+        }
     }
 
     private class DrawerItemClickListener implements android.widget.AdapterView.OnItemClickListener {

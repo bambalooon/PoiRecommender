@@ -12,12 +12,6 @@
     <string name="action_save">Zapisz</string>
     <string name="action_cancel">Anuluj</string>
 
-    <!-- Fragments titles -->
-    <string name="recommendations_fragment">Rekomendacje</string>
-    <string name="interests_fragment">Zainteresowania</string>
-    <string name="rules_fragment">Reguły</string>
-    <string name="aware_fragment">Aware</string>
-
     <!-- Recommendation -->
     <string name="emptyRecommendationList">Brak rekomendacji…</string>
 

@@ -1,5 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="navigation_drawer_titles">
+        <item>Recommendations</item>
+        <item>Interests</item>
+        <item>Rules</item>
+        <item>Aware</item>
+    </string-array>
+
+    <array name="navigation_drawer_icons">
+        <item>@drawable/ic_launcher</item>
+        <item>@drawable/ic_action_interests</item>
+        <item>@drawable/ic_action_rules</item>
+        <item>@drawable/ic_action_debug</item>
+    </array>
+
     <string-array name="operation_symbolic_array">
         <item>eq</item>
         <item>neq</item>
