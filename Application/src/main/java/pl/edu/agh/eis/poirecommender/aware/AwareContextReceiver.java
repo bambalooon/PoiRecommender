@@ -22,7 +22,7 @@ public class AwareContextReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        AwareContext awareContext = new AwareContext(context);
+        AwareContext awareContext = new AwareContext(context.getApplicationContext());
         switch (intent.getAction()) {
             case ACTIVITY_RECOGNITION_ACTION:
                 final Activity activity = new Activity(
