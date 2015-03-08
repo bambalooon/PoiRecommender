@@ -27,7 +27,6 @@ import java.util.Date;
  * Created by Krzysztof Balon on 2014-10-30.
  */
 public class RecommenderService extends IntentService {
-    public static final String CONTEXT_REFRESH_ACTION = "CONTEXT_REFRESH_CONTEXT";
     private static final String RECOMMENDER_SERVICE_NAME = "PoiRecommender::Service";
     private static final String TAG = RecommenderService.class.getSimpleName();
     private AwarePreferences awarePreferences;
@@ -35,14 +34,13 @@ public class RecommenderService extends IntentService {
     private HeartManager heartManager;
     private PoiManager poiManager;
 
-    public static void notifyRecommender(Context context) {
-        Intent notificationIntent = new Intent(context, RecommenderService.class);
-        notificationIntent.setAction(RecommenderService.CONTEXT_REFRESH_ACTION);
-        context.startService(notificationIntent);
-    }
-
     public RecommenderService() {
         super(RECOMMENDER_SERVICE_NAME);
+    }
+
+    public static void notifyRecommender(Context context) {
+        Intent notificationIntent = new Intent(context, RecommenderService.class);
+        context.startService(notificationIntent);
     }
 
     @Override
@@ -56,29 +54,27 @@ public class RecommenderService extends IntentService {
 
     @Override
     protected void onHandleIntent(final Intent intent) {
-        if(CONTEXT_REFRESH_ACTION.equals(intent.getAction())) {
-            debugInfo();
-            final ImmutableList<WithStateElement> stateElements = ImmutableList.of(
-                    new ActivityAdapter(awarePreferences.getActivity()),
-                    new WeatherRainAdapter(awarePreferences.getWeather()),
-                    new WeatherWindAdapter(awarePreferences.getWeather()),
-                    new WeatherTemperatureAdapter(awarePreferences.getWeather()),
-                    new TimeHourAdapter(new Date()),
-                    new InterestListAdapter(interestPreferences.getInterestStorage().getInterests()));
+        debugInfo();
+        final ImmutableList<WithStateElement> stateElements = ImmutableList.of(
+                new ActivityAdapter(awarePreferences.getActivity()),
+                new WeatherRainAdapter(awarePreferences.getWeather()),
+                new WeatherWindAdapter(awarePreferences.getWeather()),
+                new WeatherTemperatureAdapter(awarePreferences.getWeather()),
+                new TimeHourAdapter(new Date()),
+                new InterestListAdapter(interestPreferences.getInterestStorage().getInterests()));
 
-            final PoiType recommendedPoiType = heartManager.inferencePreferredPoiType(stateElements)
-                    .getPoiType();
+        final PoiType recommendedPoiType = heartManager.inferencePreferredPoiType(stateElements)
+                .getPoiType();
 
-            final Location location = awarePreferences.getLocation();
+        final Location location = awarePreferences.getLocation();
 
-            if(recommendedPoiType != null && location != null) {
-                Log.d(TAG, "Recommendation poi type: " + recommendedPoiType.getText());
-                final OsmRequest osmRequest = new OsmJsonRequest(PoiTypeToConstraintMap.getConstraint(recommendedPoiType), location);
-                OsmResponse osmResponse = new OsmExecutor().execute(osmRequest, getApplicationContext());
-                if(osmResponse != null) {
-                    final PoiStorage poiStorage = PoiStorage.fromOsmResponse(osmResponse);
-                    this.poiManager.setPoiStorage(poiStorage);
-                }
+        if (recommendedPoiType != null && location != null) {
+            Log.d(TAG, "Recommendation poi type: " + recommendedPoiType.getText());
+            final OsmRequest osmRequest = new OsmJsonRequest(PoiTypeToConstraintMap.getConstraint(recommendedPoiType), location);
+            OsmResponse osmResponse = new OsmExecutor().execute(osmRequest, getApplicationContext());
+            if (osmResponse != null) {
+                final PoiStorage poiStorage = PoiStorage.fromOsmResponse(osmResponse);
+                this.poiManager.setPoiStorage(poiStorage);
             }
         }
     }
