@@ -2,6 +2,8 @@ package pl.edu.agh.eis.poirecommender.application.interests;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +34,7 @@ public class InterestArrayAdapter extends ArrayAdapter<Interest> {
     }
 
     @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.interest_row, parent, false);
@@ -45,21 +47,46 @@ public class InterestArrayAdapter extends ArrayAdapter<Interest> {
 
         SeekBar interestValueBar = (SeekBar) convertView.findViewById(R.id.interest_value_bar);
         interestValueBar.setProgress(interest.getValue());
-        interestValueBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-            @Override
-            public void onProgressChanged(SeekBar seekBar, int i, boolean b) {
-            }
-
-            @Override
-            public void onStartTrackingTouch(SeekBar seekBar) {
-            }
-
-            @Override
-            public void onStopTrackingTouch(SeekBar seekBar) {
-                interestStorage.setInterest(position, seekBar.getProgress());
-                RecommenderService.notifyRecommender(getContext().getApplicationContext());
-            }
-        });
+        interestValueBar.setOnSeekBarChangeListener(new InterestSeekBarChangeListener(position));
         return convertView;
+    }
+
+    private class InterestSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
+        private static final String INTEREST_TITLE_FORMAT = "%s : %d%%";
+        private final int position;
+        private final ActionBar mActionBar;
+        private CharSequence mTitle;
+
+        public InterestSeekBarChangeListener(int position) {
+            this.position = position;
+            Context context = getContext();
+            this.mActionBar = context instanceof ActionBarActivity
+                    ? ((ActionBarActivity) context).getSupportActionBar()
+                    : null;
+        }
+
+        @Override
+        public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+            if (mActionBar != null) {
+                mActionBar.setTitle(String.format(INTEREST_TITLE_FORMAT, interestNames[position], progress));
+            }
+        }
+
+        @Override
+        public void onStartTrackingTouch(SeekBar seekBar) {
+            if (mActionBar != null) {
+                mTitle = mActionBar.getTitle();
+                mActionBar.setTitle(String.format(INTEREST_TITLE_FORMAT, interestNames[position], seekBar.getProgress()));
+            }
+        }
+
+        @Override
+        public void onStopTrackingTouch(SeekBar seekBar) {
+            if (mActionBar != null) {
+                mActionBar.setTitle(mTitle);
+            }
+            interestStorage.setInterest(position, seekBar.getProgress());
+            RecommenderService.notifyRecommender(getContext().getApplicationContext());
+        }
     }
 }
