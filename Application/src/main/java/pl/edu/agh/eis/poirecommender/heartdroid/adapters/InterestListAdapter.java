@@ -27,6 +27,6 @@ public class InterestListAdapter extends AbstractStateListAdapter<Interest> {
 
     @Override
     protected float calculateCertainty(Interest interest) {
-        return interest.getCertainty()/INTEREST_MAX_CERTAINTY;
+        return interest.getValue()/INTEREST_MAX_CERTAINTY;
     }
 }

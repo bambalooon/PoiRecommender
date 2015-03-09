@@ -7,7 +7,7 @@
     android:gravity="center_vertical">
 
     <SeekBar
-        android:id="@+id/certainty_bar"
+        android:id="@+id/interest_value_bar"
         android:max="@integer/certainty_max"
         android:layout_width="150dp"
         android:layout_height="wrap_content"

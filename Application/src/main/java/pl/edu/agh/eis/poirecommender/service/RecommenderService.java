@@ -12,7 +12,7 @@ import pl.edu.agh.eis.poirecommender.aware.model.Location;
 import pl.edu.agh.eis.poirecommender.heartdroid.HeartManager;
 import pl.edu.agh.eis.poirecommender.heartdroid.adapters.*;
 import pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType;
-import pl.edu.agh.eis.poirecommender.interests.InterestPreferences;
+import pl.edu.agh.eis.poirecommender.interests.InterestStorage;
 import pl.edu.agh.eis.poirecommender.openstreetmap.OsmExecutor;
 import pl.edu.agh.eis.poirecommender.openstreetmap.OsmJsonRequest;
 import pl.edu.agh.eis.poirecommender.openstreetmap.OsmRequest;
@@ -30,7 +30,7 @@ public class RecommenderService extends IntentService {
     private static final String RECOMMENDER_SERVICE_NAME = "PoiRecommender::Service";
     private static final String TAG = RecommenderService.class.getSimpleName();
     private AwarePreferences awarePreferences;
-    private InterestPreferences interestPreferences;
+    private InterestStorage interestStorage;
     private HeartManager heartManager;
     private PoiManager poiManager;
 
@@ -47,7 +47,7 @@ public class RecommenderService extends IntentService {
     public void onCreate() {
         super.onCreate();
         awarePreferences = new AwarePreferences(getApplicationContext());
-        interestPreferences = new InterestPreferences(getApplicationContext());
+        interestStorage = new InterestStorage(getApplicationContext());
         heartManager = new HeartManager(getApplicationContext());
         poiManager = new PoiManager(getApplicationContext());
     }
@@ -61,7 +61,7 @@ public class RecommenderService extends IntentService {
                 new WeatherWindAdapter(awarePreferences.getWeather()),
                 new WeatherTemperatureAdapter(awarePreferences.getWeather()),
                 new TimeHourAdapter(new Date()),
-                new InterestListAdapter(interestPreferences.getInterestStorage().getInterests()));
+                new InterestListAdapter(interestStorage.getInterestList()));
 
         final PoiType recommendedPoiType = heartManager.inferencePreferredPoiType(stateElements)
                 .getPoiType();
@@ -82,6 +82,6 @@ public class RecommenderService extends IntentService {
     private void debugInfo() {
         Log.d(TAG, awarePreferences.areAllPreferencesSet() ? "All preferences set!" : "Not all preferences set...");
         Log.d(TAG, "\n" + awarePreferences.getActivity() + "\n" + awarePreferences.getWeather() + "\n" + awarePreferences.getLocation());
-        Log.d(TAG, FluentIterable.from(interestPreferences.getInterestStorage().getInterests()).join(Joiner.on("; ")));
+        Log.d(TAG, FluentIterable.from(interestStorage.getInterestList()).join(Joiner.on("; ")));
     }
 }

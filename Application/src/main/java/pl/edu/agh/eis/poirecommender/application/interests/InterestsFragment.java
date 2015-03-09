@@ -11,6 +11,6 @@ public class InterestsFragment extends ListFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setListAdapter(InterestArrayAdapter.newInstance(getActivity()));
+        setListAdapter(new InterestArrayAdapter(getActivity()));
     }
 }

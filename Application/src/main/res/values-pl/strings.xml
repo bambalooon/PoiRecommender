@@ -15,14 +15,6 @@
     <!-- Recommendation -->
     <string name="emptyRecommendationList">Brak rekomendacji…</string>
 
-    <!-- Interests -->
-    <string name="sport">Sport</string>
-    <string name="shopping">Zakupy</string>
-    <string name="culture">Kultura</string>
-    <string name="sightseeing">Zwiedzanie</string>
-    <string name="eating">Jedzenie</string>
-    <string name="entertainment">Rozrywka</string>
-
     <!-- Dialogs -->
     <string name="ok">ok</string>
     <string name="select_single_item_dialog">Wybierz jeden element z listy:</string>

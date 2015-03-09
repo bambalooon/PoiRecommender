@@ -14,6 +14,15 @@
         <item>@drawable/ic_action_debug</item>
     </array>
 
+    <string-array name="interest_names">
+        <item>Sport</item>
+        <item>Shopping</item>
+        <item>Culture</item>
+        <item>Sightseeing</item>
+        <item>Eating</item>
+        <item>Entertainment</item>
+    </string-array>
+
     <string-array name="operation_symbolic_array">
         <item>eq</item>
         <item>neq</item>
