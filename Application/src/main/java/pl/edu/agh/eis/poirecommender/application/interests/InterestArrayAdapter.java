@@ -2,8 +2,6 @@ package pl.edu.agh.eis.poirecommender.application.interests;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.ActionBarActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,37 +52,28 @@ public class InterestArrayAdapter extends ArrayAdapter<Interest> {
     private class InterestSeekBarChangeListener implements SeekBar.OnSeekBarChangeListener {
         private static final String INTEREST_TITLE_FORMAT = "%s : %d%%";
         private final int position;
-        private final ActionBar mActionBar;
+        private final Activity mActivity;
         private CharSequence mTitle;
 
         public InterestSeekBarChangeListener(int position) {
             this.position = position;
-            Context context = getContext();
-            this.mActionBar = context instanceof ActionBarActivity
-                    ? ((ActionBarActivity) context).getSupportActionBar()
-                    : null;
+            this.mActivity = (Activity) getContext();
         }
 
         @Override
         public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-            if (mActionBar != null) {
-                mActionBar.setTitle(String.format(INTEREST_TITLE_FORMAT, interestNames[position], progress));
-            }
+            mActivity.setTitle(String.format(INTEREST_TITLE_FORMAT, interestNames[position], progress));
         }
 
         @Override
         public void onStartTrackingTouch(SeekBar seekBar) {
-            if (mActionBar != null) {
-                mTitle = mActionBar.getTitle();
-                mActionBar.setTitle(String.format(INTEREST_TITLE_FORMAT, interestNames[position], seekBar.getProgress()));
-            }
+            mTitle = mActivity.getTitle();
+            mActivity.setTitle(String.format(INTEREST_TITLE_FORMAT, interestNames[position], seekBar.getProgress()));
         }
 
         @Override
         public void onStopTrackingTouch(SeekBar seekBar) {
-            if (mActionBar != null) {
-                mActionBar.setTitle(mTitle);
-            }
+            mActivity.setTitle(mTitle);
             interestStorage.setInterest(position, seekBar.getProgress());
             RecommenderService.notifyRecommender(getContext().getApplicationContext());
         }

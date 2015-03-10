@@ -34,7 +34,7 @@ public class MainActivity extends ActionBarActivity {
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerList;
     private List<NavigationDrawerItem> mDrawerItems;
-    private String mTitle;
+    private String mFragmentTitle;
     private CharSequence mDrawerTitle;
 
     @Override
@@ -72,22 +72,22 @@ public class MainActivity extends ActionBarActivity {
 
         if (savedInstanceState == null) {
             selectItem(STARTUP_ITEM);
-            actionBar.setTitle(mTitle);
+            setTitle(mFragmentTitle);
         }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        outState.putString(SAVED_FRAGMENT_TITLE, mTitle);
+        outState.putString(SAVED_FRAGMENT_TITLE, mFragmentTitle);
         super.onSaveInstanceState(outState);
     }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        mTitle = savedInstanceState.getString(SAVED_FRAGMENT_TITLE);
+        mFragmentTitle = savedInstanceState.getString(SAVED_FRAGMENT_TITLE);
         if(!mDrawerLayout.isDrawerOpen(mDrawerList)) {
-            getSupportActionBar().setTitle(mTitle);
+            setTitle(mFragmentTitle);
         }
     }
 
@@ -129,6 +129,12 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    @Override
+    public void setTitle(CharSequence title) {
+        super.setTitle(title);
+        getSupportActionBar().setTitle(title);
+    }
+
     private void selectItem(int position) {
         NavigationDrawerItem item = mDrawerItems.get(position);
         Fragment fragment = null;
@@ -155,7 +161,7 @@ public class MainActivity extends ActionBarActivity {
                     .commit();
 
             mDrawerList.setItemChecked(position, true);
-            mTitle = item.getTitle();
+            mFragmentTitle = item.getTitle();
             mDrawerLayout.closeDrawer(mDrawerList);
         } else {
             Log.e(TAG, "Error in creating fragment.");
@@ -177,14 +183,14 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public void onDrawerOpened(View drawerView) {
             super.onDrawerOpened(drawerView);
-            getSupportActionBar().setTitle(mDrawerTitle);
+            setTitle(mDrawerTitle);
             invalidateOptionsMenu();
         }
 
         @Override
         public void onDrawerClosed(View drawerView) {
             super.onDrawerClosed(drawerView);
-            getSupportActionBar().setTitle(mTitle);
+            setTitle(mFragmentTitle);
             invalidateOptionsMenu();
         }
     }
