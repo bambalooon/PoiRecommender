@@ -16,6 +16,7 @@ import com.aware.context.observer.ContextPropertyObserver;
 import com.aware.context.positioner.NewRecordsCursorPositioner;
 import com.aware.context.processor.ContextPropertyProcessor;
 import com.aware.context.property.GenericContextProperty;
+import pl.edu.agh.eis.poirecommender.application.debug.AwareDebugContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,7 @@ public class AwareContextObservingService extends Service {
                     new ContextPropertyProcessor<GenericContextProperty>() {
                         @Override
                         public void process(GenericContextProperty contextProperty) {
+                            AwareDebugContext.getInstance().addAwareNotification(contextProperty);
                             Log.d(TAG, contextProperty.toString());
                         }
                     });
