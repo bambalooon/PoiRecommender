@@ -15,7 +15,7 @@ import com.aware.context.observer.ContextPropertyMapping;
 import com.aware.context.observer.ContextPropertyObserver;
 import com.aware.context.positioner.NewRecordsCursorPositioner;
 import com.aware.context.processor.ContextPropertyProcessor;
-import com.aware.context.property.ContextProperty;
+import com.aware.context.property.GenericContextProperty;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,9 +47,9 @@ public class AwareContextObservingService extends Service {
                     contextPropertyUri,
                     NewRecordsCursorPositioner.createInstancePositionedAtEnd(contextPropertyUri, contentResolver),
                     ContextPropertyCreator.getDefaultInstance(),
-                    new ContextPropertyProcessor<ContextProperty>() {
+                    new ContextPropertyProcessor<GenericContextProperty>() {
                         @Override
-                        public void process(ContextProperty contextProperty) {
+                        public void process(GenericContextProperty contextProperty) {
                             Log.d(TAG, contextProperty.toString());
                         }
                     });
