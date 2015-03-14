@@ -1,5 +1,6 @@
 package pl.edu.agh.eis.poirecommender.application.main;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.os.Bundle;
@@ -22,9 +23,12 @@ import pl.edu.agh.eis.poirecommender.application.debug.AwareFragment;
 import pl.edu.agh.eis.poirecommender.application.interests.InterestsFragment;
 import pl.edu.agh.eis.poirecommender.application.recommender.RecommenderFragment;
 import pl.edu.agh.eis.poirecommender.application.rules.RulesFragment;
+import pl.edu.agh.eis.poirecommender.aware.AwareContextObservingService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Executors;
 
 public class MainActivity extends ActionBarActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
@@ -74,6 +78,16 @@ public class MainActivity extends ActionBarActivity {
             selectItem(STARTUP_ITEM);
             setTitle(mFragmentTitle);
         }
+
+        //TODO: remove service start or move somewhere
+        final Intent awareContextObservingService = new Intent(getApplicationContext(), AwareContextObservingService.class);
+        Executors.newSingleThreadExecutor().submit(new Callable<Void>() {
+            @Override
+            public Void call() throws Exception {
+                startService(awareContextObservingService);
+                return null;
+            }
+        });
     }
 
     @Override
