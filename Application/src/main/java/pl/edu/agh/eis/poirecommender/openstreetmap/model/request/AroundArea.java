@@ -1,6 +1,6 @@
 package pl.edu.agh.eis.poirecommender.openstreetmap.model.request;
 
-import pl.edu.agh.eis.poirecommender.aware.model.Location;
+import android.location.Location;
 
 import java.util.Locale;
 

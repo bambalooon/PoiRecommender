@@ -1,6 +1,6 @@
 package pl.edu.agh.eis.poirecommender.pois.model;
 
-import pl.edu.agh.eis.poirecommender.aware.model.Location;
+import android.location.Location;
 
 /**
  * Created by Krzysztof Balon on 2014-11-11.
@@ -19,18 +19,13 @@ public class PoiAtDistance implements Poi, AtDistance {
     }
 
     @Override
-    public double getLatitude() {
-        return poi.getLatitude();
-    }
-
-    @Override
-    public double getLongitude() {
-        return poi.getLongitude();
+    public Location getLocation() {
+        return poi.getLocation();
     }
 
     @Override
     public double getDistance() {
-        return currentLocation.getDistanceToPointInMeters(poi.getLatitude(), poi.getLongitude());
+        return currentLocation.distanceTo(getLocation());
     }
 
     public Location getCurrentLocation() {

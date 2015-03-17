@@ -2,6 +2,7 @@ package pl.edu.agh.eis.poirecommender.aware;
 
 import android.app.Service;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
 import android.net.Uri;
@@ -14,9 +15,6 @@ import com.aware.context.observer.ContextPropertyCreator;
 import com.aware.context.observer.ContextPropertyMapping;
 import com.aware.context.observer.ContextPropertyObserver;
 import com.aware.context.positioner.NewRecordsCursorPositioner;
-import com.aware.context.processor.ContextPropertyProcessor;
-import com.aware.context.property.GenericContextProperty;
-import pl.edu.agh.eis.poirecommender.application.debug.AwareDebugContext;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,6 +39,7 @@ public class AwareContextObservingService extends Service {
         Handler contextPropertyChangeHandler = new Handler(handlerThread.getLooper());
 
         ContentResolver contentResolver = getContentResolver();
+        Context appContext = getApplicationContext();
         contentObservers = new ArrayList<>();
         for (Uri contextPropertyUri : ContextPropertyMapping.getDefaultInstance().getContextPropertyUriList()) {
             ContentObserver contextPropertyObserver = new ContextPropertyObserver<>(
@@ -48,13 +47,7 @@ public class AwareContextObservingService extends Service {
                     contextPropertyUri,
                     NewRecordsCursorPositioner.createInstancePositionedAtEnd(contextPropertyUri, contentResolver),
                     ContextPropertyCreator.getDefaultInstance(),
-                    new ContextPropertyProcessor<GenericContextProperty>() {
-                        @Override
-                        public void process(GenericContextProperty contextProperty) {
-                            AwareDebugContext.getInstance().addAwareNotification(contextProperty);
-                            Log.d(TAG, contextProperty.toString());
-                        }
-                    });
+                    new ContextPropertyStoreProcessor(appContext));
             contentResolver.registerContentObserver(contextPropertyUri, true, contextPropertyObserver);
             contentObservers.add(contextPropertyObserver);
         }

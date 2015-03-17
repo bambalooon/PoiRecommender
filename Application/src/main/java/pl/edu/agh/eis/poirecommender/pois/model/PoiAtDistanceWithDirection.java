@@ -1,5 +1,7 @@
 package pl.edu.agh.eis.poirecommender.pois.model;
 
+import android.location.Location;
+
 import static java.lang.Math.abs;
 import static pl.edu.agh.eis.poirecommender.pois.model.CardinalDirection.*;
 
@@ -22,13 +24,8 @@ public class PoiAtDistanceWithDirection implements Poi, AtDistance, WithDirectio
     }
 
     @Override
-    public double getLatitude() {
-        return poi.getLatitude();
-    }
-
-    @Override
-    public double getLongitude() {
-        return poi.getLongitude();
+    public Location getLocation() {
+        return poi.getLocation();
     }
 
     @Override
@@ -38,8 +35,8 @@ public class PoiAtDistanceWithDirection implements Poi, AtDistance, WithDirectio
 
     @Override
     public CardinalDirection getDirection() {
-        double x = getLongitude() - poi.getCurrentLocation().getLongitude();
-        double y = getLatitude() - poi.getCurrentLocation().getLatitude();
+        double x = getLocation().getLongitude() - poi.getCurrentLocation().getLongitude();
+        double y = getLocation().getLatitude() - poi.getCurrentLocation().getLatitude();
         if (x == 0) {
             return y >= 0 ? N : S;
         }

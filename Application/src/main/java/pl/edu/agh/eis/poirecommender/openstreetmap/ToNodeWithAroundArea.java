@@ -1,7 +1,7 @@
 package pl.edu.agh.eis.poirecommender.openstreetmap;
 
+import android.location.Location;
 import com.google.common.base.Function;
-import pl.edu.agh.eis.poirecommender.aware.model.Location;
 import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.AroundArea;
 import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.Constraint;
 import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.Node;

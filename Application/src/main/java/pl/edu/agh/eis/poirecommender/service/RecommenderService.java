@@ -3,12 +3,15 @@ package pl.edu.agh.eis.poirecommender.service;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
 import android.util.Log;
+import com.aware.plugin.google.activity_recognition.Google_AR_Provider;
+import com.aware.plugin.openweather.Provider;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
-import pl.edu.agh.eis.poirecommender.aware.AwarePreferences;
-import pl.edu.agh.eis.poirecommender.aware.model.Location;
+import pl.edu.agh.eis.poirecommender.aware.AwareLocationHolder;
+import pl.edu.agh.eis.poirecommender.aware.AwareContextStorage;
 import pl.edu.agh.eis.poirecommender.heartdroid.HeartManager;
 import pl.edu.agh.eis.poirecommender.heartdroid.adapters.*;
 import pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType;
@@ -29,7 +32,8 @@ import java.util.Date;
 public class RecommenderService extends IntentService {
     private static final String RECOMMENDER_SERVICE_NAME = "PoiRecommender::Service";
     private static final String TAG = RecommenderService.class.getSimpleName();
-    private AwarePreferences awarePreferences;
+    private AwareContextStorage awareContextStorage;
+    private AwareLocationHolder awareLocationHolder;
     private InterestStorage interestStorage;
     private HeartManager heartManager;
     private PoiManager poiManager;
@@ -46,27 +50,37 @@ public class RecommenderService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
-        awarePreferences = new AwarePreferences(getApplicationContext());
-        interestStorage = new InterestStorage(getApplicationContext());
-        heartManager = new HeartManager(getApplicationContext());
-        poiManager = new PoiManager(getApplicationContext());
+        Context appContext = getApplicationContext();
+        awareContextStorage = new AwareContextStorage(appContext);
+        awareLocationHolder = new AwareLocationHolder(appContext);
+        interestStorage = new InterestStorage(appContext);
+        heartManager = new HeartManager(appContext);
+        poiManager = new PoiManager(appContext);
     }
 
     @Override
     protected void onHandleIntent(final Intent intent) {
         debugInfo();
         final ImmutableList<WithStateElement> stateElements = ImmutableList.of(
-                new ActivityAdapter(awarePreferences.getActivity()),
-                new WeatherRainAdapter(awarePreferences.getWeather()),
-                new WeatherWindAdapter(awarePreferences.getWeather()),
-                new WeatherTemperatureAdapter(awarePreferences.getWeather()),
+                new GenericContextPropertySymbolicStateAdapter(
+                        awareContextStorage.getContextProperty(Google_AR_Provider.AUTHORITY),
+                        "activity",
+                        Google_AR_Provider.Google_Activity_Recognition_Data.ACTIVITY_NAME),
+                new GenericContextPropertyNumericStateAdapter(
+                        awareContextStorage.getContextProperty(Provider.AUTHORITY),
+                        "windInMPS",
+                        Provider.OpenWeather_Data.WIND_SPEED),
+                new GenericContextPropertyNumericStateAdapter(
+                        awareContextStorage.getContextProperty(Provider.AUTHORITY),
+                        "tempInC",
+                        Provider.OpenWeather_Data.TEMPERATURE),
                 new TimeHourAdapter(new Date()),
                 new InterestListAdapter(interestStorage.getInterestList()));
 
         final PoiType recommendedPoiType = heartManager.inferencePreferredPoiType(stateElements)
                 .getPoiType();
 
-        final Location location = awarePreferences.getLocation();
+        final Location location = awareLocationHolder.getLocation();
 
         if (recommendedPoiType != null && location != null) {
             Log.d(TAG, "Recommendation poi type: " + recommendedPoiType.getText());
@@ -80,8 +94,6 @@ public class RecommenderService extends IntentService {
     }
 
     private void debugInfo() {
-        Log.d(TAG, awarePreferences.areAllPreferencesSet() ? "All preferences set!" : "Not all preferences set...");
-        Log.d(TAG, "\n" + awarePreferences.getActivity() + "\n" + awarePreferences.getWeather() + "\n" + awarePreferences.getLocation());
         Log.d(TAG, FluentIterable.from(interestStorage.getInterestList()).join(Joiner.on("; ")));
     }
 }

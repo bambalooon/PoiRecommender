@@ -8,7 +8,7 @@ import java.util.Date;
  * Created by Krzysztof Balon on 2014-11-06.
  */
 public class WeatherWindAdapter extends AbstractNumericStateAdapter<Weather> {
-    private static final String WEATHER_WIND_ATTRIBUTE = "windInHmPH";
+    private static final String WEATHER_WIND_ATTRIBUTE = "windInMPS";
     private static final long HOUR = 3600000L;
     private static final float FORECAST_OLDEST = 6;
     private static final int NO_CERTAINTY = 0;

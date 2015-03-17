@@ -2,6 +2,7 @@ package pl.edu.agh.eis.poirecommender.application.recommender;
 
 import android.app.Activity;
 import android.content.Context;
+import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,11 +12,11 @@ import android.widget.TextView;
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 import pl.edu.agh.eis.poirecommender.R;
-import pl.edu.agh.eis.poirecommender.aware.AwarePreferences;
-import pl.edu.agh.eis.poirecommender.aware.model.Location;
+import pl.edu.agh.eis.poirecommender.aware.AwareLocationHolder;
 import pl.edu.agh.eis.poirecommender.pois.PoiManager;
 import pl.edu.agh.eis.poirecommender.pois.PoiStorage;
 import pl.edu.agh.eis.poirecommender.pois.model.*;
+import pl.edu.agh.eis.poirecommender.utils.LocationHolder;
 
 import java.util.Collections;
 import java.util.Comparator;
@@ -25,16 +26,16 @@ import java.util.List;
  * Created by Krzysztof Balon on 2014-11-11.
  */
 public class PoiArrayAdapter extends ArrayAdapter<PoiAtDistanceWithDirection> {
-    private static final String DISTANCE_FORMAT = "%.1f%s";
-    private static final String DISTANCE_UNIT = "km";
+    private static final String DISTANCE_FORMAT = "%.0f%s";
+    private static final String DISTANCE_UNIT = "m";
     private final PoiManager poiManager;
-    private final AwarePreferences awarePreferences;
+    private final LocationHolder locationHolder;
     private List<PoiAtDistanceWithDirection> poiList;
 
     public PoiArrayAdapter(Activity activity) {
         super(activity, R.layout.poi_row);
         Context context = activity.getApplicationContext();
-        this.awarePreferences = new AwarePreferences(context);
+        this.locationHolder = new AwareLocationHolder(context);
         this.poiManager = new PoiManager(context);
         updatePoiList();
     }
@@ -71,7 +72,7 @@ public class PoiArrayAdapter extends ArrayAdapter<PoiAtDistanceWithDirection> {
 
     private void updatePoiList() {
         final PoiStorage poiStorage = poiManager.getPoiStorage();
-        final Location location = awarePreferences.getLocation();
+        final Location location = locationHolder.getLocation();
         this.poiList = poiStorage == null || location == null
                 ? Collections.<PoiAtDistanceWithDirection>emptyList()
                 : FluentIterable.from(poiStorage.getPoiList())

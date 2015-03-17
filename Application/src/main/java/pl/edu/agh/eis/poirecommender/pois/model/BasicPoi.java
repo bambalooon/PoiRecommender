@@ -1,39 +1,37 @@
 package pl.edu.agh.eis.poirecommender.pois.model;
 
+import android.location.Location;
 import pl.edu.agh.eis.poirecommender.openstreetmap.model.response.Element;
 
 /**
  * Created by Krzysztof Balon on 2014-11-11.
  */
 public class BasicPoi implements Poi {
+    private static final String OSM_LOCATION_PROVIDER = "OpenStreetMap";
     private final String name;
-    private final double latitude;
-    private final double longitude;
+    private final Location location;
 
     public static BasicPoi fromOsmElement(Element osmElement) {
+        Location location = new Location(OSM_LOCATION_PROVIDER);
+        location.setLatitude(osmElement.getLat());
+        location.setLongitude(osmElement.getLon());
         return new BasicPoi(
                 osmElement.getTags() == null
                         ? null
                         : osmElement.getTags().getName(),
-                osmElement.getLat(),
-                osmElement.getLon());
+                location);
     }
 
-    public BasicPoi(String name, double latitude, double longitude) {
+    public BasicPoi(String name, Location location) {
         this.name = name;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.location = location;
     }
 
     public String getName() {
         return name;
     }
 
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
+    public Location getLocation() {
+        return location;
     }
 }

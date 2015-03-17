@@ -1,6 +1,6 @@
 package pl.edu.agh.eis.poirecommender.openstreetmap;
 
-import pl.edu.agh.eis.poirecommender.aware.model.Location;
+import android.location.Location;
 import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.CompositeConstraint;
 
 /**

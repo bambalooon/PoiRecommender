@@ -101,7 +101,7 @@
         <attr id="att_xtt_7" type="tpe_6" name="activity" abbrev="acti1" class="simple" comm="io"/>
         <attr id="att_xtt_8" type="tpe_9" name="hour" abbrev="hour" class="simple" comm="io"/>
         <attr id="att_xtt_9" type="tpe_7" name="user_interests" abbrev="use1" class="general" comm="io"/>
-        <attr id="att_xtt_10" type="tpe_11" name="windInHmPH" abbrev="wind1" class="simple" comm="io"/>
+        <attr id="att_xtt_10" type="tpe_11" name="windInMPS" abbrev="wind1" class="simple" comm="io"/>
         <attr id="att_xtt_11" type="tpe_5" name="windStrName" abbrev="wind2" class="simple" comm="io"/>
         <attr id="att_xtt_12" type="tpe_8" name="poi" abbrev="poi1" class="simple" comm="io"/>
     </attributes>
@@ -121,7 +121,7 @@
                     <relation name="gte">
                         <attref ref="att_xtt_10"/>
                         <set>
-                            <value is="12.000"/>
+                            <value is="10.000"/>
                         </set>
                     </relation>
                 </condition>
