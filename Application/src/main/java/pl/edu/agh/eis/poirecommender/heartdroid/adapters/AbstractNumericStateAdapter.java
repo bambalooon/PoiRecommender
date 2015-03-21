@@ -20,9 +20,10 @@ public abstract class AbstractNumericStateAdapter<T> implements WithStateElement
     public StateElement getStateElement() {
         StateElement stateElement = new StateElement();
         stateElement.setAttributeName(getAttributeName());
-        Value value = adaptValue() == null
+        Double adaptedValue = adaptValue();
+        Value value = adaptedValue == null
                 ? new Null()
-                : new SimpleNumeric(adaptValue(), calculateCertainty());
+                : new SimpleNumeric(adaptedValue, calculateCertainty());
         stateElement.setValue(value);
         return stateElement;
     }

@@ -20,9 +20,10 @@ public abstract class AbstractSymbolicStateAdapter<T> implements WithStateElemen
     public StateElement getStateElement() {
         StateElement stateElement = new StateElement();
         stateElement.setAttributeName(getAttributeName());
-        Value value = adaptValue() == null
+        String adaptedValue = adaptValue();
+        Value value = adaptedValue == null
                 ? new Null()
-                : new SimpleSymbolic(adaptValue(), null, calculateCertainty());
+                : new SimpleSymbolic(adaptedValue, null, calculateCertainty());
         stateElement.setValue(value);
         return stateElement;
     }
