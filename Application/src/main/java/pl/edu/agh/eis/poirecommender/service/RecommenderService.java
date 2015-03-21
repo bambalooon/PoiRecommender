@@ -74,6 +74,10 @@ public class RecommenderService extends IntentService {
                         awareContextStorage.getContextProperty(Provider.AUTHORITY),
                         "tempInC",
                         Provider.OpenWeather_Data.TEMPERATURE),
+                new GenericContextPropertyNumericStateAdapter(
+                        awareContextStorage.getContextProperty(Provider.AUTHORITY),
+                        "rainVal",
+                        Provider.OpenWeather_Data.RAIN),
                 new TimeHourAdapter(new Date()),
                 new InterestListAdapter(interestStorage.getInterestList()));
 
