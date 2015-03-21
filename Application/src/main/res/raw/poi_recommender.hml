@@ -142,7 +142,7 @@
                     <relation name="lt">
                         <attref ref="att_xtt_10"/>
                         <set>
-                            <value is="12.000"/>
+                            <value is="10.000"/>
                         </set>
                     </relation>
                 </condition>
