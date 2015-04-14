@@ -34,7 +34,7 @@ public class AwareContextStorage {
     public void setContextProperty(GenericContextProperty contextProperty) {
         String contextPropertyJson = GSON_SERIALIZER.toJson(contextProperty);
         awarePreferences.edit()
-                .putString(contextProperty.getName(), contextPropertyJson)
+                .putString(contextProperty.getId(), contextPropertyJson)
                 .apply();
     }
 
