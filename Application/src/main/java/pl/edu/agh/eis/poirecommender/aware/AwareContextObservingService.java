@@ -1,23 +1,15 @@
 package pl.edu.agh.eis.poirecommender.aware;
 
 import android.app.Service;
-import android.content.ContentResolver;
-import android.content.Context;
 import android.content.Intent;
 import android.database.ContentObserver;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
 import android.util.Log;
-import com.aware.context.observer.ContextPropertyCreator;
-import com.aware.context.observer.ContextPropertyMapping;
-import com.aware.context.observer.ContextPropertyObserver;
-import com.aware.context.positioner.NewRecordsCursorPositioner;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.aware.context.provider.ContextContract;
+import pl.edu.agh.eis.poirecommender.service.RecommenderService;
 
 /**
  * Name: AwareContextObservingService
@@ -28,7 +20,7 @@ import java.util.List;
 public class AwareContextObservingService extends Service {
     private static final String TAG = AwareContextObservingService.class.getSimpleName();
     private HandlerThread handlerThread;
-    private List<ContentObserver> contentObservers;
+    private ContentObserver contextObserver;
 
     @Override
     public void onCreate() {
@@ -36,32 +28,24 @@ public class AwareContextObservingService extends Service {
 
         handlerThread = new HandlerThread(TAG);
         handlerThread.start();
-        Handler contextPropertyChangeHandler = new Handler(handlerThread.getLooper());
+        Handler contextChangeHandler = new Handler(handlerThread.getLooper());
 
-        ContentResolver contentResolver = getContentResolver();
-        Context appContext = getApplicationContext();
-        contentObservers = new ArrayList<>();
-        for (Uri contextPropertyUri : ContextPropertyMapping.getDefaultInstance().getContextPropertyUriList()) {
-            ContentObserver contextPropertyObserver = new ContextPropertyObserver<>(
-                    contextPropertyChangeHandler,
-                    contextPropertyUri,
-                    NewRecordsCursorPositioner.createInstancePositionedAtEnd(contextPropertyUri, contentResolver),
-                    ContextPropertyCreator.getDefaultInstance(),
-                    new ContextPropertyStoreProcessor(appContext));
-            contentResolver.registerContentObserver(contextPropertyUri, true, contextPropertyObserver);
-            contentObservers.add(contextPropertyObserver);
-        }
+        contextObserver = new ContentObserver(contextChangeHandler) {
+            @Override
+            public void onChange(boolean selfChange) {
+                super.onChange(selfChange);
+                RecommenderService.notifyRecommender(getApplicationContext());
+            }
+        };
+        getContentResolver().registerContentObserver(ContextContract.Properties.CONTENT_URI, true, contextObserver);
         Log.d(TAG, "Service created!");
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        ContentResolver contentResolver = getContentResolver();
-        for (ContentObserver contextPropertyObserver : contentObservers) {
-            contentResolver.unregisterContentObserver(contextPropertyObserver);
-        }
-        contentObservers = null;
+        getContentResolver().unregisterContentObserver(contextObserver);
+        contextObserver = null;
 
         if (Build.VERSION.SDK_INT > Build.VERSION_CODES.JELLY_BEAN_MR2) {
             handlerThread.quitSafely();
