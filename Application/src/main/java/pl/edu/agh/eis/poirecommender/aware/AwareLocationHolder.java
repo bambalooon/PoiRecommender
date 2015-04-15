@@ -1,8 +1,8 @@
 package pl.edu.agh.eis.poirecommender.aware;
 
-import android.content.Context;
 import android.location.Location;
 import com.aware.context.property.GenericContextProperty;
+import com.aware.context.storage.ContextStorage;
 import com.aware.providers.Locations_Provider;
 import com.google.common.base.Function;
 import pl.edu.agh.eis.poirecommender.utils.LocationHolder;
@@ -11,17 +11,17 @@ import java.util.Map;
 
 /**
  * Name: AwareContextLocation
- * Description: AwareContextLocation gets ContextProperty with location from AwareContextStorage
+ * Description: AwareContextLocation gets ContextProperty with location from ContextStorage
  *              and converts it to Android Location
  * Date: 2015-03-15
  * Created by BamBalooon
  */
 public class AwareLocationHolder implements LocationHolder {
     private static final String AWARE_LOCATION_PROPERTY_NAME = Locations_Provider.AUTHORITY;
-    private final AwareContextStorage awareContextStorage;
+    private final ContextStorage<GenericContextProperty> awareContextStorage;
 
-    public AwareLocationHolder(Context context) {
-        this.awareContextStorage = new AwareContextStorage(context);
+    public AwareLocationHolder(ContextStorage<GenericContextProperty> awareContextStorage) {
+        this.awareContextStorage = awareContextStorage;
     }
 
     public Location getLocation() {
