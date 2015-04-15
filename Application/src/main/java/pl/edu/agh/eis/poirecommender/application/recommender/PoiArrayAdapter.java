@@ -1,7 +1,6 @@
 package pl.edu.agh.eis.poirecommender.application.recommender;
 
 import android.app.Activity;
-import android.content.Context;
 import android.location.Location;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,6 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import com.aware.context.property.GenericContextProperty;
+import com.aware.context.provider.Context;
+import com.aware.context.transform.ContextPropertySerialization;
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 import pl.edu.agh.eis.poirecommender.R;
@@ -22,9 +24,12 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import static android.content.Context.LAYOUT_INFLATER_SERVICE;
+
 /**
  * Created by Krzysztof Balon on 2014-11-11.
  */
+//FIXME: add loader to load location in other thread
 public class PoiArrayAdapter extends ArrayAdapter<PoiAtDistanceWithDirection> {
     private static final String DISTANCE_FORMAT = "%.0f%s";
     private static final String DISTANCE_UNIT = "m";
@@ -34,8 +39,10 @@ public class PoiArrayAdapter extends ArrayAdapter<PoiAtDistanceWithDirection> {
 
     public PoiArrayAdapter(Activity activity) {
         super(activity, R.layout.poi_row);
-        Context context = activity.getApplicationContext();
-        this.locationHolder = new AwareLocationHolder(context);
+        android.content.Context context = activity.getApplicationContext();
+        this.locationHolder = new AwareLocationHolder(
+                new Context(context.getContentResolver(),
+                        new ContextPropertySerialization<>(GenericContextProperty.class)));
         this.poiManager = new PoiManager(context);
         updatePoiList();
     }
@@ -54,7 +61,7 @@ public class PoiArrayAdapter extends ArrayAdapter<PoiAtDistanceWithDirection> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.poi_row, parent, false);
         }
         PoiAtDistanceWithDirection poi = poiList.get(position);
