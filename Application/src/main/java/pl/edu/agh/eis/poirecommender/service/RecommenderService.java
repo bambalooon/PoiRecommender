@@ -1,17 +1,19 @@
 package pl.edu.agh.eis.poirecommender.service;
 
 import android.app.IntentService;
-import android.content.Context;
 import android.content.Intent;
 import android.location.Location;
 import android.util.Log;
+import com.aware.context.property.GenericContextProperty;
+import com.aware.context.provider.Context;
+import com.aware.context.storage.ContextStorage;
+import com.aware.context.transform.ContextPropertySerialization;
 import com.aware.plugin.google.activity_recognition.Google_AR_Provider;
 import com.aware.plugin.openweather.Provider;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import pl.edu.agh.eis.poirecommender.aware.AwareLocationHolder;
-import pl.edu.agh.eis.poirecommender.aware.AwareContextStorage;
 import pl.edu.agh.eis.poirecommender.heartdroid.HeartManager;
 import pl.edu.agh.eis.poirecommender.heartdroid.adapters.*;
 import pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType;
@@ -32,7 +34,7 @@ import java.util.Date;
 public class RecommenderService extends IntentService {
     private static final String RECOMMENDER_SERVICE_NAME = "PoiRecommender::Service";
     private static final String TAG = RecommenderService.class.getSimpleName();
-    private AwareContextStorage awareContextStorage;
+    private ContextStorage<GenericContextProperty> awareContextStorage;
     private AwareLocationHolder awareLocationHolder;
     private InterestStorage interestStorage;
     private HeartManager heartManager;
@@ -42,7 +44,7 @@ public class RecommenderService extends IntentService {
         super(RECOMMENDER_SERVICE_NAME);
     }
 
-    public static void notifyRecommender(Context context) {
+    public static void notifyRecommender(android.content.Context context) {
         Intent notificationIntent = new Intent(context, RecommenderService.class);
         context.startService(notificationIntent);
     }
@@ -50,9 +52,10 @@ public class RecommenderService extends IntentService {
     @Override
     public void onCreate() {
         super.onCreate();
-        Context appContext = getApplicationContext();
-        awareContextStorage = new AwareContextStorage(appContext);
-        awareLocationHolder = new AwareLocationHolder(appContext);
+        android.content.Context appContext = getApplicationContext();
+        awareContextStorage = new Context(appContext.getContentResolver(),
+                new ContextPropertySerialization<>(GenericContextProperty.class));
+        awareLocationHolder = new AwareLocationHolder(awareContextStorage);
         interestStorage = new InterestStorage(appContext);
         heartManager = new HeartManager(appContext);
         poiManager = new PoiManager(appContext);
@@ -98,6 +101,7 @@ public class RecommenderService extends IntentService {
     }
 
     private void debugInfo() {
+        Log.d(TAG, awareContextStorage.getContextProperties().toString());
         Log.d(TAG, FluentIterable.from(interestStorage.getInterestList()).join(Joiner.on("; ")));
     }
 }
