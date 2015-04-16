@@ -5,7 +5,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import pl.edu.agh.eis.poirecommender.openstreetmap.model.response.Element;
 import pl.edu.agh.eis.poirecommender.openstreetmap.model.response.OsmResponse;
-import pl.edu.agh.eis.poirecommender.pois.model.BasicPoi;
+import pl.edu.agh.eis.poirecommender.pois.model.OsmPoi;
 import pl.edu.agh.eis.poirecommender.pois.model.Poi;
 
 import java.util.List;
@@ -32,10 +32,10 @@ public class PoiStorage {
         return poiList;
     }
 
-    private static final Function<Element, ? extends Poi> OSM_ELEMENT_TO_POI = new Function<Element, BasicPoi>() {
+    private static final Function<Element, ? extends Poi> OSM_ELEMENT_TO_POI = new Function<Element, OsmPoi>() {
         @Override
-        public BasicPoi apply(Element element) {
-            return BasicPoi.fromOsmElement(element);
+        public OsmPoi apply(Element element) {
+            return OsmPoi.fromOsmElement(element);
         }
     };
     private static final Predicate<Poi> HAS_NAME_FILTER = new Predicate<Poi>() {
