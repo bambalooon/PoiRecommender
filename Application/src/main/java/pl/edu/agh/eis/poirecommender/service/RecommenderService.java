@@ -25,6 +25,7 @@ import pl.edu.agh.eis.poirecommender.openstreetmap.PoiTypeToConstraintMap;
 import pl.edu.agh.eis.poirecommender.openstreetmap.model.response.OsmResponse;
 import pl.edu.agh.eis.poirecommender.pois.PoiManager;
 import pl.edu.agh.eis.poirecommender.pois.PoiStorage;
+import pl.edu.agh.eis.poirecommender.utils.LocationHolder;
 
 import java.util.Date;
 
@@ -34,8 +35,8 @@ import java.util.Date;
 public class RecommenderService extends IntentService {
     private static final String RECOMMENDER_SERVICE_NAME = "PoiRecommender::Service";
     private static final String TAG = RecommenderService.class.getSimpleName();
-    private ContextStorage<GenericContextProperty> awareContextStorage;
-    private AwareLocationHolder awareLocationHolder;
+    private ContextStorage<GenericContextProperty> contextStorage;
+    private LocationHolder locationHolder;
     private InterestStorage interestStorage;
     private HeartManager heartManager;
     private PoiManager poiManager;
@@ -53,9 +54,9 @@ public class RecommenderService extends IntentService {
     public void onCreate() {
         super.onCreate();
         android.content.Context appContext = getApplicationContext();
-        awareContextStorage = new Context(appContext.getContentResolver(),
+        contextStorage = new Context(appContext.getContentResolver(),
                 new ContextPropertySerialization<>(GenericContextProperty.class));
-        awareLocationHolder = new AwareLocationHolder(awareContextStorage);
+        locationHolder = new AwareLocationHolder(contextStorage);
         interestStorage = new InterestStorage(appContext);
         heartManager = new HeartManager(appContext);
         poiManager = new PoiManager(appContext);
@@ -66,19 +67,19 @@ public class RecommenderService extends IntentService {
         debugInfo();
         final ImmutableList<WithStateElement> stateElements = ImmutableList.of(
                 new GenericContextPropertySymbolicStateAdapter(
-                        awareContextStorage.getContextProperty(Google_AR_Provider.AUTHORITY),
+                        contextStorage.getContextProperty(Google_AR_Provider.AUTHORITY),
                         "activity",
                         Google_AR_Provider.Google_Activity_Recognition_Data.ACTIVITY_NAME),
                 new GenericContextPropertyNumericStateAdapter(
-                        awareContextStorage.getContextProperty(Provider.AUTHORITY),
+                        contextStorage.getContextProperty(Provider.AUTHORITY),
                         "windInMPS",
                         Provider.OpenWeather_Data.WIND_SPEED),
                 new GenericContextPropertyNumericStateAdapter(
-                        awareContextStorage.getContextProperty(Provider.AUTHORITY),
+                        contextStorage.getContextProperty(Provider.AUTHORITY),
                         "tempInC",
                         Provider.OpenWeather_Data.TEMPERATURE),
                 new GenericContextPropertyNumericStateAdapter(
-                        awareContextStorage.getContextProperty(Provider.AUTHORITY),
+                        contextStorage.getContextProperty(Provider.AUTHORITY),
                         "rainVal",
                         Provider.OpenWeather_Data.RAIN),
                 new TimeHourAdapter(new Date()),
@@ -87,7 +88,7 @@ public class RecommenderService extends IntentService {
         final PoiType recommendedPoiType = heartManager.inferencePreferredPoiType(stateElements)
                 .getPoiType();
 
-        final Location location = awareLocationHolder.getLocation();
+        final Location location = locationHolder.getLocation();
 
         if (recommendedPoiType != null && location != null) {
             Log.d(TAG, "Recommendation poi type: " + recommendedPoiType.getText());
@@ -101,7 +102,7 @@ public class RecommenderService extends IntentService {
     }
 
     private void debugInfo() {
-        Log.d(TAG, awareContextStorage.getContextProperties().toString());
+        Log.d(TAG, contextStorage.getContextProperties().toString());
         Log.d(TAG, FluentIterable.from(interestStorage.getInterestList()).join(Joiner.on("; ")));
     }
 }
