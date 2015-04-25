@@ -10,6 +10,7 @@ import com.aware.context.storage.ContextStorage;
 import com.aware.context.transform.ContextPropertySerialization;
 import com.aware.plugin.google.activity_recognition.Google_AR_Provider;
 import com.aware.plugin.openweather.Provider;
+import com.aware.plugin.poirecommender.provider.PoiRecommenderContract;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
@@ -30,7 +31,10 @@ import pl.edu.agh.eis.poirecommender.utils.LocationHolder;
 import java.util.Date;
 
 /**
- * Created by Krzysztof Balon on 2014-10-30.
+ * Name: RecommenderService
+ * Description: RecommenderService
+ * Date: 2014-10-30
+ * Created by BamBalooon
  */
 public class RecommenderService extends IntentService {
     private static final String RECOMMENDER_SERVICE_NAME = "PoiRecommender::Service";
@@ -67,19 +71,19 @@ public class RecommenderService extends IntentService {
         debugInfo();
         final ImmutableList<WithStateElement> stateElements = ImmutableList.of(
                 new GenericContextPropertySymbolicStateAdapter(
-                        contextStorage.getContextProperty(Google_AR_Provider.AUTHORITY),
+                        contextStorage.getContextProperty(PoiRecommenderContract.Contexts.PLUGIN_GOOGLE_ACTIVITY_RECOGNITION_ID),
                         "activity",
                         Google_AR_Provider.Google_Activity_Recognition_Data.ACTIVITY_NAME),
                 new GenericContextPropertyNumericStateAdapter(
-                        contextStorage.getContextProperty(Provider.AUTHORITY),
+                        contextStorage.getContextProperty(PoiRecommenderContract.Contexts.PLUGIN_OPENWEATHER_ID),
                         "windInMPS",
                         Provider.OpenWeather_Data.WIND_SPEED),
                 new GenericContextPropertyNumericStateAdapter(
-                        contextStorage.getContextProperty(Provider.AUTHORITY),
+                        contextStorage.getContextProperty(PoiRecommenderContract.Contexts.PLUGIN_OPENWEATHER_ID),
                         "tempInC",
                         Provider.OpenWeather_Data.TEMPERATURE),
                 new GenericContextPropertyNumericStateAdapter(
-                        contextStorage.getContextProperty(Provider.AUTHORITY),
+                        contextStorage.getContextProperty(PoiRecommenderContract.Contexts.PLUGIN_OPENWEATHER_ID),
                         "rainVal",
                         Provider.OpenWeather_Data.RAIN),
                 new TimeHourAdapter(new Date()),
