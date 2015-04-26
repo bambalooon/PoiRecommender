@@ -10,7 +10,7 @@ import com.aware.context.storage.ContextStorage;
 import com.aware.context.transform.ContextPropertySerialization;
 import com.aware.plugin.google.activity_recognition.Google_AR_Provider;
 import com.aware.plugin.openweather.Provider;
-import com.aware.plugin.poirecommender.provider.PoiRecommenderContract;
+import com.aware.poirecommender.provider.PoiRecommenderContract;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
