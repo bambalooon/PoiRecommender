@@ -3,7 +3,7 @@ package pl.edu.agh.eis.poirecommender.aware;
 import android.location.Location;
 import com.aware.context.property.GenericContextProperty;
 import com.aware.context.storage.ContextStorage;
-import com.aware.plugin.poirecommender.provider.PoiRecommenderContract;
+import com.aware.poirecommender.provider.PoiRecommenderContract;
 import com.google.common.base.Function;
 import pl.edu.agh.eis.poirecommender.utils.LocationHolder;
 
