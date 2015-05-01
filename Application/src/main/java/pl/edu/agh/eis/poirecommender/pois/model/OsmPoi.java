@@ -1,7 +1,7 @@
 package pl.edu.agh.eis.poirecommender.pois.model;
 
 import android.location.Location;
-import pl.edu.agh.eis.poirecommender.openstreetmap.model.response.Element;
+import com.aware.poirecommender.openstreetmap.model.response.Element;
 
 /**
  * Created by Krzysztof Balon on 2014-11-11.

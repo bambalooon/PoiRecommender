@@ -1,10 +1,10 @@
 package pl.edu.agh.eis.poirecommender.pois;
 
+import com.aware.poirecommender.openstreetmap.model.response.Element;
+import com.aware.poirecommender.openstreetmap.model.response.OsmResponse;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
-import pl.edu.agh.eis.poirecommender.openstreetmap.model.response.Element;
-import pl.edu.agh.eis.poirecommender.openstreetmap.model.response.OsmResponse;
 import pl.edu.agh.eis.poirecommender.pois.model.OsmPoi;
 import pl.edu.agh.eis.poirecommender.pois.model.Poi;
 
