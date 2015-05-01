@@ -10,6 +10,7 @@ import com.aware.context.storage.ContextStorage;
 import com.aware.context.transform.ContextPropertySerialization;
 import com.aware.plugin.google.activity_recognition.Google_AR_Provider;
 import com.aware.plugin.openweather.Provider;
+import com.aware.poirecommender.openstreetmap.model.response.OsmResponse;
 import com.aware.poirecommender.provider.PoiRecommenderContract;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
@@ -23,7 +24,6 @@ import pl.edu.agh.eis.poirecommender.openstreetmap.OsmExecutor;
 import pl.edu.agh.eis.poirecommender.openstreetmap.OsmJsonRequest;
 import pl.edu.agh.eis.poirecommender.openstreetmap.OsmRequest;
 import pl.edu.agh.eis.poirecommender.openstreetmap.PoiTypeToConstraintMap;
-import pl.edu.agh.eis.poirecommender.openstreetmap.model.response.OsmResponse;
 import pl.edu.agh.eis.poirecommender.pois.PoiManager;
 import pl.edu.agh.eis.poirecommender.pois.PoiStorage;
 import pl.edu.agh.eis.poirecommender.utils.LocationHolder;
@@ -71,19 +71,20 @@ public class RecommenderService extends IntentService {
         debugInfo();
         final ImmutableList<WithStateElement> stateElements = ImmutableList.of(
                 new GenericContextPropertySymbolicStateAdapter(
-                        contextStorage.getContextProperty(PoiRecommenderContract.Contexts.PLUGIN_GOOGLE_ACTIVITY_RECOGNITION_ID),
+                        contextStorage.getContextProperty(PoiRecommenderContract.Contexts
+                                .PLUGIN_GOOGLE_ACTIVITY_RECOGNITION_TIMESTAMP),
                         "activity",
                         Google_AR_Provider.Google_Activity_Recognition_Data.ACTIVITY_NAME),
                 new GenericContextPropertyNumericStateAdapter(
-                        contextStorage.getContextProperty(PoiRecommenderContract.Contexts.PLUGIN_OPENWEATHER_ID),
+                        contextStorage.getContextProperty(PoiRecommenderContract.Contexts.PLUGIN_OPENWEATHER_TIMESTAMP),
                         "windInMPS",
                         Provider.OpenWeather_Data.WIND_SPEED),
                 new GenericContextPropertyNumericStateAdapter(
-                        contextStorage.getContextProperty(PoiRecommenderContract.Contexts.PLUGIN_OPENWEATHER_ID),
+                        contextStorage.getContextProperty(PoiRecommenderContract.Contexts.PLUGIN_OPENWEATHER_TIMESTAMP),
                         "tempInC",
                         Provider.OpenWeather_Data.TEMPERATURE),
                 new GenericContextPropertyNumericStateAdapter(
-                        contextStorage.getContextProperty(PoiRecommenderContract.Contexts.PLUGIN_OPENWEATHER_ID),
+                        contextStorage.getContextProperty(PoiRecommenderContract.Contexts.PLUGIN_OPENWEATHER_TIMESTAMP),
                         "rainVal",
                         Provider.OpenWeather_Data.RAIN),
                 new TimeHourAdapter(new Date()),
