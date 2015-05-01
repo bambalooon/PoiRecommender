@@ -17,7 +17,7 @@ import java.util.Map;
  * Created by BamBalooon
  */
 public class AwareLocationHolder implements LocationHolder {
-    private static final String AWARE_LOCATION_PROPERTY_NAME = PoiRecommenderContract.Contexts.LOCATION_ID;
+    private static final String AWARE_LOCATION_PROPERTY_NAME = PoiRecommenderContract.Contexts.LOCATION_TIMESTAMP;
     private final ContextStorage<GenericContextProperty> awareContextStorage;
 
     public AwareLocationHolder(ContextStorage<GenericContextProperty> awareContextStorage) {
