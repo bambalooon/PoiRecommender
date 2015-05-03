@@ -33,12 +33,14 @@ import java.util.concurrent.Executors;
 public class MainActivity extends ActionBarActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String SAVED_FRAGMENT_TITLE = "SAVED_FRAGMENT_TITLE";
+    private static final String SAVED_SELECTED_FRAGMENT_INDEX = "SAVED_SELECTED_FRAGMENT_INDEX";
     private static final int STARTUP_ITEM = 0;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private ListView mDrawerList;
     private List<NavigationDrawerItem> mDrawerItems;
     private String mFragmentTitle;
+    private int mSelectedFragmentIndex = -1;
     private CharSequence mDrawerTitle;
 
     @Override
@@ -93,6 +95,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putString(SAVED_FRAGMENT_TITLE, mFragmentTitle);
+        outState.putInt(SAVED_SELECTED_FRAGMENT_INDEX, mSelectedFragmentIndex);
         super.onSaveInstanceState(outState);
     }
 
@@ -100,6 +103,7 @@ public class MainActivity extends ActionBarActivity {
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         mFragmentTitle = savedInstanceState.getString(SAVED_FRAGMENT_TITLE);
+        mSelectedFragmentIndex = savedInstanceState.getInt(SAVED_SELECTED_FRAGMENT_INDEX);
         if(!mDrawerLayout.isDrawerOpen(mDrawerList)) {
             setTitle(mFragmentTitle);
         }
@@ -138,6 +142,9 @@ public class MainActivity extends ActionBarActivity {
     public void onBackPressed() {
         if(mDrawerLayout.isDrawerOpen(mDrawerList)) {
             mDrawerLayout.closeDrawer(mDrawerList);
+        } else if (mSelectedFragmentIndex > STARTUP_ITEM) {
+            selectItem(STARTUP_ITEM);
+            setTitle(mFragmentTitle);
         } else {
             super.onBackPressed();
         }
@@ -176,6 +183,7 @@ public class MainActivity extends ActionBarActivity {
 
             mDrawerList.setItemChecked(position, true);
             mFragmentTitle = item.getTitle();
+            mSelectedFragmentIndex = position;
             mDrawerLayout.closeDrawer(mDrawerList);
         } else {
             Log.e(TAG, "Error in creating fragment.");
