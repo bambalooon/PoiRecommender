@@ -1,12 +1,16 @@
 package pl.edu.agh.eis.poirecommender.pois.model;
 
 import android.location.Location;
+import com.aware.poirecommender.openstreetmap.model.response.Element;
 
 import static java.lang.Math.abs;
 import static pl.edu.agh.eis.poirecommender.pois.model.CardinalDirection.*;
 
 /**
- * Created by Krzysztof Balon on 2014-11-11.
+ * Name: PoiAtDistanceWithDirection
+ * Description: PoiAtDistanceWithDirection
+ * Date: 2014-11-11
+ * Created by BamBalooon
  */
 public class PoiAtDistanceWithDirection implements Poi, AtDistance, WithDirection {
     private static final double INTERCORDINAL_MIN = 0.4245;
@@ -26,6 +30,11 @@ public class PoiAtDistanceWithDirection implements Poi, AtDistance, WithDirectio
     @Override
     public Location getLocation() {
         return poi.getLocation();
+    }
+
+    @Override
+    public Element getElement() {
+        return poi.getElement();
     }
 
     @Override

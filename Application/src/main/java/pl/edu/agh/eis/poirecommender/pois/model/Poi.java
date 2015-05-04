@@ -9,7 +9,6 @@ import com.aware.poirecommender.openstreetmap.model.response.Element;
  * Date: 2014-11-11
  * Created by BamBalooon
  */
-
 public interface Poi {
     String getName();
     Location getLocation();

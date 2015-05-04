@@ -1,9 +1,13 @@
 package pl.edu.agh.eis.poirecommender.pois.model;
 
 import android.location.Location;
+import com.aware.poirecommender.openstreetmap.model.response.Element;
 
 /**
- * Created by Krzysztof Balon on 2014-11-11.
+ * Name: PoiAtDistance
+ * Description: PoiAtDistance
+ * Date: 2014-11-11
+ * Created by BamBalooon
  */
 public class PoiAtDistance implements Poi, AtDistance {
     private final Poi poi;
@@ -21,6 +25,11 @@ public class PoiAtDistance implements Poi, AtDistance {
     @Override
     public Location getLocation() {
         return poi.getLocation();
+    }
+
+    @Override
+    public Element getElement() {
+        return poi.getElement();
     }
 
     @Override
