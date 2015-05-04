@@ -27,10 +27,13 @@ import java.util.List;
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 /**
- * Created by Krzysztof Balon on 2014-11-11.
+ * Name: PoiArrayAdapter
+ * Description: PoiArrayAdapter
+ * Date: 2014-11-11
+ * Created by BamBalooon
  */
-//FIXME: add loader to load location in other thread
 public class PoiArrayAdapter extends ArrayAdapter<PoiAtDistanceWithDirection> {
+    //FIXME: add loader to load location in other thread
     private static final String DISTANCE_FORMAT = "%.0f%s";
     private static final String DISTANCE_UNIT = "m";
     private final PoiManager poiManager;
@@ -59,12 +62,17 @@ public class PoiArrayAdapter extends ArrayAdapter<PoiAtDistanceWithDirection> {
     }
 
     @Override
+    public PoiAtDistanceWithDirection getItem(int position) {
+        return poiList.get(position);
+    }
+
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE);
             convertView = inflater.inflate(R.layout.poi_row, parent, false);
         }
-        PoiAtDistanceWithDirection poi = poiList.get(position);
+        PoiAtDistanceWithDirection poi = getItem(position);
         final TextView poiNameText = (TextView) convertView.findViewById(R.id.poi_name);
         final TextView poiDistanceText = (TextView) convertView.findViewById(R.id.poi_distance);
         final ImageView poiDirectionIcon = (ImageView) convertView.findViewById(R.id.poi_direction_icon);
