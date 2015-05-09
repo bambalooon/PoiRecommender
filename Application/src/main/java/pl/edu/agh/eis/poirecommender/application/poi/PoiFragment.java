@@ -34,6 +34,7 @@ public class PoiFragment extends Fragment {
     private Poi mPoi;
     private PoiRecommenderServiceInvoker mServiceInvoker;
     private RatingProvider mRatingProvider;
+    private Button mCheckInPoiButton;
 
     public static PoiFragment newInstance(Element poiElement) {
         PoiFragment poiFragment = new PoiFragment();
@@ -63,17 +64,24 @@ public class PoiFragment extends Fragment {
         TextView poiLatitudeTextView = (TextView) view.findViewById(R.id.poi_lat);
         TextView poiLongitudeTextView = (TextView) view.findViewById(R.id.poi_lon);
         RatingBar poiRatingBar = (RatingBar) view.findViewById(R.id.rating_bar);
-        Button checkInPoiButton = (Button) view.findViewById(R.id.poi_select);
+        mCheckInPoiButton = (Button) view.findViewById(R.id.poi_select);
 
         poiNameTextView.setText(mPoi.getName());
         Location poiLocation = mPoi.getLocation();
         poiLatitudeTextView.setText(Double.toString(poiLocation.getLatitude()));
         poiLongitudeTextView.setText(Double.toString(poiLocation.getLongitude()));
+        poiRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                mCheckInPoiButton.setEnabled(true);
+            }
+        });
         mRatingProvider = new RatingProvider(poiRatingBar, getResources().getInteger(R.integer.poi_rating_stars_count));
-        checkInPoiButton.setOnClickListener(new View.OnClickListener() {
+        mCheckInPoiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mServiceInvoker.storeAndRatePoiWithContext(mPoi.getElement(), mRatingProvider.getRating());
+                mCheckInPoiButton.setEnabled(false);
             }
         });
         return view;
