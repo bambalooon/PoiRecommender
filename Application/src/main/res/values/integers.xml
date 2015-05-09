@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <integer name="certainty_max">100</integer>
+
+    <integer name="poi_rating_stars_count">5</integer>
+    <integer name="poi_rating_stars_step">1</integer>
+    <integer name="poi_rating_stars_default">3</integer>
 </resources>

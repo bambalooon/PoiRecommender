@@ -61,6 +61,15 @@
 
     </LinearLayout>
 
+    <RatingBar
+        android:id="@+id/rating_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="@integer/poi_rating_stars_count"
+        android:stepSize="@integer/poi_rating_stars_step"
+        android:rating="@integer/poi_rating_stars_default"
+        />
+
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
