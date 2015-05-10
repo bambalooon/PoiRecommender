@@ -1,79 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent">
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
+    <TableRow>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Nazwa: "
+            android:text="@string/poi_name"
             />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/poi_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             />
+    </TableRow>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
+    <TableRow>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Latitude: "
+            android:text="@string/poi_latitude"
             />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/poi_lat"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             />
+    </TableRow>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
+    <TableRow>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Longitude: "
+            android:text="@string/poi_longitude"
             />
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:id="@+id/poi_lon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+    </TableRow>
+
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <RatingBar
+            android:id="@+id/rating_bar"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="@integer/poi_rating_stars_count"
+            android:stepSize="@integer/poi_rating_stars_step"
+            android:rating="@integer/poi_rating_stars_default"
+            android:visibility="invisible"
             />
 
-    </LinearLayout>
+        <ProgressBar
+            android:id="@+id/progress_bar"
+            style="?android:attr/progressBarStyleLarge"
+            android:layout_gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+    </FrameLayout>
 
-    <RatingBar
-        android:id="@+id/rating_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:numStars="@integer/poi_rating_stars_count"
-        android:stepSize="@integer/poi_rating_stars_step"
-        android:rating="@integer/poi_rating_stars_default"
-        />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/poi_select"
-        android:text="Go to"/>
-
-</LinearLayout>
+    <TableRow>
+        <Button
+            android:id="@+id/poi_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/poi_check_in"
+            />
+    </TableRow>
+</TableLayout>

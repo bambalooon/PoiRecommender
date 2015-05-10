@@ -26,4 +26,10 @@
     <string name="drawer_open">Otwarte</string>
     <string name="drawer_close">Zamknięte</string>
 
+    <!-- POI Fragment -->
+    <string name="poi_name">Nazwa:</string>
+    <string name="poi_latitude">Szer. geogr.:</string>
+    <string name="poi_longitude">Dł. geogr.:</string>
+    <string name="poi_check_in">Zgłoś się</string>
+
 </resources>
