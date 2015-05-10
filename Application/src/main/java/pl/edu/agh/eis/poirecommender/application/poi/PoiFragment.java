@@ -66,7 +66,7 @@ public class PoiFragment extends Fragment implements LoaderManager.LoaderCallbac
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.poi_fragment, container, false);
+        View view = inflater.inflate(R.layout.fragment_poi, container, false);
 
         TextView poiNameTextView = (TextView) view.findViewById(R.id.poi_name);
         TextView poiLatitudeTextView = (TextView) view.findViewById(R.id.poi_lat);

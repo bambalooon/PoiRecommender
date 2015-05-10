@@ -41,7 +41,7 @@ public class PoiArrayAdapter extends ArrayAdapter<PoiAtDistanceWithDirection> {
     private List<PoiAtDistanceWithDirection> poiList;
 
     public PoiArrayAdapter(Activity activity) {
-        super(activity, R.layout.poi_row);
+        super(activity, R.layout.row_poi);
         android.content.Context context = activity.getApplicationContext();
         this.locationHolder = new AwareLocationHolder(
                 new Context(context.getContentResolver(),
@@ -70,7 +70,7 @@ public class PoiArrayAdapter extends ArrayAdapter<PoiAtDistanceWithDirection> {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.poi_row, parent, false);
+            convertView = inflater.inflate(R.layout.row_poi, parent, false);
         }
         PoiAtDistanceWithDirection poi = getItem(position);
         final TextView poiNameText = (TextView) convertView.findViewById(R.id.poi_name);

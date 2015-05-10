@@ -8,13 +8,16 @@ import pl.edu.agh.eis.poirecommender.R;
 import java.util.List;
 
 /**
- * Created by Krzysztof Balon on 2015-04-17.
+ * Name: ContextAdapter
+ * Description: ContextAdapter
+ * Date: 2015-04-17
+ * Created by BamBalooon
  */
 public class ContextAdapter extends ArrayAdapter<GenericContextProperty> {
     private List<GenericContextProperty> contextProperties;
 
     public ContextAdapter(Activity activity) {
-        super(activity, R.layout.aware_row, R.id.aware_row_text);
+        super(activity, R.layout.row_aware, R.id.aware_row_text);
     }
 
     @Override

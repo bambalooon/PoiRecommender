@@ -31,7 +31,10 @@ import java.util.Collections;
 import java.util.List;
 
 /**
- * Created by Krzysztof Balon on 2014-11-16.
+ * Name: RuleArrayAdapter
+ * Description: RuleArrayAdapter
+ * Date: 2014-11-16
+ * Created by BamBalooon
  */
 public class RuleArrayAdapter extends ArrayAdapter<Rule> {
     private static final int[] ROW_BACKGROUND_COLORS = {Color.TRANSPARENT, Color.YELLOW};
@@ -42,7 +45,7 @@ public class RuleArrayAdapter extends ArrayAdapter<Rule> {
     private List<Rule> ruleList;
 
     public RuleArrayAdapter(Activity activity, HeartPreferences heartPreferences) {
-        super(activity, R.layout.rule_row);
+        super(activity, R.layout.row_rule);
         this.heartPreferences = heartPreferences;
         updateRuleList();
     }
@@ -57,7 +60,7 @@ public class RuleArrayAdapter extends ArrayAdapter<Rule> {
         //TODO: clean up, optimize, create classes encapsulating rule menu creation
         final LayoutInflater inflater = LayoutInflater.from(getContext());
 //        if (convertView == null) {
-            convertView = inflater.inflate(R.layout.rule_row, parent, false);
+            convertView = inflater.inflate(R.layout.row_rule, parent, false);
             convertView.setBackgroundColor(ROW_BACKGROUND_COLORS[position % ROW_BACKGROUND_COLORS.length]);
 //        }
         final Rule rule = ruleList.get(position);
@@ -67,7 +70,7 @@ public class RuleArrayAdapter extends ArrayAdapter<Rule> {
             final String operationName = formulae.getOp().getText();
             final String attributeValue = formulae.getValue().toString();
 
-            RelativeLayout conditionRow = (RelativeLayout) inflater.inflate(R.layout.rule_condition_row, ruleRow, false);
+            RelativeLayout conditionRow = (RelativeLayout) inflater.inflate(R.layout.row_rule_condition, ruleRow, false);
             TextView attributeNameText = (TextView) conditionRow.findViewById(R.id.attribute_name);
             attributeNameText.setText(attributeName);
 
@@ -275,7 +278,7 @@ public class RuleArrayAdapter extends ArrayAdapter<Rule> {
             ruleRow.addView(conditionRow);
         }
         for (final Decision decision : rule.getDecisions()) {
-            RelativeLayout decisionRow = (RelativeLayout) inflater.inflate(R.layout.rule_decision_row, ruleRow, false);
+            RelativeLayout decisionRow = (RelativeLayout) inflater.inflate(R.layout.row_rule_decision, ruleRow, false);
             TextView attributeNameText = (TextView) decisionRow.findViewById(R.id.attribute_name);
             attributeNameText.setText(decision.getAttribute().getName());
             TextView attributeValueText = (TextView) decisionRow.findViewById(R.id.attribute_value);

@@ -14,14 +14,17 @@ import pl.edu.agh.eis.poirecommender.interests.model.Interest;
 import pl.edu.agh.eis.poirecommender.service.RecommenderService;
 
 /**
- * Created by Krzysztof Balon on 2014-10-26.
+ * Name: InterestArrayAdapter
+ * Description: InterestArrayAdapter
+ * Date: 2014-10-26
+ * Created by BamBalooon
  */
 public class InterestArrayAdapter extends ArrayAdapter<Interest> {
     private final InterestStorage interestStorage;
     private final String[] interestNames;
 
     public InterestArrayAdapter(Activity activity) {
-        super(activity, R.layout.interest_row);
+        super(activity, R.layout.row_interest);
         this.interestStorage = new InterestStorage(activity.getApplicationContext());
         this.interestNames = activity.getResources().getStringArray(R.array.interest_names);
     }
@@ -35,7 +38,7 @@ public class InterestArrayAdapter extends ArrayAdapter<Interest> {
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.interest_row, parent, false);
+            convertView = inflater.inflate(R.layout.row_interest, parent, false);
         }
 
         final Interest interest = interestStorage.getInterest(position);
