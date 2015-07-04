@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import com.aware.poirecommender.openstreetmap.model.response.Element;
 import com.aware.poirecommender.provider.PoiRecommenderContract;
 import com.aware.poirecommender.transform.Serializer;
@@ -112,6 +113,8 @@ public class PoiFragment extends Fragment implements LoaderManager.LoaderCallbac
             @Override
             public void onClick(View v) {
                 mServiceInvoker.storeContext(mPoi.getElement().getId());
+                //FIXME: message should be displayed after check in ended successfully
+                Toast.makeText(getActivity(), R.string.checked_in_message, Toast.LENGTH_SHORT).show();
             }
         });
         return view;

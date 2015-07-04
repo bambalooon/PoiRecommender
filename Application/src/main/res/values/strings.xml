@@ -32,5 +32,6 @@
     <string name="poi_longitude">Longitude:</string>
     <string name="poi_check_in">Check In</string>
     <string name="save_poi_rating">Save POI rating</string>
+    <string name="checked_in_message">Your position was checked in!</string>
 
 </resources>
