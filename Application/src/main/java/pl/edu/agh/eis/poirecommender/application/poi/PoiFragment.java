@@ -100,7 +100,7 @@ public class PoiFragment extends Fragment implements LoaderManager.LoaderCallbac
         mSaveRatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mServiceInvoker.storeAndRatePoiWithContext(mPoi.getElement(), mRatingBarDecorator.getRating());
+                mServiceInvoker.storeAndRatePoiWithContext(mPoi.getElement().getId(), mRatingBarDecorator.getRating());
                 mSaveRatingButton.setVisibility(View.INVISIBLE);
                 mProgressBar.setVisibility(View.VISIBLE);
                 mRatingBarDecorator.disable();
@@ -109,7 +109,7 @@ public class PoiFragment extends Fragment implements LoaderManager.LoaderCallbac
         mCheckInPoiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mServiceInvoker.storeAndRatePoiWithContext(mPoi.getElement(), mRatingBarDecorator.getRating());
+                mServiceInvoker.storeAndRatePoiWithContext(mPoi.getElement().getId(), mRatingBarDecorator.getRating());
             }
         });
         return view;

@@ -4,9 +4,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import com.aware.poirecommender.openstreetmap.model.response.Element;
 import com.aware.poirecommender.service.PoiRecommenderService;
-import com.aware.poirecommender.transform.Serializer;
 
 /**
  * Name: PoiRecommenderServiceInvoker
@@ -24,11 +22,11 @@ public class PoiRecommenderServiceInvoker {
         this.actionStoreAndRatePoiWithContextRequestCode = actionStoreAndRatePoiWithContextRequestCode;
     }
 
-    public void storeAndRatePoiWithContext(Element poiElement, double poiRating) {
+    public void storeAndRatePoiWithContext(long poiId, double poiRating) {
         Intent actionIntent = new Intent(PoiRecommenderService.ACTION_STORE_AND_RATE_POI_WITH_CONTEXT);
         actionIntent.putExtra(
-                PoiRecommenderService.POI_EXTRA,
-                new Serializer<>(Element.class).serialize(poiElement));
+                PoiRecommenderService.POI_ID_EXTRA,
+                poiId);
         actionIntent.putExtra(
                 PoiRecommenderService.RATING_EXTRA,
                 poiRating);
