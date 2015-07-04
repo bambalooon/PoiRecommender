@@ -32,7 +32,6 @@ public class RatingBarDecorator {
     }
 
     public void enable() {
-        ratingBar.setVisibility(View.VISIBLE);
         ratingBar.setIsIndicator(false);
         ratingBar.setAlpha(RATING_BAR_ENABLED_ALPHA);
     }
