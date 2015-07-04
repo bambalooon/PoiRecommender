@@ -36,7 +36,8 @@ public class PoiFragment extends Fragment implements LoaderManager.LoaderCallbac
      * because starting pending intent with same request code cancels or updates previous one
      * According to: http://codetheory.in/android-pending-intents/
      */
-    private static final int ACTION_STORE_POI_WITH_CONTEXT_REQUEST_CODE = 0;
+    private static final int ACTION_RATE_POI_REQUEST_CODE = 0;
+    private static final int ACTION_STORE_CONTEXT_REQUEST_CODE = 1;
     private static final int POI_RATING_LOADER = 0;
 
     private Poi mPoi;
@@ -65,7 +66,8 @@ public class PoiFragment extends Fragment implements LoaderManager.LoaderCallbac
         mPoi = OsmPoi.fromOsmElement(poiElement);
         mServiceInvoker = new PoiRecommenderServiceInvoker(
                 getActivity().getApplicationContext(),
-                ACTION_STORE_POI_WITH_CONTEXT_REQUEST_CODE);
+                ACTION_RATE_POI_REQUEST_CODE,
+                ACTION_STORE_CONTEXT_REQUEST_CODE);
     }
 
     @Override
@@ -100,7 +102,7 @@ public class PoiFragment extends Fragment implements LoaderManager.LoaderCallbac
         mSaveRatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mServiceInvoker.storeAndRatePoiWithContext(mPoi.getElement().getId(), mRatingBarDecorator.getRating());
+                mServiceInvoker.ratePoi(mPoi.getElement().getId(), mRatingBarDecorator.getRating());
                 mSaveRatingButton.setVisibility(View.INVISIBLE);
                 mProgressBar.setVisibility(View.VISIBLE);
                 mRatingBarDecorator.disable();
@@ -109,7 +111,7 @@ public class PoiFragment extends Fragment implements LoaderManager.LoaderCallbac
         mCheckInPoiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mServiceInvoker.storeAndRatePoiWithContext(mPoi.getElement().getId(), mRatingBarDecorator.getRating());
+                mServiceInvoker.storeContext(mPoi.getElement().getId());
             }
         });
         return view;

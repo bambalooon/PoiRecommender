@@ -15,15 +15,19 @@ import com.aware.poirecommender.service.PoiRecommenderService;
 public class PoiRecommenderServiceInvoker {
     private static final String TAG = PoiRecommenderServiceInvoker.class.getSimpleName();
     private final Context context;
-    private final int actionStoreAndRatePoiWithContextRequestCode;
+    private final int actionRatePoiRequestCode;
+    private final int actionStoreContextRequestCode;
 
-    public PoiRecommenderServiceInvoker(Context context, int actionStoreAndRatePoiWithContextRequestCode) {
+    public PoiRecommenderServiceInvoker(Context context,
+                                        int actionRatePoiRequestCode,
+                                        int actionStoreContextRequestCode) {
         this.context = context;
-        this.actionStoreAndRatePoiWithContextRequestCode = actionStoreAndRatePoiWithContextRequestCode;
+        this.actionRatePoiRequestCode = actionRatePoiRequestCode;
+        this.actionStoreContextRequestCode = actionStoreContextRequestCode;
     }
 
-    public void storeAndRatePoiWithContext(long poiId, double poiRating) {
-        Intent actionIntent = new Intent(PoiRecommenderService.ACTION_STORE_AND_RATE_POI_WITH_CONTEXT);
+    public void ratePoi(long poiId, double poiRating) {
+        Intent actionIntent = new Intent(PoiRecommenderService.ACTION_RATE_POI);
         actionIntent.putExtra(
                 PoiRecommenderService.POI_ID_EXTRA,
                 poiId);
@@ -32,7 +36,24 @@ public class PoiRecommenderServiceInvoker {
                 poiRating);
         PendingIntent pendingIntent = PendingIntent.getService(
                 context,
-                actionStoreAndRatePoiWithContextRequestCode,
+                actionRatePoiRequestCode,
+                actionIntent,
+                PendingIntent.FLAG_UPDATE_CURRENT);
+        try {
+            pendingIntent.send();
+        } catch (PendingIntent.CanceledException e) {
+            Log.e(TAG, "Sending pending intent failed...", e);
+        }
+    }
+
+    public void storeContext(long poiId) {
+        Intent actionIntent = new Intent(PoiRecommenderService.ACTION_STORE_CONTEXT);
+        actionIntent.putExtra(
+                PoiRecommenderService.POI_ID_EXTRA,
+                poiId);
+        PendingIntent pendingIntent = PendingIntent.getService(
+                context,
+                actionStoreContextRequestCode,
                 actionIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT);
         try {
