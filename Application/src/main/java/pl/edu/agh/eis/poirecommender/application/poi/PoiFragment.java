@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -40,8 +41,11 @@ public class PoiFragment extends Fragment implements LoaderManager.LoaderCallbac
 
     private Poi mPoi;
     private PoiRecommenderServiceInvoker mServiceInvoker;
+
     private ProgressBar mProgressBar;
     private RatingBarDecorator mRatingBarDecorator;
+    private ImageButton mSaveRatingButton;
+
     private Button mCheckInPoiButton;
 
     public static PoiFragment newInstance(Element poiElement) {
@@ -67,13 +71,16 @@ public class PoiFragment extends Fragment implements LoaderManager.LoaderCallbac
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_poi, container, false);
-
+        //POI info
         TextView poiNameTextView = (TextView) view.findViewById(R.id.poi_name);
         TextView poiLatitudeTextView = (TextView) view.findViewById(R.id.poi_lat);
         TextView poiLongitudeTextView = (TextView) view.findViewById(R.id.poi_lon);
+        //Rating menu
         mProgressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
         RatingBar poiRatingBar = (RatingBar) view.findViewById(R.id.rating_bar);
-        mCheckInPoiButton = (Button) view.findViewById(R.id.poi_select);
+        mSaveRatingButton = (ImageButton) view.findViewById(R.id.save_rating_btn);
+        //Check In
+        mCheckInPoiButton = (Button) view.findViewById(R.id.check_in_btn);
 
         getActivity().getSupportLoaderManager().restartLoader(POI_RATING_LOADER, null, this);
 
@@ -84,17 +91,25 @@ public class PoiFragment extends Fragment implements LoaderManager.LoaderCallbac
         poiRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                mCheckInPoiButton.setEnabled(true);
+                mSaveRatingButton.setVisibility(View.VISIBLE);
             }
         });
+
         mRatingBarDecorator = new RatingBarDecorator(poiRatingBar);
+        mRatingBarDecorator.disable();
+        mSaveRatingButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mServiceInvoker.storeAndRatePoiWithContext(mPoi.getElement(), mRatingBarDecorator.getRating());
+                mSaveRatingButton.setVisibility(View.INVISIBLE);
+                mProgressBar.setVisibility(View.VISIBLE);
+                mRatingBarDecorator.disable();
+            }
+        });
         mCheckInPoiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 mServiceInvoker.storeAndRatePoiWithContext(mPoi.getElement(), mRatingBarDecorator.getRating());
-                mCheckInPoiButton.setEnabled(false);
-                mProgressBar.setVisibility(View.VISIBLE);
-                mRatingBarDecorator.disable();
             }
         });
         return view;
@@ -122,6 +137,9 @@ public class PoiFragment extends Fragment implements LoaderManager.LoaderCallbac
             int poiRatingColumnIndex = poiRatingCursor.getColumnIndex(PoiRecommenderContract.PoisRating.POI_RATING);
             double poiRating = poiRatingCursor.getDouble(poiRatingColumnIndex);
             mRatingBarDecorator.setRating(poiRating);
+            mSaveRatingButton.setVisibility(View.INVISIBLE);
+        } else { //No rating for selected POI
+            mSaveRatingButton.setVisibility(View.VISIBLE);
         }
         mProgressBar.setVisibility(View.INVISIBLE);
         mRatingBarDecorator.enable();

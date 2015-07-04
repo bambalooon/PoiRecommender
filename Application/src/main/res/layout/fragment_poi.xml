@@ -49,16 +49,28 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <RatingBar
-            android:id="@+id/rating_bar"
+        <TableRow
             android:layout_gravity="center"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:numStars="@integer/poi_rating_stars_count"
-            android:stepSize="@integer/poi_rating_stars_step"
-            android:rating="@integer/poi_rating_stars_default"
-            android:visibility="invisible"
-            />
+            android:layout_height="wrap_content">
+            <RatingBar
+                android:id="@+id/rating_bar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:numStars="@integer/poi_rating_stars_count"
+                android:stepSize="@integer/poi_rating_stars_step"
+                android:rating="@integer/poi_rating_stars_default"
+                />
+
+            <ImageButton
+                android:id="@+id/save_rating_btn"
+                android:src="@drawable/ic_action_accept"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/save_poi_rating"
+                />
+        </TableRow>
 
         <ProgressBar
             android:id="@+id/progress_bar"
@@ -71,7 +83,7 @@
 
     <TableRow>
         <Button
-            android:id="@+id/poi_select"
+            android:id="@+id/check_in_btn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/poi_check_in"
