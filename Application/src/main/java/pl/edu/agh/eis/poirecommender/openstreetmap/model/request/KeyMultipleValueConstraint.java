@@ -9,7 +9,7 @@ import java.util.List;
  * Created by Krzysztof Balon on 2014-11-08.
  */
 public class KeyMultipleValueConstraint implements Constraint {
-    private final char ASSIGNMENT_SIGN = '~';
+    private static final char ASSIGNMENT_SIGN = '~';
     private final Joiner VALUES_JOINER = Joiner.on('|');
     private final String key;
     private final List<String> values;

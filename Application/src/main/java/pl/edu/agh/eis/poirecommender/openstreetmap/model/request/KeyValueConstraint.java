@@ -4,11 +4,12 @@ package pl.edu.agh.eis.poirecommender.openstreetmap.model.request;
  * Created by Krzysztof Balon on 2014-11-08.
  */
 public class KeyValueConstraint implements Constraint {
-    private static final char ASSIGNMENT_SIGN = '=';
+    private final char assignmentSign;
     private final String key;
     private final String value;
 
-    public KeyValueConstraint(String key, String value) {
+    public KeyValueConstraint(char assignmentSign, String key, String value) {
+        this.assignmentSign = assignmentSign;
         this.key = key;
         this.value = value;
     }
@@ -20,7 +21,7 @@ public class KeyValueConstraint implements Constraint {
                 CONSTRAINT_VALUE_START,
                 key,
                 CONSTRAINT_VALUE_END,
-                ASSIGNMENT_SIGN,
+                assignmentSign,
                 CONSTRAINT_VALUE_START,
                 value,
                 CONSTRAINT_VALUE_END,

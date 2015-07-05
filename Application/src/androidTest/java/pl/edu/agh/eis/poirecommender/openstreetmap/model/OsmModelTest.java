@@ -37,7 +37,7 @@ public class OsmModelTest extends TestCase {
         final Location location = generateLocation(EXPECTED_LATITUDE, EXPECTED_LONGITUDE);
         this.aroundArea = new AroundArea(location, EXPECTED_RADIUS);
         this.keyConstraint = new KeyConstraint(KEY_CONSTRAINT_KEY);
-        this.keyValueConstraint = new KeyValueConstraint(KEY_VALUE_CONSTRAINT_KEY, KEY_VALUE_CONSTRAINT_VALUE);
+        this.keyValueConstraint = new KeyValueEqualConstraint(KEY_VALUE_CONSTRAINT_KEY, KEY_VALUE_CONSTRAINT_VALUE);
         this.keyMultipleValueConstraint =
                 new KeyMultipleValueConstraint(KEY_MULTI_VALUE_CONSTRAINT_KEY, KEY_MULTI_VALUE_CONSTRAINT_VALUES);
     }
