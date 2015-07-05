@@ -1,7 +1,11 @@
 package pl.edu.agh.eis.poirecommender.application.find_poi;
 
+import android.app.SearchManager;
+import android.content.Context;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
+import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -23,6 +27,10 @@ public class FindPoiFragment extends ListFragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.find_poi, menu);
+        FragmentActivity activity = getActivity();
+        SearchManager searchManager = (SearchManager) activity.getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView = (SearchView) menu.findItem(R.id.action_find_poi).getActionView();
+        searchView.setSearchableInfo(searchManager.getSearchableInfo(activity.getComponentName()));
     }
 
     @Override
