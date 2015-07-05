@@ -35,4 +35,7 @@
     <string name="save_poi_rating">Save POI rating</string>
     <string name="checked_in_message">Your position was checked in!</string>
 
+    <!-- Find POI Fragment -->
+    <string name="poi_search_hint">POI name</string>
+
 </resources>

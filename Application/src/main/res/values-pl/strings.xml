@@ -35,4 +35,7 @@
     <string name="save_poi_rating">Zapisz ocenę punktu POI</string>
     <string name="checked_in_message">Twoja pozycja została zgłoszona!</string>
 
+    <!-- Find POI Fragment -->
+    <string name="poi_search_hint">Nazwa punktu POI</string>
+
 </resources>
