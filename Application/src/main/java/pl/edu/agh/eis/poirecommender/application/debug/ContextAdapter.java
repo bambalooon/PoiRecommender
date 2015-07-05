@@ -17,7 +17,7 @@ public class ContextAdapter extends ArrayAdapter<GenericContextProperty> {
     private List<GenericContextProperty> contextProperties;
 
     public ContextAdapter(Activity activity) {
-        super(activity, R.layout.row_aware, R.id.aware_row_text);
+        super(activity, R.layout.row_aware);
     }
 
     @Override
