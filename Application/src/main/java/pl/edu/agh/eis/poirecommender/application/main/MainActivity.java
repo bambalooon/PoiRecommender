@@ -48,6 +48,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //TODO: start activity with search action in find POI fragment
         setContentView(R.layout.activity_recommender);
 
         mDrawerTitle = getTitle();
