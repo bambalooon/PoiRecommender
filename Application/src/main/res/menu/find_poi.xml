@@ -1,0 +1,10 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+      xmlns:app="http://schemas.android.com/apk/res-auto"
+      xmlns:tools="http://schemas.android.com/tools"
+      tools:context="pl.edu.agh.eis.poirecommender.application.main.MainActivity" >
+    <item android:id="@+id/action_find_poi"
+          android:icon="@drawable/ic_action_search"
+          android:title="@string/action_find_poi"
+          app:showAsAction="ifRoom"
+        />
+</menu>

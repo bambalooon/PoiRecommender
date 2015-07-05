@@ -11,6 +11,7 @@
     <string name="action_add">Add</string>
     <string name="action_save">Save</string>
     <string name="action_cancel">Cancel</string>
+    <string name="action_find_poi">Find POI</string>
 
     <!-- Recommendation -->
     <string name="emptyRecommendationList">Nothing to recommend…</string>
