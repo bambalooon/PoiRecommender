@@ -19,6 +19,7 @@ import pl.edu.agh.eis.poirecommender.R;
  * Created by BamBalooon
  */
 public class FindPoiFragment extends ListFragment {
+    //TODO: Try to use SearchFragment from support library leanback-v17 instead
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
