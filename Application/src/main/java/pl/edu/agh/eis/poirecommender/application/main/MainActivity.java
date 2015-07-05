@@ -1,5 +1,6 @@
 package pl.edu.agh.eis.poirecommender.application.main;
 
+import android.app.SearchManager;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
@@ -20,10 +21,10 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import pl.edu.agh.eis.poirecommender.R;
 import pl.edu.agh.eis.poirecommender.application.debug.AwareFragment;
+import pl.edu.agh.eis.poirecommender.application.find_poi.FindPoiFragment;
 import pl.edu.agh.eis.poirecommender.application.interests.InterestsFragment;
 import pl.edu.agh.eis.poirecommender.application.recommender.RecommenderFragment;
 import pl.edu.agh.eis.poirecommender.application.rules.RulesFragment;
-import pl.edu.agh.eis.poirecommender.application.find_poi.FindPoiFragment;
 import pl.edu.agh.eis.poirecommender.aware.AwareContextObservingService;
 
 import java.util.ArrayList;
@@ -91,6 +92,14 @@ public class MainActivity extends ActionBarActivity {
                 return null;
             }
         });
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+        }
     }
 
     @Override
