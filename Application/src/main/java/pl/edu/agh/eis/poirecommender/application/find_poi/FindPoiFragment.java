@@ -12,7 +12,10 @@ import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ListView;
 import pl.edu.agh.eis.poirecommender.R;
+import pl.edu.agh.eis.poirecommender.application.poi.PoiFragment;
 import pl.edu.agh.eis.poirecommender.pois.model.PoiAtDistanceWithDirection;
 
 import java.util.List;
@@ -27,12 +30,14 @@ public class FindPoiFragment extends ListFragment {
     //TODO: Try to use SearchFragment from support library leanback-v17 instead
     private static final int POIS_LOADER = 0;
     private PoiListLoader poiListLoader;
+    private PoiListAdapter poiListAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        setListAdapter(new PoiListAdapter(getActivity()));
+        poiListAdapter = new PoiListAdapter(getActivity());
+        setListAdapter(poiListAdapter);
         poiListLoader = new PoiListLoader(getActivity());
         getLoaderManager().initLoader(POIS_LOADER, null,
                 new LoaderManager.LoaderCallbacks<List<PoiAtDistanceWithDirection>>() {
@@ -43,12 +48,12 @@ public class FindPoiFragment extends ListFragment {
 
                     @Override
                     public void onLoadFinished(Loader<List<PoiAtDistanceWithDirection>> loader, List<PoiAtDistanceWithDirection> data) {
-                        ((PoiListAdapter) getListAdapter()).swapPoiList(data);
+                        poiListAdapter.swapPoiList(data);
                     }
 
                     @Override
                     public void onLoaderReset(Loader<List<PoiAtDistanceWithDirection>> loader) {
-                        ((PoiListAdapter) getListAdapter()).swapPoiList(null);
+                        poiListAdapter.swapPoiList(null);
                     }
                 });
     }
@@ -76,6 +81,16 @@ public class FindPoiFragment extends ListFragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onListItemClick(ListView l, View v, int position, long id) {
+        //TODO: allow to go back to list of found elements
+        PoiFragment poiFragment = PoiFragment.newInstance(poiListAdapter.getItem(position).getElement());
+        getActivity().getSupportFragmentManager().beginTransaction()
+                .replace(R.id.content_frame, poiFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     public PoiListLoader getPoiListLoader() {
