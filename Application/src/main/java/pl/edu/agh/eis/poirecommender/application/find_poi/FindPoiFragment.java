@@ -9,11 +9,9 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.SearchView;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
+import android.view.*;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import pl.edu.agh.eis.poirecommender.R;
 import pl.edu.agh.eis.poirecommender.application.poi.PoiFragment;
 import pl.edu.agh.eis.poirecommender.pois.model.PoiAtDistanceWithDirection;
@@ -31,6 +29,7 @@ public class FindPoiFragment extends ListFragment {
     private static final int POIS_LOADER = 0;
     private PoiListLoader mPoiListLoader;
     private PoiListAdapter mPoiListAdapter;
+    private ProgressBar mProgressBar;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -49,13 +48,23 @@ public class FindPoiFragment extends ListFragment {
                     @Override
                     public void onLoadFinished(Loader<List<PoiAtDistanceWithDirection>> loader, List<PoiAtDistanceWithDirection> data) {
                         mPoiListAdapter.swapPoiList(data);
+                        mProgressBar.setVisibility(View.INVISIBLE);
                     }
 
                     @Override
                     public void onLoaderReset(Loader<List<PoiAtDistanceWithDirection>> loader) {
                         mPoiListAdapter.swapPoiList(null);
+                        mProgressBar.setVisibility(View.INVISIBLE);
                     }
                 });
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.fragment_find_poi, container, false);
+        mProgressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
+        mProgressBar.setVisibility(View.INVISIBLE);
+        return view;
     }
 
     @Override
@@ -86,6 +95,7 @@ public class FindPoiFragment extends ListFragment {
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         //TODO: allow to go back to list of found elements
+        //FIXME: bug when after search clicking back button twice?
         PoiFragment poiFragment = PoiFragment.newInstance(mPoiListAdapter.getItem(position).getElement());
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, poiFragment)
@@ -93,7 +103,8 @@ public class FindPoiFragment extends ListFragment {
                 .commit();
     }
 
-    public PoiListLoader getPoiListLoader() {
-        return mPoiListLoader;
+    public void executePoiSearchQuery(String poiName) {
+        mProgressBar.setVisibility(View.VISIBLE);
+        mPoiListLoader.loadPois(poiName);
     }
 }

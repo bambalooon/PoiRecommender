@@ -102,7 +102,7 @@ public class MainActivity extends ActionBarActivity {
             String poiName = intent.getStringExtra(SearchManager.QUERY);
             Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
             if (currentFragment instanceof FindPoiFragment) {
-                ((FindPoiFragment) currentFragment).getPoiListLoader().findPois(poiName);
+                ((FindPoiFragment) currentFragment).executePoiSearchQuery(poiName);
             }
         }
     }

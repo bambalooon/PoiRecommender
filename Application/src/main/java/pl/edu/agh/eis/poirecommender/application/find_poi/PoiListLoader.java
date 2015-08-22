@@ -40,7 +40,7 @@ public class PoiListLoader extends AsyncTaskLoader<List<PoiAtDistanceWithDirecti
         locationHolder = new AwareLocationHolder(context);
     }
 
-    public void findPois(String poiName) {
+    public void loadPois(String poiName) {
         this.poiName = poiName;
         onContentChanged();
     }
