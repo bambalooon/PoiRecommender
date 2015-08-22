@@ -27,12 +27,12 @@ import java.util.List;
 import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 
 /**
- * Name: PoiArrayAdapter
- * Description: PoiArrayAdapter
+ * Name: PoiListAdapter
+ * Description: PoiListAdapter
  * Date: 2014-11-11
  * Created by BamBalooon
  */
-public class PoiArrayAdapter extends ArrayAdapter<PoiAtDistanceWithDirection> {
+public class PoiListAdapter extends ArrayAdapter<PoiAtDistanceWithDirection> {
     //FIXME: add loader to load location in other thread
     private static final String DISTANCE_FORMAT = "%.0f%s";
     private static final String DISTANCE_UNIT = "m";
@@ -40,7 +40,7 @@ public class PoiArrayAdapter extends ArrayAdapter<PoiAtDistanceWithDirection> {
     private final LocationHolder locationHolder;
     private List<PoiAtDistanceWithDirection> poiList;
 
-    public PoiArrayAdapter(Activity activity) {
+    public PoiListAdapter(Activity activity) {
         super(activity, R.layout.row_poi);
         android.content.Context context = activity.getApplicationContext();
         this.locationHolder = new AwareLocationHolder(

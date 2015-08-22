@@ -14,14 +14,14 @@ import pl.edu.agh.eis.poirecommender.application.poi.PoiFragment;
  * Created by BamBalooon
  */
 public class RecommenderFragment extends ListFragment {
-    private PoiArrayAdapter poiArrayAdapter;
+    private PoiListAdapter poiListAdapter;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        poiArrayAdapter = new PoiArrayAdapter(getActivity());
-        setListAdapter(poiArrayAdapter);
+        poiListAdapter = new PoiListAdapter(getActivity());
+        setListAdapter(poiListAdapter);
     }
 
     @Override
@@ -33,7 +33,7 @@ public class RecommenderFragment extends ListFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_refresh:
-                poiArrayAdapter.notifyDataSetChanged();
+                poiListAdapter.notifyDataSetChanged();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -48,12 +48,12 @@ public class RecommenderFragment extends ListFragment {
     @Override
     public void onResume() {
         super.onResume();
-        poiArrayAdapter.notifyDataSetChanged();
+        poiListAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        PoiFragment poiFragment = PoiFragment.newInstance(poiArrayAdapter.getItem(position).getElement());
+        PoiFragment poiFragment = PoiFragment.newInstance(poiListAdapter.getItem(position).getElement());
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, poiFragment)
                 .addToBackStack(null)
