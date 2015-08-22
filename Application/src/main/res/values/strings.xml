@@ -37,5 +37,6 @@
 
     <!-- Find POI Fragment -->
     <string name="poi_search_hint">POI name</string>
+    <string name="emptyPoiSearchList">No POI that meets given criteria…</string>
 
 </resources>
