@@ -17,16 +17,13 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-/**
- * Created by Krzysztof Balon on 2014-11-09.
- */
 public class OsmExecutor {
     private static final String TAG = OsmExecutor.class.getSimpleName();
     private static final String OPEN_STREET_MAP_API_URL_STRING = "http://overpass-api.de/api/interpreter?data=";
     private static final String RESPONSE_ENCODING = "UTF-8";
     private static final String REQUEST_METHOD = "GET";
     private static final int READ_TIMEOUT = 30 * 1000;
-    private static final int CONNECTION_TIMEOUT = 10 * 1000;
+    private static final int CONNECTION_TIMEOUT = 30 * 1000;
 
     private final Serializer<OsmResponse> responseSerializer = new Serializer<>(OsmResponse.class);
 
@@ -64,7 +61,9 @@ public class OsmExecutor {
             if(in != null) {
                 try {
                     in.close();
-                } catch (IOException e) {}
+                } catch (IOException e) {
+                    Log.d(TAG, "IOException thrown while trying to close InputStream from OSM Service.", e);
+                }
             }
         }
     }
