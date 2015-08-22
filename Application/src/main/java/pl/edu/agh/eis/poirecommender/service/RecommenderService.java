@@ -69,6 +69,12 @@ public class RecommenderService extends IntentService {
     @Override
     protected void onHandleIntent(final Intent intent) {
         debugInfo();
+
+        final Location location = locationHolder.getLocation();
+        if (location == null) {
+            return;
+        }
+
         final ImmutableList<WithStateElement> stateElements = ImmutableList.of(
                 new GenericContextPropertySymbolicStateAdapter(
                         contextStorage.getContextProperty(PoiRecommenderContract.Contexts
@@ -93,9 +99,7 @@ public class RecommenderService extends IntentService {
         final PoiType recommendedPoiType = heartManager.inferencePreferredPoiType(stateElements)
                 .getPoiType();
 
-        final Location location = locationHolder.getLocation();
-
-        if (recommendedPoiType != null && location != null) {
+        if (recommendedPoiType != null) {
             Log.d(TAG, "Recommendation poi type: " + recommendedPoiType.getText());
             final OsmRequest osmRequest = new OsmJsonRequest(PoiTypeToConstraintMap.getConstraint(recommendedPoiType), location);
             OsmResponse osmResponse = new OsmExecutor().execute(osmRequest, getApplicationContext());
