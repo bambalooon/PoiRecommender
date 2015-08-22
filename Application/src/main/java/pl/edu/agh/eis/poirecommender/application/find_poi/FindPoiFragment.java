@@ -6,11 +6,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.ListFragment;
+import android.support.v4.app.LoaderManager;
+import android.support.v4.content.Loader;
 import android.support.v7.widget.SearchView;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import pl.edu.agh.eis.poirecommender.R;
+import pl.edu.agh.eis.poirecommender.pois.model.PoiAtDistanceWithDirection;
+
+import java.util.List;
 
 /**
  * Name: FindPoiFragment
@@ -20,10 +25,32 @@ import pl.edu.agh.eis.poirecommender.R;
  */
 public class FindPoiFragment extends ListFragment {
     //TODO: Try to use SearchFragment from support library leanback-v17 instead
+    private static final int POIS_LOADER = 0;
+    private PoiListLoader poiListLoader;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        setListAdapter(new PoiListAdapter(getActivity()));
+        poiListLoader = new PoiListLoader(getActivity());
+        getLoaderManager().initLoader(POIS_LOADER, null,
+                new LoaderManager.LoaderCallbacks<List<PoiAtDistanceWithDirection>>() {
+                    @Override
+                    public Loader<List<PoiAtDistanceWithDirection>> onCreateLoader(int id, Bundle args) {
+                        return poiListLoader;
+                    }
+
+                    @Override
+                    public void onLoadFinished(Loader<List<PoiAtDistanceWithDirection>> loader, List<PoiAtDistanceWithDirection> data) {
+                        ((PoiListAdapter) getListAdapter()).swapPoiList(data);
+                    }
+
+                    @Override
+                    public void onLoaderReset(Loader<List<PoiAtDistanceWithDirection>> loader) {
+                        ((PoiListAdapter) getListAdapter()).swapPoiList(null);
+                    }
+                });
     }
 
     @Override
@@ -49,5 +76,9 @@ public class FindPoiFragment extends ListFragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    public PoiListLoader getPoiListLoader() {
+        return poiListLoader;
     }
 }
