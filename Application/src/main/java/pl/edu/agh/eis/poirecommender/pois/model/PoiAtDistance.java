@@ -2,6 +2,7 @@ package pl.edu.agh.eis.poirecommender.pois.model;
 
 import android.location.Location;
 import com.aware.poirecommender.openstreetmap.model.response.Element;
+import com.google.common.base.Function;
 
 /**
  * Name: PoiAtDistance
@@ -39,5 +40,18 @@ public class PoiAtDistance implements Poi, AtDistance {
 
     public Location getCurrentLocation() {
         return currentLocation;
+    }
+
+    public static class AttachLocationToPoi implements Function<Poi, PoiAtDistance> {
+        private final Location location;
+
+        public AttachLocationToPoi(Location location) {
+            this.location = location;
+        }
+
+        @Override
+        public PoiAtDistance apply(Poi poi) {
+            return new PoiAtDistance(poi, location);
+        }
     }
 }

@@ -2,6 +2,9 @@ package pl.edu.agh.eis.poirecommender.pois.model;
 
 import android.location.Location;
 import com.aware.poirecommender.openstreetmap.model.response.Element;
+import com.google.common.base.Function;
+
+import java.util.Comparator;
 
 import static java.lang.Math.abs;
 import static pl.edu.agh.eis.poirecommender.pois.model.CardinalDirection.*;
@@ -20,7 +23,6 @@ public class PoiAtDistanceWithDirection implements Poi, AtDistance, WithDirectio
     public PoiAtDistanceWithDirection(PoiAtDistance poi) {
         this.poi = poi;
     }
-
 
     @Override
     public String getName() {
@@ -62,4 +64,24 @@ public class PoiAtDistanceWithDirection implements Poi, AtDistance, WithDirectio
                     : tg >= -INTERCORDINAL_MAX ? SW
                     : S;
     }
+
+    public static final Function<PoiAtDistance, PoiAtDistanceWithDirection> ATTACH_DIRECTION_TO_POI =
+            new Function<PoiAtDistance, PoiAtDistanceWithDirection>() {
+                @Override
+                public PoiAtDistanceWithDirection apply(PoiAtDistance poi) {
+                    return new PoiAtDistanceWithDirection(poi);
+                }
+            };
+
+    public static final Comparator<AtDistance> DISTANCE_COMPARATOR = new Comparator<AtDistance>() {
+        @Override
+        public int compare(AtDistance atDistance, AtDistance atDistance2) {
+            double comparison = atDistance.getDistance() - atDistance2.getDistance();
+            return comparison > 0
+                    ? 1
+                    : comparison == 0
+                    ? 0
+                    : -1;
+        }
+    };
 }
