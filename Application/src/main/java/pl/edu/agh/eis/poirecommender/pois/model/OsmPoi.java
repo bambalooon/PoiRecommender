@@ -2,6 +2,7 @@ package pl.edu.agh.eis.poirecommender.pois.model;
 
 import android.location.Location;
 import com.aware.poirecommender.openstreetmap.model.response.Element;
+import com.google.common.base.Function;
 
 /**
  * Name: OsmPoi
@@ -44,4 +45,11 @@ public class OsmPoi implements Poi {
     public Element getElement() {
         return osmElement;
     }
+
+    public static final Function<Element, ? extends Poi> OSM_ELEMENT_TO_POI = new Function<Element, OsmPoi>() {
+        @Override
+        public OsmPoi apply(Element element) {
+            return OsmPoi.fromOsmElement(element);
+        }
+    };
 }
