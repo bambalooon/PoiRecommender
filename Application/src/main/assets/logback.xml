@@ -1,0 +1,51 @@
+<configuration>
+    <!-- Properties -->
+    <property name="LOG_DIR" value="/data/data/pl.edu.agh.eis.poirecommender/log"/>
+    <property name="MSG_PATTERN" value="%d{MM-dd HH:mm:ss.SSS} [%thread] %-5level %class - %msg%n"/>
+    
+    <!-- Appenders -->
+
+    <appender name="logcat" class="ch.qos.logback.classic.android.LogcatAppender">
+        <encoder>
+            <pattern>%msg</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="full" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_DIR}/full.log</file>
+        <encoder>
+            <pattern>${MSG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="app" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_DIR}/app.log</file>
+        <encoder>
+            <pattern>${MSG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <appender name="gui" class="ch.qos.logback.core.FileAppender">
+        <file>${LOG_DIR}/gui.log</file>
+        <encoder>
+            <pattern>${MSG_PATTERN}</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Loggers -->
+
+    <logger name="pl.edu.agh.eis.poirecommender.application" additivity="false">
+        <appender-ref ref="gui"/>
+        <appender-ref ref="full"/>
+        <appender-ref ref="logcat"/>
+    </logger>
+
+    <logger name="pl.edu.agh.eis.poirecommender" level="DEBUG">
+        <appender-ref ref="app"/>
+    </logger>
+
+    <root level="INFO">
+        <appender-ref ref="full" />
+        <appender-ref ref="logcat"/>
+    </root>
+</configuration>
