@@ -13,7 +13,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -35,7 +34,6 @@ import java.util.concurrent.Executors;
 
 @Slf4j
 public class MainActivity extends ActionBarActivity {
-    private static final String TAG = MainActivity.class.getSimpleName();
     private static final String SAVED_FRAGMENT_TITLE = "SAVED_FRAGMENT_TITLE";
     private static final String SAVED_SELECTED_FRAGMENT_INDEX = "SAVED_SELECTED_FRAGMENT_INDEX";
     private static final int STARTUP_ITEM = 0;
@@ -207,7 +205,7 @@ public class MainActivity extends ActionBarActivity {
             mSelectedFragmentIndex = position;
             mDrawerLayout.closeDrawer(mDrawerList);
         } else {
-            Log.e(TAG, "Error in creating fragment.");
+            log.error("Error in creating fragment.");
         }
     }
 

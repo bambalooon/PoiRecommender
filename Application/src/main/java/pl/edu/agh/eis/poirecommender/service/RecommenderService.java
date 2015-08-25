@@ -3,7 +3,6 @@ package pl.edu.agh.eis.poirecommender.service;
 import android.app.IntentService;
 import android.content.Intent;
 import android.location.Location;
-import android.util.Log;
 import com.aware.context.property.GenericContextProperty;
 import com.aware.context.provider.Context;
 import com.aware.context.storage.ContextStorage;
@@ -15,6 +14,7 @@ import com.aware.poirecommender.provider.PoiRecommenderContract;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
+import lombok.extern.slf4j.Slf4j;
 import pl.edu.agh.eis.poirecommender.aware.AwareLocationHolder;
 import pl.edu.agh.eis.poirecommender.heartdroid.HeartManager;
 import pl.edu.agh.eis.poirecommender.heartdroid.adapters.*;
@@ -36,9 +36,9 @@ import java.util.Date;
  * Date: 2014-10-30
  * Created by BamBalooon
  */
+@Slf4j
 public class RecommenderService extends IntentService {
     private static final String RECOMMENDER_SERVICE_NAME = "PoiRecommender::Service";
-    private static final String TAG = RecommenderService.class.getSimpleName();
     private ContextStorage<GenericContextProperty> contextStorage;
     private LocationHolder locationHolder;
     private InterestStorage interestStorage;
@@ -100,7 +100,7 @@ public class RecommenderService extends IntentService {
                 .getPoiType();
 
         if (recommendedPoiType != null) {
-            Log.d(TAG, "Recommendation poi type: " + recommendedPoiType.getText());
+            log.debug("Recommendation poi type: " + recommendedPoiType.getText());
             final OsmRequest osmRequest = new OsmJsonRequest(PoiTypeToConstraintMap.getConstraint(recommendedPoiType), location);
             OsmResponse osmResponse = new OsmExecutor().execute(osmRequest, getApplicationContext());
             if (osmResponse != null) {
@@ -111,7 +111,7 @@ public class RecommenderService extends IntentService {
     }
 
     private void debugInfo() {
-        Log.d(TAG, contextStorage.getContextProperties().toString());
-        Log.d(TAG, FluentIterable.from(interestStorage.getInterestList()).join(Joiner.on("; ")));
+        log.debug(contextStorage.getContextProperties().toString());
+        log.debug(FluentIterable.from(interestStorage.getInterestList()).join(Joiner.on("; ")));
     }
 }

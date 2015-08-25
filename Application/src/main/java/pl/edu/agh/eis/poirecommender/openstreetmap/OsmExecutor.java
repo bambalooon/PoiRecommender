@@ -10,6 +10,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import com.google.common.io.CharStreams;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -17,8 +18,8 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+@Slf4j
 public class OsmExecutor {
-    private static final String TAG = OsmExecutor.class.getSimpleName();
     private static final String OPEN_STREET_MAP_API_URL_STRING = "http://overpass-api.de/api/interpreter?data=";
     private static final String RESPONSE_ENCODING = "UTF-8";
     private static final String REQUEST_METHOD = "GET";
@@ -47,14 +48,14 @@ public class OsmExecutor {
 
             urlConnection.connect();
             if(urlConnection.getResponseCode() != HttpURLConnection.HTTP_OK) {
-                Log.d(TAG, "Connection exception for url: " + url.toString() + ", status code: " + urlConnection.getResponseCode());
+                log.debug("Connection exception for url: " + url.toString() + ", status code: " + urlConnection.getResponseCode());
                 return null;
             }
             in = urlConnection.getInputStream();
             final String jsonResponse = CharStreams.toString(new InputStreamReader(in, RESPONSE_ENCODING));
             return responseSerializer.deserialize(jsonResponse);
         } catch (IOException e) {
-            Log.d(TAG, e.getMessage() + "\n" + FluentIterable.from(ImmutableList.copyOf(e.getStackTrace()))
+            log.debug(e.getMessage() + "\n" + FluentIterable.from(ImmutableList.copyOf(e.getStackTrace()))
                     .join(Joiner.on('\n')));
             return null;
         } finally {
@@ -62,7 +63,7 @@ public class OsmExecutor {
                 try {
                     in.close();
                 } catch (IOException e) {
-                    Log.d(TAG, "IOException thrown while trying to close InputStream from OSM Service.", e);
+                    log.debug("IOException thrown while trying to close InputStream from OSM Service.", e);
                 }
             }
         }

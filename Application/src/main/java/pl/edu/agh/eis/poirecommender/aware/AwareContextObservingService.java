@@ -7,8 +7,8 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.IBinder;
-import android.util.Log;
 import com.aware.context.provider.ContextContract;
+import lombok.extern.slf4j.Slf4j;
 import pl.edu.agh.eis.poirecommender.service.RecommenderService;
 
 /**
@@ -17,8 +17,8 @@ import pl.edu.agh.eis.poirecommender.service.RecommenderService;
  * Date: 2015-03-14
  * Created by BamBalooon
  */
+@Slf4j
 public class AwareContextObservingService extends Service {
-    private static final String TAG = AwareContextObservingService.class.getSimpleName();
     private HandlerThread handlerThread;
     private ContentObserver contextObserver;
 
@@ -26,7 +26,7 @@ public class AwareContextObservingService extends Service {
     public void onCreate() {
         super.onCreate();
 
-        handlerThread = new HandlerThread(TAG);
+        handlerThread = new HandlerThread(AwareContextObservingService.class.getSimpleName());
         handlerThread.start();
         Handler contextChangeHandler = new Handler(handlerThread.getLooper());
 
@@ -38,7 +38,7 @@ public class AwareContextObservingService extends Service {
             }
         };
         getContentResolver().registerContentObserver(ContextContract.Properties.CONTENT_URI, true, contextObserver);
-        Log.d(TAG, "Service created!");
+        log.debug("Service created!");
     }
 
     @Override
@@ -52,7 +52,7 @@ public class AwareContextObservingService extends Service {
         } else {
             handlerThread.quit();
         }
-        Log.d(TAG, "Service destroyed!");
+        log.debug("Service destroyed!");
     }
 
     @Override

@@ -3,8 +3,8 @@ package pl.edu.agh.eis.poirecommender.application.poi;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 import com.aware.poirecommender.service.PoiRecommenderService;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * Name: PoiRecommenderServiceInvoker
@@ -12,8 +12,8 @@ import com.aware.poirecommender.service.PoiRecommenderService;
  * Date: 2015-05-09
  * Created by BamBalooon
  */
+@Slf4j
 public class PoiRecommenderServiceInvoker {
-    private static final String TAG = PoiRecommenderServiceInvoker.class.getSimpleName();
     private final Context context;
     private final int actionRatePoiRequestCode;
     private final int actionStoreContextRequestCode;
@@ -42,7 +42,7 @@ public class PoiRecommenderServiceInvoker {
         try {
             pendingIntent.send();
         } catch (PendingIntent.CanceledException e) {
-            Log.e(TAG, "Sending pending intent failed...", e);
+            log.error("Sending pending intent failed...", e);
         }
     }
 
@@ -59,7 +59,7 @@ public class PoiRecommenderServiceInvoker {
         try {
             pendingIntent.send();
         } catch (PendingIntent.CanceledException e) {
-            Log.e(TAG, "Sending pending intent failed...", e);
+            log.error("Sending pending intent failed...", e);
         }
     }
 }
