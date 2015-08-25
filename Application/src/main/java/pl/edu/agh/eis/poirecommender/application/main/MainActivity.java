@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import lombok.extern.slf4j.Slf4j;
 import pl.edu.agh.eis.poirecommender.R;
 import pl.edu.agh.eis.poirecommender.application.debug.AwareFragment;
 import pl.edu.agh.eis.poirecommender.application.find_poi.FindPoiFragment;
@@ -32,6 +33,7 @@ import java.util.List;
 import java.util.concurrent.Callable;
 import java.util.concurrent.Executors;
 
+@Slf4j
 public class MainActivity extends ActionBarActivity {
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String SAVED_FRAGMENT_TITLE = "SAVED_FRAGMENT_TITLE";
@@ -93,6 +95,7 @@ public class MainActivity extends ActionBarActivity {
                 return null;
             }
         });
+        log.debug("PoiRecommender::MainActivity started.");
     }
 
     @Override
