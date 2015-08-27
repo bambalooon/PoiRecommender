@@ -96,8 +96,6 @@ public class FindPoiFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        //TODO: allow to go back to list of found elements
-        //FIXME: bug when after search clicking back button twice?
         PoiFragment poiFragment = PoiFragment.newInstance(mPoiListAdapter.getItem(position).getElement());
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, poiFragment)
