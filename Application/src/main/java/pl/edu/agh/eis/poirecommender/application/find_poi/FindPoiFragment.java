@@ -12,6 +12,7 @@ import android.support.v7.widget.SearchView;
 import android.view.*;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import lombok.extern.slf4j.Slf4j;
 import pl.edu.agh.eis.poirecommender.R;
 import pl.edu.agh.eis.poirecommender.application.poi.PoiFragment;
 import pl.edu.agh.eis.poirecommender.pois.model.PoiAtDistanceWithDirection;
@@ -24,6 +25,7 @@ import java.util.List;
  * Date: 2015-07-05
  * Created by BamBalooon
  */
+@Slf4j
 public class FindPoiFragment extends ListFragment {
     //TODO: Try to use SearchFragment from support library leanback-v17 instead
     private static final int POIS_LOADER = 0;
@@ -94,8 +96,6 @@ public class FindPoiFragment extends ListFragment {
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
-        //TODO: allow to go back to list of found elements
-        //FIXME: bug when after search clicking back button twice?
         PoiFragment poiFragment = PoiFragment.newInstance(mPoiListAdapter.getItem(position).getElement());
         getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.content_frame, poiFragment)
@@ -104,6 +104,7 @@ public class FindPoiFragment extends ListFragment {
     }
 
     public void executePoiSearchQuery(String poiName) {
+        log.debug("Searching for POI: {}", poiName);
         mProgressBar.setVisibility(View.VISIBLE);
         mPoiListLoader.loadPois(poiName);
     }

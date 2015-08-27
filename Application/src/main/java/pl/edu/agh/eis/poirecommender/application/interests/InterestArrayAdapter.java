@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import lombok.extern.slf4j.Slf4j;
 import pl.edu.agh.eis.poirecommender.R;
 import pl.edu.agh.eis.poirecommender.interests.InterestStorage;
 import pl.edu.agh.eis.poirecommender.interests.model.Interest;
@@ -19,6 +20,7 @@ import pl.edu.agh.eis.poirecommender.service.RecommenderService;
  * Date: 2014-10-26
  * Created by BamBalooon
  */
+@Slf4j
 public class InterestArrayAdapter extends ArrayAdapter<Interest> {
     private final InterestStorage interestStorage;
     private final String[] interestNames;
@@ -78,6 +80,7 @@ public class InterestArrayAdapter extends ArrayAdapter<Interest> {
         public void onStopTrackingTouch(SeekBar seekBar) {
             mActivity.setTitle(mTitle);
             interestStorage.setInterest(position, seekBar.getProgress());
+            log.debug("Interest {} set to: {}", interestNames[position], seekBar.getProgress());
             RecommenderService.notifyRecommender(getContext().getApplicationContext());
         }
     }

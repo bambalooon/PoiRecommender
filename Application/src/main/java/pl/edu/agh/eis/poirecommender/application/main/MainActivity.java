@@ -99,6 +99,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        setIntent(intent);
         if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
             String poiName = intent.getStringExtra(SearchManager.QUERY);
             Fragment currentFragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
@@ -106,6 +107,7 @@ public class MainActivity extends ActionBarActivity {
                 ((FindPoiFragment) currentFragment).executePoiSearchQuery(poiName);
             }
         }
+        log.debug("New intent with action: {}", intent.getAction());
     }
 
     @Override
@@ -158,12 +160,16 @@ public class MainActivity extends ActionBarActivity {
     public void onBackPressed() {
         if(mDrawerLayout.isDrawerOpen(mDrawerList)) {
             mDrawerLayout.closeDrawer(mDrawerList);
-        } else if (mSelectedFragmentIndex > STARTUP_ITEM) {
+        } else if (isBackStackEmpty() && mSelectedFragmentIndex > STARTUP_ITEM) {
             selectItem(STARTUP_ITEM);
             setTitle(mFragmentTitle);
         } else {
             super.onBackPressed();
         }
+    }
+
+    private boolean isBackStackEmpty() {
+        return getSupportFragmentManager().getBackStackEntryCount() == 0;
     }
 
     @Override
@@ -195,7 +201,9 @@ public class MainActivity extends ActionBarActivity {
         }
 
         if (fragment != null) {
+            log.debug("Selected {} in drawer", fragment.getClass().getSimpleName());
             FragmentManager fm = getSupportFragmentManager();
+            clearBackStack(fm);
             fm.beginTransaction()
                     .replace(R.id.content_frame, fragment)
                     .commit();
@@ -206,6 +214,12 @@ public class MainActivity extends ActionBarActivity {
             mDrawerLayout.closeDrawer(mDrawerList);
         } else {
             log.error("Error in creating fragment.");
+        }
+    }
+
+    private void clearBackStack(FragmentManager fm) {
+        for (int i = 0; i < fm.getBackStackEntryCount(); i++) {
+            fm.popBackStack();
         }
     }
 
