@@ -35,6 +35,7 @@ public class AwareContextObservingService extends Service {
             public void onChange(boolean selfChange) {
                 super.onChange(selfChange);
                 RecommenderService.notifyRecommender(getApplicationContext());
+                log.debug("Aware context change - recommender service notified");
             }
         };
         getContentResolver().registerContentObserver(ContextContract.Properties.CONTENT_URI, true, contextObserver);

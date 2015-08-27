@@ -106,6 +106,7 @@ public class MainActivity extends ActionBarActivity {
                 ((FindPoiFragment) currentFragment).executePoiSearchQuery(poiName);
             }
         }
+        log.debug("New intent with action: {}", intent.getAction());
     }
 
     @Override
@@ -195,6 +196,7 @@ public class MainActivity extends ActionBarActivity {
         }
 
         if (fragment != null) {
+            log.debug("Selected fragment {} in drawer", fragment.getClass().getSimpleName());
             FragmentManager fm = getSupportFragmentManager();
             fm.beginTransaction()
                     .replace(R.id.content_frame, fragment)

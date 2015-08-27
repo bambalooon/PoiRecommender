@@ -22,6 +22,7 @@ import heart.xtt.Decision;
 import heart.xtt.Rule;
 import heart.xtt.Table;
 import heart.xtt.XTTModel;
+import lombok.extern.slf4j.Slf4j;
 import pl.edu.agh.eis.poirecommender.R;
 import pl.edu.agh.eis.poirecommender.heartdroid.HeartManager;
 import pl.edu.agh.eis.poirecommender.heartdroid.HeartPreferences;
@@ -36,6 +37,7 @@ import java.util.List;
  * Date: 2014-11-16
  * Created by BamBalooon
  */
+@Slf4j
 public class RuleArrayAdapter extends ArrayAdapter<Rule> {
     private static final int[] ROW_BACKGROUND_COLORS = {Color.TRANSPARENT, Color.YELLOW};
     private static final List<String> SINGLE_VALUE_OPERATIONS = ImmutableList.of("eq", "neq", "lt", "gt", "lte", "gte");
@@ -57,6 +59,7 @@ public class RuleArrayAdapter extends ArrayAdapter<Rule> {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        long viewGenerationStart = System.currentTimeMillis();
         //TODO: clean up, optimize, create classes encapsulating rule menu creation
         final LayoutInflater inflater = LayoutInflater.from(getContext());
 //        if (convertView == null) {
@@ -321,6 +324,7 @@ public class RuleArrayAdapter extends ArrayAdapter<Rule> {
             });
             ruleRow.addView(decisionRow);
         }
+        log.trace("Rule row generated in: {}ms", System.currentTimeMillis() - viewGenerationStart);
         return convertView;
     }
 

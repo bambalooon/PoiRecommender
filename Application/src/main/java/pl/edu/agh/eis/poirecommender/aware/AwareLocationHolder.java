@@ -5,6 +5,7 @@ import com.aware.context.property.GenericContextProperty;
 import com.aware.context.storage.ContextStorage;
 import com.aware.poirecommender.provider.PoiRecommenderContract;
 import com.google.common.base.Function;
+import lombok.extern.slf4j.Slf4j;
 import pl.edu.agh.eis.poirecommender.utils.LocationHolder;
 
 import java.util.Map;
@@ -16,6 +17,7 @@ import java.util.Map;
  * Date: 2015-03-15
  * Created by BamBalooon
  */
+@Slf4j
 public class AwareLocationHolder implements LocationHolder {
     private static final String AWARE_LOCATION_PROPERTY_NAME = PoiRecommenderContract.Contexts.LOCATION_TIMESTAMP;
     private final ContextStorage<GenericContextProperty> awareContextStorage;
@@ -26,7 +28,9 @@ public class AwareLocationHolder implements LocationHolder {
 
     public Location getLocation() {
         GenericContextProperty contextProperty = awareContextStorage.getContextProperty(AWARE_LOCATION_PROPERTY_NAME);
-        return CONTEXT_PROPERTY_TO_LOCATION_TRANSFORM.apply(contextProperty);
+        Location location = CONTEXT_PROPERTY_TO_LOCATION_TRANSFORM.apply(contextProperty);
+        log.debug("Location returned from Aware DB: {}", location);
+        return location;
     }
 
     private static final Function<GenericContextProperty, Location> CONTEXT_PROPERTY_TO_LOCATION_TRANSFORM

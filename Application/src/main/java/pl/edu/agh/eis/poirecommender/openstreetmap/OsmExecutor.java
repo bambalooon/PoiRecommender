@@ -37,6 +37,7 @@ public class OsmExecutor {
     }
 
     public OsmResponse execute(OsmRequest osmRequest) {
+        long requestStart = System.currentTimeMillis();
         InputStream in = null;
         try {
             final URL url = new URL(OPEN_STREET_MAP_API_URL_STRING + osmRequest);
@@ -66,6 +67,7 @@ public class OsmExecutor {
                     log.debug("IOException thrown while trying to close InputStream from OSM Service.", e);
                 }
             }
+            log.debug("OSM request executed in {} ms", System.currentTimeMillis() - requestStart);
         }
     }
 }

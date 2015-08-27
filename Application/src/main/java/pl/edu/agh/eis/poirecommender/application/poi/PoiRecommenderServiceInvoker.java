@@ -41,6 +41,7 @@ public class PoiRecommenderServiceInvoker {
                 PendingIntent.FLAG_UPDATE_CURRENT);
         try {
             pendingIntent.send();
+            log.debug("POI {} rated: {}", poiId, poiRating);
         } catch (PendingIntent.CanceledException e) {
             log.error("Sending pending intent failed...", e);
         }
@@ -58,6 +59,7 @@ public class PoiRecommenderServiceInvoker {
                 PendingIntent.FLAG_UPDATE_CURRENT);
         try {
             pendingIntent.send();
+            log.debug("Context stored with POI {}", poiId);
         } catch (PendingIntent.CanceledException e) {
             log.error("Sending pending intent failed...", e);
         }

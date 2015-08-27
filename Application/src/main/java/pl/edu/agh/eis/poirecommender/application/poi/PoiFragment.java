@@ -20,6 +20,7 @@ import com.aware.poirecommender.openstreetmap.model.response.Element;
 import com.aware.poirecommender.provider.PoiRecommenderContract;
 import com.aware.poirecommender.transform.Serializer;
 import com.google.common.base.Preconditions;
+import lombok.extern.slf4j.Slf4j;
 import pl.edu.agh.eis.poirecommender.R;
 import pl.edu.agh.eis.poirecommender.pois.model.OsmPoi;
 import pl.edu.agh.eis.poirecommender.pois.model.Poi;
@@ -30,6 +31,7 @@ import pl.edu.agh.eis.poirecommender.pois.model.Poi;
  * Date: 2015-05-03
  * Created by BamBalooon
  */
+@Slf4j
 public class PoiFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
     private static final String ARGUMENT_POI_ELEMENT = "ARGUMENT_POI_ELEMENT";
     /**
@@ -69,6 +71,7 @@ public class PoiFragment extends Fragment implements LoaderManager.LoaderCallbac
                 getActivity().getApplicationContext(),
                 ACTION_RATE_POI_REQUEST_CODE,
                 ACTION_STORE_CONTEXT_REQUEST_CODE);
+        log.debug("PoiFragment created for {}", mPoi);
     }
 
     @Override
