@@ -1,8 +1,11 @@
 package pl.edu.agh.eis.poirecommender.openstreetmap.model;
 
 import android.location.Location;
+import android.support.test.runner.AndroidJUnit4;
 import com.google.common.collect.ImmutableList;
-import junit.framework.TestCase;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 import pl.edu.agh.eis.poirecommender.openstreetmap.OsmXmlRequest;
 import pl.edu.agh.eis.poirecommender.openstreetmap.PoiTypeToConstraintMap;
 import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.*;
@@ -10,12 +13,11 @@ import pl.edu.agh.eis.poirecommender.pois.model.OsmPoi;
 
 import java.util.List;
 
+import static junit.framework.Assert.assertEquals;
 import static pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType.*;
 
-/**
- * Created by Krzysztof Balon on 2014-11-08.
- */
-public class OsmModelTest extends TestCase {
+@RunWith(AndroidJUnit4.class)
+public class OsmModelTest {
     private static final double EXPECTED_LATITUDE = 10.15161;
     private static final double EXPECTED_LONGITUDE = 20.16171801;
     private static final float EXPECTED_RADIUS = 300.1701f;
@@ -31,9 +33,8 @@ public class OsmModelTest extends TestCase {
     private Constraint keyValueConstraint;
     private Constraint keyMultipleValueConstraint;
 
-    @Override
-    public void setUp() throws Exception {
-        super.setUp();
+    @Before
+    public void setUp() {
         final Location location = generateLocation(EXPECTED_LATITUDE, EXPECTED_LONGITUDE);
         this.aroundArea = new AroundArea(location, EXPECTED_RADIUS);
         this.keyConstraint = new KeyConstraint(KEY_CONSTRAINT_KEY);
@@ -42,6 +43,7 @@ public class OsmModelTest extends TestCase {
                 new KeyMultipleValueConstraint(KEY_MULTI_VALUE_CONSTRAINT_KEY, KEY_MULTI_VALUE_CONSTRAINT_VALUES);
     }
 
+    @Test
     public void testAroundAreaRequestPartCreation() {
         //when
         final String createdQueryPart = aroundArea.createQueryPart();
@@ -50,6 +52,7 @@ public class OsmModelTest extends TestCase {
         assertEquals("(around:300.17,10.151610,20.161718)", createdQueryPart);
     }
 
+    @Test
     public void testNodeKeyConstraintRequestPartCreation() {
         //when
         final String createdQueryPart = keyConstraint.createQueryPart();
@@ -58,6 +61,7 @@ public class OsmModelTest extends TestCase {
         assertEquals("[\"keyConstraint\"]", createdQueryPart);
     }
 
+    @Test
     public void testNodeKeyValueConstraintRequestPartCreation() {
         //when
         final String createdQueryPart = keyValueConstraint.createQueryPart();
@@ -66,6 +70,7 @@ public class OsmModelTest extends TestCase {
         assertEquals("[\"keyValueConstraintKey\"=\"keyValueConstraintValue\"]", createdQueryPart);
     }
 
+    @Test
     public void testNodeKeyMultipleValueConstraintRequestPartCreation() {
         //when
         final String createdQueryPart = keyMultipleValueConstraint.createQueryPart();
@@ -76,6 +81,7 @@ public class OsmModelTest extends TestCase {
                 createdQueryPart);
     }
 
+    @Test
     public void testNodeRequestPartCreation() {
         //when
         final String createdQuery = new Node(aroundArea, keyConstraint).createQuery();
@@ -86,6 +92,7 @@ public class OsmModelTest extends TestCase {
                 createdQuery);
     }
 
+    @Test
     public void testCompoundConstraint() {
         //given
         List<Constraint> constraints = ImmutableList.of(keyConstraint, keyValueConstraint, keyMultipleValueConstraint);
@@ -99,6 +106,7 @@ public class OsmModelTest extends TestCase {
                 createdQueryPart);
     }
 
+    @Test
     public void testCompositeConstraintBuilder() {
         //when
         final CompositeConstraint compositeConstraint = new CompositeConstraintBuilder(keyConstraint).and(keyValueConstraint).and(keyMultipleValueConstraint)
@@ -117,6 +125,7 @@ public class OsmModelTest extends TestCase {
                 compositeConstraint.getConstraints().get(2).createQueryPart());
     }
 
+    @Test
     public void testPoiTypeToConstraintMapping() {
         //given
         final List<String> expectedIndoorEatingConstraintQueryParts = ImmutableList
@@ -177,6 +186,7 @@ public class OsmModelTest extends TestCase {
         }
     }
 
+    @Test
     public void testOsmRequest() throws Exception {
         //given
         CompositeConstraint compositeConstraint = PoiTypeToConstraintMap.getConstraint(SHOPPING_CENTER);
