@@ -10,7 +10,6 @@ android {
         targetSdkVersion 22
         versionCode 1
         versionName "0.1"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
 
     compileOptions {
@@ -48,8 +47,6 @@ dependencies {
     compile "com.github.tony19:logback-android-classic:${logback_version}"
     compile "org.slf4j:slf4j-api:${slf4j_version}"
     // testing
-    androidTestCompile "junit:junit:${junit_version}"
-    androidTestCompile("com.android.support.test:testing-support-lib:${testingSupport_version}") {
-        exclude group: "junit"
-    }
+    testCompile "junit:junit:${junit_version}"
+    testCompile "org.mockito:mockito-core:${mockito_version}"
 }
