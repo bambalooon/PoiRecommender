@@ -10,8 +10,7 @@ import com.google.common.collect.FluentIterable;
 import pl.edu.agh.eis.poirecommender.aware.AwareLocationHolder;
 import pl.edu.agh.eis.poirecommender.openstreetmap.OsmExecutor;
 import pl.edu.agh.eis.poirecommender.openstreetmap.OsmJsonRequest;
-import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.CompositeConstraint;
-import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.CompositeConstraintBuilder;
+import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.Constraint;
 import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.KeyValueSimilarConstraint;
 import pl.edu.agh.eis.poirecommender.pois.model.OsmPoi;
 import pl.edu.agh.eis.poirecommender.pois.model.PoiAtDistance;
@@ -21,12 +20,6 @@ import pl.edu.agh.eis.poirecommender.utils.LocationHolder;
 import java.util.Collections;
 import java.util.List;
 
-/**
- * Name: PoiListLoader
- * Description: PoiListLoader
- * Date: 2015-07-05
- * Created by BamBalooon
- */
 public class PoiListLoader extends AsyncTaskLoader<List<PoiAtDistanceWithDirection>> {
     private List<PoiAtDistanceWithDirection> mData;
     private LocationHolder locationHolder;
@@ -53,12 +46,9 @@ public class PoiListLoader extends AsyncTaskLoader<List<PoiAtDistanceWithDirecti
             return Collections.emptyList();
         }
 
-        CompositeConstraint poiConstraints = new CompositeConstraintBuilder(
-                new KeyValueSimilarConstraint("name", poiName))
-                .build();
+        Constraint poiConstraint = new KeyValueSimilarConstraint("name", poiName);
 
-        OsmResponse osmResponse = new OsmExecutor()
-                .execute(new OsmJsonRequest(poiConstraints, location));
+        OsmResponse osmResponse = new OsmExecutor().execute(new OsmJsonRequest(poiConstraint, location));
 
         return FluentIterable.from(osmResponse.getElements())
                 .transform(OsmPoi.OSM_ELEMENT_TO_POI)
