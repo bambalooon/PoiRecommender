@@ -2,9 +2,6 @@ package pl.edu.agh.eis.poirecommender.openstreetmap.model.request;
 
 import java.util.LinkedList;
 
-/**
- * Created by Krzysztof Balon on 2014-11-09.
- */
 public class CompositeConstraintBuilder {
     private final CompositeConstraint compositeConstraint;
     private LinkedList<Constraint> constraints;

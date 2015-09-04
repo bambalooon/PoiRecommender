@@ -6,9 +6,6 @@ import com.google.common.collect.FluentIterable;
 
 import java.util.List;
 
-/**
- * Created by Krzysztof Balon on 2014-11-09.
- */
 public class CompoundConstraint implements Constraint {
     private static final Joiner CONSTRAINTS_AND_JOINER = Joiner.on("");
     private final List<Constraint> constraints;
