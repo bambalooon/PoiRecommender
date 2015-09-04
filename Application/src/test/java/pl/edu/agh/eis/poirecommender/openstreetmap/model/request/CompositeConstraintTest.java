@@ -1,6 +1,5 @@
 package pl.edu.agh.eis.poirecommender.openstreetmap.model.request;
 
-import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -45,7 +44,7 @@ public class CompositeConstraintTest {
 
         //when
         List<String> compositeQueries = FluentIterable.from(compositeConstraint.getConstraints())
-                .transform(TO_QUERY).toList();
+                .transform(QueryPart.TO_STRING).toList();
 
         //then
         assertEquals(compositeQueries, Arrays.asList(
@@ -53,11 +52,4 @@ public class CompositeConstraintTest {
                 "_CONSTRAINT_2_1_*CONSTRAINT_2_2*",
                 "#CONSTRAINT_3#"));
     }
-
-    private static final Function<Constraint, String> TO_QUERY = new Function<Constraint, String>() {
-        @Override
-        public String apply(Constraint constraint) {
-            return constraint.createQueryPart();
-        }
-    };
 }
