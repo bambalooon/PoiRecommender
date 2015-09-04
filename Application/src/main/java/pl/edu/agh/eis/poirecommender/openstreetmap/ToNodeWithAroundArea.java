@@ -7,9 +7,6 @@ import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.Constraint;
 import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.Node;
 import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.Query;
 
-/**
- * Created by Krzysztof Balon on 2014-11-09.
- */
 public class ToNodeWithAroundArea implements Function<Constraint, Query> {
     private static final float DEFAULT_RADIUS = 5000; //[m]
     private final Location location;

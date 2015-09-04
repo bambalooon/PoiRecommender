@@ -5,9 +5,6 @@ import com.google.common.collect.FluentIterable;
 
 import java.util.List;
 
-/**
- * Created by Krzysztof Balon on 2014-11-08.
- */
 public class KeyMultipleValueConstraint implements Constraint {
     private static final char ASSIGNMENT_SIGN = '~';
     private final Joiner VALUES_JOINER = Joiner.on('|');

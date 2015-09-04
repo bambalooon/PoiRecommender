@@ -5,13 +5,12 @@ import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
 import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.CompositeConstraint;
+import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.Constraint;
 import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.Query;
 
+import java.util.Collections;
 import java.util.List;
 
-/**
- * Created by Krzysztof Balon on 2014-11-09.
- */
 public class OsmXmlRequest implements OsmRequest {
     private static final Joiner QUERY_SEPARATOR = Joiner.on(';');
     private static final String REQUEST_START = "(";
@@ -19,8 +18,17 @@ public class OsmXmlRequest implements OsmRequest {
     private final List<Query> queries;
 
     public OsmXmlRequest(CompositeConstraint compositeConstraint, Location location) {
-        final ToNodeWithAroundArea toNodeWithAroundArea = new ToNodeWithAroundArea(location);
-        this.queries = FluentIterable.from(compositeConstraint.getConstraints())
+        this(compositeConstraint.getConstraints(), location);
+    }
+
+    public OsmXmlRequest(Constraint constraint, Location location) {
+        this(Collections.singletonList(constraint), location);
+    }
+
+    //TODO: ToNodeWithAroundArea should be extracted outside to avoid classes coupling
+    protected OsmXmlRequest(List<Constraint> constraints, Location location) {
+        ToNodeWithAroundArea toNodeWithAroundArea = new ToNodeWithAroundArea(location);
+        this.queries = FluentIterable.from(constraints)
                 .transform(toNodeWithAroundArea)
                 .toList();
     }

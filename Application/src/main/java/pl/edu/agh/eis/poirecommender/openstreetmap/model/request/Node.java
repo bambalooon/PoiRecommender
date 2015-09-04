@@ -1,8 +1,5 @@
 package pl.edu.agh.eis.poirecommender.openstreetmap.model.request;
 
-/**
- * Created by Krzysztof Balon on 2014-11-08.
- */
 public class Node implements Query {
     private static final String NODE_REQUEST = "node";
     private final Area area;
