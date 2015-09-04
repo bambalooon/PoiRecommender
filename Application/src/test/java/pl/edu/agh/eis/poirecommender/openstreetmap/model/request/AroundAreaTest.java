@@ -1,27 +1,26 @@
 package pl.edu.agh.eis.poirecommender.openstreetmap.model.request;
 
 import android.location.Location;
-import android.support.test.runner.AndroidJUnit4;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import pl.edu.agh.eis.poirecommender.pois.model.OsmPoi;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.BDDMockito.given;
 
-@RunWith(AndroidJUnit4.class)
+@RunWith(MockitoJUnitRunner.class)
 public class AroundAreaTest {
-    private static final Location LOCATION;
-    static {
-        LOCATION = new Location(OsmPoi.OSM_LOCATION_PROVIDER);
-        LOCATION.setTime(0);
-        LOCATION.setLatitude(10.15161);
-        LOCATION.setLongitude(20.16171801);
-    }
-
-    private Area aroundArea = new AroundArea(LOCATION, 300.1701f);
+    @Mock
+    private Location locationMock;
 
     @Test
     public void shouldCreateCorrectArountAreaRequestPart() {
+        //given
+        given(locationMock.getLatitude()).willReturn(10.15161);
+        given(locationMock.getLongitude()).willReturn(20.16171801);
+        Area aroundArea = new AroundArea(locationMock, 300.1701f);
+
         //when
         String createdQueryPart = aroundArea.createQueryPart();
 
