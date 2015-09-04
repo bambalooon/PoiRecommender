@@ -49,4 +49,5 @@ dependencies {
     // testing
     testCompile "junit:junit:${junit_version}"
     testCompile "org.mockito:mockito-core:${mockito_version}"
+    testCompile "pl.pragmatists:JUnitParams:${junitparams_version}"
 }
