@@ -8,7 +8,7 @@ public class KeyConstraintTest {
     private Constraint keyConstraint = new KeyConstraint("keyConstraint");
 
     @Test
-    public void testNodeKeyConstraintRequestPartCreation() {
+    public void shouldCreateCorrectKeyConstraintRequestPart() {
         //when
         String createdQueryPart = keyConstraint.createQueryPart();
 

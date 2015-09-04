@@ -15,7 +15,7 @@ public class AroundAreaTest {
     private Location locationMock;
 
     @Test
-    public void shouldCreateCorrectArountAreaRequestPart() {
+    public void shouldCreateCorrectAroundAreaRequestPart() {
         //given
         given(locationMock.getLatitude()).willReturn(10.15161);
         given(locationMock.getLongitude()).willReturn(20.16171801);

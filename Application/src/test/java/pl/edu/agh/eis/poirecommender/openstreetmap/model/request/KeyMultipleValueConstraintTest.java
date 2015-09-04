@@ -10,7 +10,7 @@ public class KeyMultipleValueConstraintTest {
             "constraintKey", ImmutableList.of("constraintValue1", "constraintValue2", "constraintValue3"));
 
     @Test
-    public void testNodeKeyMultipleValueConstraintRequestPartCreation() {
+    public void shouldCreateCorrectKeyMultipleValueConstraintRequestPart() {
         //when
         String createdQueryPart = keyMultipleValueConstraint.createQueryPart();
 

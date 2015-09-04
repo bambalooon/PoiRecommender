@@ -20,7 +20,7 @@ public class NodeTest {
     private Node node;
 
     @Test
-    public void testNodeRequestPartCreation() {
+    public void shouldCreateCorrectNodeRequestPart() {
         //given
         given(areaMock.createQueryPart()).willReturn("_AREA_");
         given(constraintMock.createQueryPart()).willReturn("+CONSTRAINT+");
