@@ -4,9 +4,6 @@ import android.location.Location;
 
 import java.util.Locale;
 
-/**
- * Created by Krzysztof Balon on 2014-11-08.
- */
 public class AroundArea implements Area {
     private static final String AROUND_RESTRICTOR = "around:";
     private final Location location;
