@@ -25,6 +25,7 @@ public class OsmXmlRequest implements OsmRequest {
         this(Collections.singletonList(constraint), location);
     }
 
+    //TODO: ToNodeWithAroundArea should be extracted outside to avoid classes coupling
     protected OsmXmlRequest(List<Constraint> constraints, Location location) {
         ToNodeWithAroundArea toNodeWithAroundArea = new ToNodeWithAroundArea(location);
         this.queries = FluentIterable.from(constraints)
