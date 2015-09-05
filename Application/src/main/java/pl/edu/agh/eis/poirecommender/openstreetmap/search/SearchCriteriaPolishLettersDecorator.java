@@ -6,7 +6,7 @@ import com.google.common.collect.FluentIterable;
 public class SearchCriteriaPolishLettersDecorator implements SearchCriteriaDecorable {
     private final SearchCriteriaDecorable searchCriteriaDecorable;
 
-    public SearchCriteriaPolishLettersDecorator(SearchCriteriaDecorable searchCriteriaDecorable) {
+    SearchCriteriaPolishLettersDecorator(SearchCriteriaDecorable searchCriteriaDecorable) {
         this.searchCriteriaDecorable = searchCriteriaDecorable;
     }
 

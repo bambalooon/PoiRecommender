@@ -13,8 +13,4 @@ public class SearchCriteriaDecorator implements SearchCriteriaDecorable {
     public Iterable<String> getSearchCriteria() {
         return Splitter.fixedLength(1).split(searchCriteria);
     }
-
-    public static SearchCriteriaDecorable decorate(String searchCriteria) {
-        return new SearchCriteriaDecorator(searchCriteria);
-    }
 }
