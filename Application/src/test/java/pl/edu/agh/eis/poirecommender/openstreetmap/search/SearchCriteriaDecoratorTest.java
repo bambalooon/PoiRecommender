@@ -1,11 +1,11 @@
 package pl.edu.agh.eis.poirecommender.openstreetmap.search;
 
-import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import org.junit.Test;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 public class SearchCriteriaDecoratorTest {
     @Test
@@ -17,7 +17,7 @@ public class SearchCriteriaDecoratorTest {
         Iterable<String> splitSearchCriteria = searchCriteriaDecorator.getSearchCriteria();
 
         //then
-        assertTrue(Iterables.elementsEqual(splitSearchCriteria,
-                Arrays.asList("S", "e", "a", "r", "c", "h", " ", "c", "r", "i", "t", "e", "r", "i", "a", ".")));
+        assertEquals(Arrays.asList("S", "e", "a", "r", "c", "h", " ", "c", "r", "i", "t", "e", "r", "i", "a", "."),
+                Lists.newArrayList(splitSearchCriteria));
     }
 }

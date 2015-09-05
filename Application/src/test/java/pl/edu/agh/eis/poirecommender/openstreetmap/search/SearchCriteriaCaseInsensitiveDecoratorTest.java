@@ -1,6 +1,6 @@
 package pl.edu.agh.eis.poirecommender.openstreetmap.search;
 
-import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
 import junitparams.JUnitParamsRunner;
 import junitparams.Parameters;
 import org.junit.Before;
@@ -14,7 +14,7 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static java.util.Collections.singletonList;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
 
 @RunWith(JUnitParamsRunner.class)
@@ -40,7 +40,7 @@ public class SearchCriteriaCaseInsensitiveDecoratorTest {
         Iterable<String> searchCriteria = searchCriteriaDecorator.getSearchCriteria();
 
         //then
-        assertTrue(Iterables.elementsEqual(searchCriteria, nonLetterCharacters));
+        assertEquals(nonLetterCharacters, Lists.newArrayList(searchCriteria));
     }
 
     @Test
@@ -54,7 +54,7 @@ public class SearchCriteriaCaseInsensitiveDecoratorTest {
         Iterable<String> searchCriteria = searchCriteriaDecorator.getSearchCriteria();
 
         //then
-        assertTrue(Iterables.elementsEqual(searchCriteria, outSearchCriteria));
+        assertEquals(outSearchCriteria, Lists.newArrayList(searchCriteria));
     }
 
     @SuppressWarnings("unused")
