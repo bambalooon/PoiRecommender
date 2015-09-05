@@ -5,15 +5,9 @@ import com.google.common.collect.FluentIterable;
 import org.apache.commons.lang3.StringUtils;
 
 class SearchCriteriaCaseInsensitiveDecorator implements SearchCriteriaDecorable {
-    private final SearchCriteriaDecorable searchCriteriaDecorable;
-
-    SearchCriteriaCaseInsensitiveDecorator(SearchCriteriaDecorable searchCriteriaDecorable) {
-        this.searchCriteriaDecorable = searchCriteriaDecorable;
-    }
-
     @Override
-    public Iterable<String> getSearchCriteria() {
-        return FluentIterable.from(searchCriteriaDecorable.getSearchCriteria())
+    public Iterable<String> decorate(Iterable<String> searchCriteria) {
+        return FluentIterable.from(searchCriteria)
                 .transform(new Function<String, String>() {
                     @Override
                     public String apply(String input) {

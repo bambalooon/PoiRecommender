@@ -14,7 +14,7 @@ public class SearchCriteriaDecoratorTest {
         SearchCriteriaDecorator searchCriteriaDecorator = new SearchCriteriaDecorator("Search criteria.");
 
         //when
-        Iterable<String> splitSearchCriteria = searchCriteriaDecorator.getSearchCriteria();
+        Iterable<String> splitSearchCriteria = searchCriteriaDecorator.decorate(null);
 
         //then
         assertEquals(Arrays.asList("S", "e", "a", "r", "c", "h", " ", "c", "r", "i", "t", "e", "r", "i", "a", "."),

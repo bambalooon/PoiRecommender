@@ -10,7 +10,7 @@ class SearchCriteriaDecorator implements SearchCriteriaDecorable {
     }
 
     @Override
-    public Iterable<String> getSearchCriteria() {
-        return Splitter.fixedLength(1).split(searchCriteria);
+    public Iterable<String> decorate(Iterable<String> searchCriteria) {
+        return Splitter.fixedLength(1).split(this.searchCriteria);
     }
 }

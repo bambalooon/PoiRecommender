@@ -4,16 +4,10 @@ import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 
 class SearchCriteriaPolishLettersDecorator implements SearchCriteriaDecorable {
-    private final SearchCriteriaDecorable searchCriteriaDecorable;
-
-    SearchCriteriaPolishLettersDecorator(SearchCriteriaDecorable searchCriteriaDecorable) {
-        this.searchCriteriaDecorable = searchCriteriaDecorable;
-    }
-
     @Override
-    public Iterable<String> getSearchCriteria() {
+    public Iterable<String> decorate(Iterable<String> searchCriteria) {
         return FluentIterable
-                .from(searchCriteriaDecorable.getSearchCriteria())
+                .from(searchCriteria)
                 .transform(ADD_ALTERNATIVE_LETTER_WITH_TAIL)
                 .toList();
     }
