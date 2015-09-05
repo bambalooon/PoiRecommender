@@ -7,14 +7,14 @@ import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
 
-public class SearchCriteriaDecoratorTest {
+public class SearchCriteriaSplitterTest {
     @Test
-    public void shouldBuildCorrectDecoratorFromSearchCriteria() {
+    public void shouldSplitCorrectlySearchCriteria() {
         //given
-        SearchCriteriaDecorator searchCriteriaDecorator = new SearchCriteriaDecorator("Search criteria.");
+        SearchCriteriaSplitter searchCriteriaSplitter = new SearchCriteriaSplitter();
 
         //when
-        Iterable<String> splitSearchCriteria = searchCriteriaDecorator.decorate(null);
+        Iterable<String> splitSearchCriteria = searchCriteriaSplitter.split("Search criteria.");
 
         //then
         assertEquals(Arrays.asList("S", "e", "a", "r", "c", "h", " ", "c", "r", "i", "t", "e", "r", "i", "a", "."),
