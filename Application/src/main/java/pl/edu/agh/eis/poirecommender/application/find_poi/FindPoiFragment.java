@@ -15,6 +15,7 @@ import android.widget.ProgressBar;
 import lombok.extern.slf4j.Slf4j;
 import pl.edu.agh.eis.poirecommender.R;
 import pl.edu.agh.eis.poirecommender.application.poi.PoiFragment;
+import pl.edu.agh.eis.poirecommender.openstreetmap.search.SearchCriteriaFormatter;
 import pl.edu.agh.eis.poirecommender.pois.model.PoiAtDistanceWithDirection;
 
 import java.util.List;
@@ -32,6 +33,7 @@ public class FindPoiFragment extends ListFragment {
     private PoiListLoader mPoiListLoader;
     private PoiListAdapter mPoiListAdapter;
     private ProgressBar mProgressBar;
+    private SearchCriteriaFormatter mSearchCriteriaFormatter = new SearchCriteriaFormatter();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -104,8 +106,9 @@ public class FindPoiFragment extends ListFragment {
     }
 
     public void executePoiSearchQuery(String poiName) {
-        log.debug("Searching for POI: {}", poiName);
+        String formattedSearchCriteria = mSearchCriteriaFormatter.format(poiName);
+        log.debug("Searching for POI: {}, formatted: {}", poiName, formattedSearchCriteria);
         mProgressBar.setVisibility(View.VISIBLE);
-        mPoiListLoader.loadPois(poiName);
+        mPoiListLoader.loadPois(formattedSearchCriteria);
     }
 }
