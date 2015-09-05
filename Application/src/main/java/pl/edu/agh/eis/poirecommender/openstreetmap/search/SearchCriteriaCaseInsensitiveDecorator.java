@@ -4,7 +4,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 import org.apache.commons.lang3.StringUtils;
 
-public class SearchCriteriaCaseInsensitiveDecorator implements SearchCriteriaDecorable {
+class SearchCriteriaCaseInsensitiveDecorator implements SearchCriteriaDecorable {
     private final SearchCriteriaDecorable searchCriteriaDecorable;
 
     SearchCriteriaCaseInsensitiveDecorator(SearchCriteriaDecorable searchCriteriaDecorable) {

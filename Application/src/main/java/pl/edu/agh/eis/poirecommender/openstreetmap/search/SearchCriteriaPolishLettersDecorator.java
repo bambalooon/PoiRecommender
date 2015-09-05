@@ -3,7 +3,7 @@ package pl.edu.agh.eis.poirecommender.openstreetmap.search;
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 
-public class SearchCriteriaPolishLettersDecorator implements SearchCriteriaDecorable {
+class SearchCriteriaPolishLettersDecorator implements SearchCriteriaDecorable {
     private final SearchCriteriaDecorable searchCriteriaDecorable;
 
     SearchCriteriaPolishLettersDecorator(SearchCriteriaDecorable searchCriteriaDecorable) {
