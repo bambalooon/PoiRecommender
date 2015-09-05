@@ -40,6 +40,7 @@ dependencies {
     compile "com.android.support:support-annotations:${supportLibrary_version}"
     // other
     compile "com.google.guava:guava:${guava_version}"
+    compile "org.apache.commons:commons-lang3:${apacheCommonsLang3_version}"
     compile "com.google.code.gson:gson:${gson_version}"
     provided "org.projectlombok:lombok:${lombok_version}"
     // logging
