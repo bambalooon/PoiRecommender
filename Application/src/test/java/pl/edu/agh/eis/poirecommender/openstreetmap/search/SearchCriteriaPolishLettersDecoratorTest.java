@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(JUnitParamsRunner.class)
 public class SearchCriteriaPolishLettersDecoratorTest {
-    private SearchCriteriaDecorable searchCriteriaDecorator = new SearchCriteriaPolishLettersDecorator();
+    private SearchCriteriaDecorator searchCriteriaDecorator = new SearchCriteriaPolishLettersDecorator();
 
     @Test
     public void shouldNotModifySearchCriteriaForNonLetterCharacters() {

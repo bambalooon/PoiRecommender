@@ -14,7 +14,7 @@ import static org.junit.Assert.assertEquals;
 
 @RunWith(JUnitParamsRunner.class)
 public class SearchCriteriaCaseInsensitiveDecoratorTest {
-    private SearchCriteriaDecorable searchCriteriaDecorator = new SearchCriteriaCaseInsensitiveDecorator();
+    private SearchCriteriaDecorator searchCriteriaDecorator = new SearchCriteriaCaseInsensitiveDecorator();
 
     @Test
     public void shouldNotModifySearchCriteriaForNonLetterCharacters() {
