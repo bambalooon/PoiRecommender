@@ -11,25 +11,46 @@
         </encoder>
     </appender>
 
-    <appender name="full" class="ch.qos.logback.core.FileAppender">
+    <appender name="full" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_DIR}/full.log</file>
         <encoder>
             <pattern>${MSG_PATTERN}</pattern>
         </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/full-%d{dd.MM}.log</fileNamePattern>
+            <maxHistory>2</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>5MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
     </appender>
 
-    <appender name="app" class="ch.qos.logback.core.FileAppender">
+    <appender name="app" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_DIR}/app.log</file>
         <encoder>
             <pattern>${MSG_PATTERN}</pattern>
         </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/app-%d{dd.MM}.log</fileNamePattern>
+            <maxHistory>2</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>5MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
     </appender>
 
-    <appender name="gui" class="ch.qos.logback.core.FileAppender">
+    <appender name="gui" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${LOG_DIR}/gui.log</file>
         <encoder>
             <pattern>${MSG_PATTERN}</pattern>
         </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_DIR}/gui-%d{dd.MM}.log</fileNamePattern>
+            <maxHistory>2</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>5MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
     </appender>
 
     <!-- Loggers -->
