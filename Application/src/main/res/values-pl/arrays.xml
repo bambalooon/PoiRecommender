@@ -4,18 +4,8 @@
     <string-array name="navigation_drawer_titles">
         <item>Rekomendacje</item>
         <item>Znajdź POI</item>
-        <item>Zainteresowania</item>
         <item>Reguły</item>
         <item>Aware</item>
-    </string-array>
-
-    <string-array name="interest_names">
-        <item>Sport</item>
-        <item>Zakupy</item>
-        <item>Kultura</item>
-        <item>Zwiedzanie</item>
-        <item>Jedzenie</item>
-        <item>Rozrywka</item>
     </string-array>
 
     <string-array name="operation_symbolic_array">

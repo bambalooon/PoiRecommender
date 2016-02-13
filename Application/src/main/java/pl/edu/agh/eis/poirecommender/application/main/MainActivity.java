@@ -22,7 +22,6 @@ import lombok.extern.slf4j.Slf4j;
 import pl.edu.agh.eis.poirecommender.R;
 import pl.edu.agh.eis.poirecommender.application.debug.AwareFragment;
 import pl.edu.agh.eis.poirecommender.application.find_poi.FindPoiFragment;
-import pl.edu.agh.eis.poirecommender.application.interests.InterestsFragment;
 import pl.edu.agh.eis.poirecommender.application.recommender.RecommenderFragment;
 import pl.edu.agh.eis.poirecommender.application.rules.RulesFragment;
 import pl.edu.agh.eis.poirecommender.aware.AwareContextObservingService;
@@ -190,12 +189,9 @@ public class MainActivity extends ActionBarActivity {
                 fragment = new FindPoiFragment();
                 break;
             case 2:
-                fragment = new InterestsFragment();
-                break;
-            case 3:
                 fragment = new RulesFragment();
                 break;
-            case 4:
+            case 3:
                 fragment = new AwareFragment();
                 break;
         }

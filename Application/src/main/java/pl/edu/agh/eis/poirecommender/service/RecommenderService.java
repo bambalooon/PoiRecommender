@@ -11,15 +11,15 @@ import com.aware.plugin.google.activity_recognition.Google_AR_Provider;
 import com.aware.plugin.openweather.Provider;
 import com.aware.poirecommender.openstreetmap.model.response.OsmResponse;
 import com.aware.poirecommender.provider.PoiRecommenderContract;
-import com.google.common.base.Joiner;
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
 import lombok.extern.slf4j.Slf4j;
 import pl.edu.agh.eis.poirecommender.aware.AwareLocationHolder;
 import pl.edu.agh.eis.poirecommender.heartdroid.HeartManager;
-import pl.edu.agh.eis.poirecommender.heartdroid.adapters.*;
+import pl.edu.agh.eis.poirecommender.heartdroid.adapters.GenericContextPropertyNumericStateAdapter;
+import pl.edu.agh.eis.poirecommender.heartdroid.adapters.GenericContextPropertySymbolicStateAdapter;
+import pl.edu.agh.eis.poirecommender.heartdroid.adapters.TimeHourAdapter;
+import pl.edu.agh.eis.poirecommender.heartdroid.adapters.WithStateElement;
 import pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType;
-import pl.edu.agh.eis.poirecommender.interests.InterestStorage;
 import pl.edu.agh.eis.poirecommender.openstreetmap.OsmExecutor;
 import pl.edu.agh.eis.poirecommender.openstreetmap.OsmJsonRequest;
 import pl.edu.agh.eis.poirecommender.openstreetmap.OsmRequest;
@@ -41,7 +41,6 @@ public class RecommenderService extends IntentService {
     private static final String RECOMMENDER_SERVICE_NAME = "PoiRecommender::Service";
     private ContextStorage<GenericContextProperty> contextStorage;
     private LocationHolder locationHolder;
-    private InterestStorage interestStorage;
     private HeartManager heartManager;
     private PoiManager poiManager;
 
@@ -61,7 +60,6 @@ public class RecommenderService extends IntentService {
         contextStorage = new Context(appContext.getContentResolver(),
                 new ContextPropertySerialization<>(GenericContextProperty.class));
         locationHolder = new AwareLocationHolder(contextStorage);
-        interestStorage = new InterestStorage(appContext);
         heartManager = new HeartManager(appContext);
         poiManager = new PoiManager(appContext);
     }
@@ -93,8 +91,7 @@ public class RecommenderService extends IntentService {
                         contextStorage.getContextProperty(PoiRecommenderContract.Contexts.PLUGIN_OPENWEATHER_TIMESTAMP),
                         "rainVal",
                         Provider.OpenWeather_Data.RAIN),
-                new TimeHourAdapter(new Date()),
-                new InterestListAdapter(interestStorage.getInterestList()));
+                new TimeHourAdapter(new Date()));
 
         final PoiType recommendedPoiType = heartManager.inferencePreferredPoiType(stateElements)
                 .getPoiType();
@@ -112,6 +109,5 @@ public class RecommenderService extends IntentService {
 
     private void debugInfo() {
         log.debug(contextStorage.getContextProperties().toString());
-        log.debug(FluentIterable.from(interestStorage.getInterestList()).join(Joiner.on("; ")));
     }
 }

@@ -3,7 +3,6 @@
     <string-array name="navigation_drawer_titles">
         <item>Recommendations</item>
         <item>Find POI</item>
-        <item>Interests</item>
         <item>Rules</item>
         <item>Aware</item>
     </string-array>
@@ -11,19 +10,9 @@
     <array name="navigation_drawer_icons">
         <item>@drawable/ic_launcher</item>
         <item>@drawable/ic_action_search</item>
-        <item>@drawable/ic_action_interests</item>
         <item>@drawable/ic_action_rules</item>
         <item>@drawable/ic_action_debug</item>
     </array>
-
-    <string-array name="interest_names">
-        <item>Sport</item>
-        <item>Shopping</item>
-        <item>Culture</item>
-        <item>Sightseeing</item>
-        <item>Eating</item>
-        <item>Entertainment</item>
-    </string-array>
 
     <string-array name="operation_symbolic_array">
         <item>eq</item>
