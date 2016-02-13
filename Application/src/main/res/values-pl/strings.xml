@@ -38,5 +38,10 @@
     <!-- Find POI Fragment -->
     <string name="poi_search_hint">Nazwa punktu POI</string>
     <string name="emptyPoiSearchList">Brak punktów POI spełniających kryteria…</string>
+    <string name="search_failed_message">Błąd w trakcie wyszukiwania POI</string>
+    <string name="location_absent">Lokalizacja nieznana</string>
+    <string name="poi_name_absent">Brak nazwy POI</string>
+    <string name="error_while_loading_pois">Błąd w trakcie ładowania POI</string>
+    <string name="no_pois_for_recommendation">Brak rekomendowanych POI</string>
 
 </resources>

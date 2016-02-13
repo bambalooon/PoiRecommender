@@ -38,5 +38,10 @@
     <!-- Find POI Fragment -->
     <string name="poi_search_hint">POI name</string>
     <string name="emptyPoiSearchList">No POI that meets given criteria…</string>
+    <string name="search_failed_message">Search failed</string>
+    <string name="location_absent">No location present</string>
+    <string name="poi_name_absent">POI name missing</string>
+    <string name="error_while_loading_pois">Error occurred while loading POIs</string>
+    <string name="no_pois_for_recommendation">There are no POIs for recommendation</string>
 
 </resources>

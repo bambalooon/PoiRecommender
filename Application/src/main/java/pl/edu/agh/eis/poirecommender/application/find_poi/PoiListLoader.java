@@ -6,7 +6,10 @@ import com.aware.context.property.GenericContextProperty;
 import com.aware.context.provider.Context;
 import com.aware.context.transform.ContextPropertySerialization;
 import com.aware.poirecommender.openstreetmap.model.response.OsmResponse;
+import com.google.common.base.Optional;
 import com.google.common.collect.FluentIterable;
+import lombok.extern.slf4j.Slf4j;
+import pl.edu.agh.eis.poirecommender.R;
 import pl.edu.agh.eis.poirecommender.aware.AwareLocationHolder;
 import pl.edu.agh.eis.poirecommender.openstreetmap.OsmExecutor;
 import pl.edu.agh.eis.poirecommender.openstreetmap.OsmJsonRequest;
@@ -15,13 +18,14 @@ import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.KeyValueSimilar
 import pl.edu.agh.eis.poirecommender.pois.model.OsmPoi;
 import pl.edu.agh.eis.poirecommender.pois.model.PoiAtDistance;
 import pl.edu.agh.eis.poirecommender.pois.model.PoiAtDistanceWithDirection;
+import pl.edu.agh.eis.poirecommender.utils.AsyncResult;
 import pl.edu.agh.eis.poirecommender.utils.LocationHolder;
 
-import java.util.Collections;
 import java.util.List;
 
-public class PoiListLoader extends AsyncTaskLoader<List<PoiAtDistanceWithDirection>> {
-    private List<PoiAtDistanceWithDirection> mData;
+@Slf4j
+public class PoiListLoader extends AsyncTaskLoader<AsyncResult<? extends List<PoiAtDistanceWithDirection>>> {
+    private AsyncResult<? extends List<PoiAtDistanceWithDirection>> mData;
     private LocationHolder locationHolder;
     private String poiName;
 
@@ -39,32 +43,42 @@ public class PoiListLoader extends AsyncTaskLoader<List<PoiAtDistanceWithDirecti
     }
 
     @Override
-    public List<PoiAtDistanceWithDirection> loadInBackground() {
+    public AsyncResult<? extends List<PoiAtDistanceWithDirection>> loadInBackground() {
         Location location = locationHolder.getLocation();
 
-        if (poiName == null || location == null) {
-            return Collections.emptyList();
+        if (location == null) {
+            return new AsyncResult<>(Optional.<List<PoiAtDistanceWithDirection>>absent(), Optional.of(R.string.location_absent));
+        }
+
+        if (poiName == null) {
+            return new AsyncResult<>(Optional.<List<PoiAtDistanceWithDirection>>absent(), Optional.<Integer>absent());
         }
 
         Constraint poiConstraint = new KeyValueSimilarConstraint("name", poiName);
 
-        OsmResponse osmResponse = new OsmExecutor().execute(new OsmJsonRequest(poiConstraint, location));
+        try {
+            OsmResponse osmResponse = new OsmExecutor().execute(new OsmJsonRequest(poiConstraint, location));
 
-        return FluentIterable.from(osmResponse.getElements())
-                .transform(OsmPoi.OSM_ELEMENT_TO_POI)
-                .transform(new PoiAtDistance.AttachLocationToPoi(location))
-                .transform(PoiAtDistanceWithDirection.ATTACH_DIRECTION_TO_POI)
-                .toSortedList(PoiAtDistanceWithDirection.DISTANCE_COMPARATOR);
+            return new AsyncResult<>(Optional.of(FluentIterable.from(osmResponse.getElements())
+                    .transform(OsmPoi.OSM_ELEMENT_TO_POI)
+                    .transform(new PoiAtDistance.AttachLocationToPoi(location))
+                    .transform(PoiAtDistanceWithDirection.ATTACH_DIRECTION_TO_POI)
+                    .toSortedList(PoiAtDistanceWithDirection.DISTANCE_COMPARATOR)),
+                    Optional.<Integer>absent());
+        } catch (RuntimeException e) {
+            log.error("OSM query execution error: ", e);
+            return new AsyncResult<>(Optional.<List<PoiAtDistanceWithDirection>>absent(), Optional.of(R.string.error_while_loading_pois));
+        }
     }
 
     @Override
-    public void deliverResult(List<PoiAtDistanceWithDirection> data) {
+    public void deliverResult(AsyncResult<? extends List<PoiAtDistanceWithDirection>> data) {
         if (isReset()) {
             releaseResources(data);
             return;
         }
 
-        List<PoiAtDistanceWithDirection> oldData = mData;
+        AsyncResult<? extends List<PoiAtDistanceWithDirection>> oldData = mData;
         mData = data;
 
         if (isStarted()) {
@@ -108,11 +122,11 @@ public class PoiListLoader extends AsyncTaskLoader<List<PoiAtDistanceWithDirecti
     }
 
     @Override
-    public void onCanceled(List<PoiAtDistanceWithDirection> data) {
+    public void onCanceled(AsyncResult<? extends List<PoiAtDistanceWithDirection>> data) {
         releaseResources(data);
     }
 
-    protected void releaseResources(List<PoiAtDistanceWithDirection> data) {
+    protected void releaseResources(AsyncResult<? extends List<PoiAtDistanceWithDirection>> data) {
         //nothing to do with list
     }
 

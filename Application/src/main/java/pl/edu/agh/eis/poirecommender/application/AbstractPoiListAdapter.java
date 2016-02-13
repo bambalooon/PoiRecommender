@@ -10,6 +10,7 @@ import android.widget.TextView;
 import pl.edu.agh.eis.poirecommender.R;
 import pl.edu.agh.eis.poirecommender.pois.model.CardinalDirection;
 import pl.edu.agh.eis.poirecommender.pois.model.PoiAtDistanceWithDirection;
+import pl.edu.agh.eis.poirecommender.utils.AsyncResult;
 
 import java.util.List;
 
@@ -18,7 +19,7 @@ import static android.content.Context.LAYOUT_INFLATER_SERVICE;
 public abstract class AbstractPoiListAdapter extends ArrayAdapter<PoiAtDistanceWithDirection> {
     protected static final String DISTANCE_FORMAT = "%.0f%s";
     protected static final String DISTANCE_UNIT = "m";
-    protected List<PoiAtDistanceWithDirection> poiList;
+    protected AsyncResult<? extends List<PoiAtDistanceWithDirection>> poiList;
 
     protected AbstractPoiListAdapter(Activity activity) {
         super(activity, R.layout.row_poi);
@@ -27,14 +28,14 @@ public abstract class AbstractPoiListAdapter extends ArrayAdapter<PoiAtDistanceW
     @Override
     public int getCount() {
         return poiList != null
-                ? poiList.size()
+                ? poiList.getData().isPresent() ? poiList.getData().get().size() : 0
                 : 0;
     }
 
     @Override
     public PoiAtDistanceWithDirection getItem(int position) {
         return poiList != null
-                ? poiList.get(position)
+                ? poiList.getData().isPresent() ? poiList.getData().get().get(position) : null
                 : null;
     }
 

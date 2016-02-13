@@ -9,14 +9,21 @@ import android.support.v4.app.ListFragment;
 import android.support.v4.app.LoaderManager;
 import android.support.v4.content.Loader;
 import android.support.v7.widget.SearchView;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 import lombok.extern.slf4j.Slf4j;
 import pl.edu.agh.eis.poirecommender.R;
 import pl.edu.agh.eis.poirecommender.application.poi.PoiFragment;
 import pl.edu.agh.eis.poirecommender.openstreetmap.search.SearchCriteriaFormatter;
 import pl.edu.agh.eis.poirecommender.pois.model.PoiAtDistanceWithDirection;
+import pl.edu.agh.eis.poirecommender.utils.AsyncResult;
 
 import java.util.List;
 
@@ -43,20 +50,23 @@ public class FindPoiFragment extends ListFragment {
         setListAdapter(mPoiListAdapter);
         mPoiListLoader = new PoiListLoader(getActivity());
         getLoaderManager().initLoader(POIS_LOADER, null,
-                new LoaderManager.LoaderCallbacks<List<PoiAtDistanceWithDirection>>() {
+                new LoaderManager.LoaderCallbacks<AsyncResult<? extends List<PoiAtDistanceWithDirection>>>() {
                     @Override
-                    public Loader<List<PoiAtDistanceWithDirection>> onCreateLoader(int id, Bundle args) {
+                    public Loader<AsyncResult<? extends List<PoiAtDistanceWithDirection>>> onCreateLoader(int id, Bundle args) {
                         return mPoiListLoader;
                     }
 
                     @Override
-                    public void onLoadFinished(Loader<List<PoiAtDistanceWithDirection>> loader, List<PoiAtDistanceWithDirection> data) {
+                    public void onLoadFinished(Loader<AsyncResult<? extends List<PoiAtDistanceWithDirection>>> loader, AsyncResult<? extends List<PoiAtDistanceWithDirection>> data) {
+                        if (data.getMessageResource().isPresent()) {
+                            Toast.makeText(getActivity(), data.getMessageResource().get(), Toast.LENGTH_LONG).show();
+                        }
                         mPoiListAdapter.swapPoiList(data);
                         mProgressBar.setVisibility(View.INVISIBLE);
                     }
 
                     @Override
-                    public void onLoaderReset(Loader<List<PoiAtDistanceWithDirection>> loader) {
+                    public void onLoaderReset(Loader<AsyncResult<? extends List<PoiAtDistanceWithDirection>>> loader) {
                         mPoiListAdapter.swapPoiList(null);
                         mProgressBar.setVisibility(View.INVISIBLE);
                     }

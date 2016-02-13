@@ -3,7 +3,6 @@ package pl.edu.agh.eis.poirecommender.openstreetmap;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.util.Log;
 import com.aware.poirecommender.openstreetmap.model.response.OsmResponse;
 import com.aware.poirecommender.transform.Serializer;
 import com.google.common.base.Joiner;
@@ -58,7 +57,7 @@ public class OsmExecutor {
         } catch (IOException e) {
             log.debug(e.getMessage() + "\n" + FluentIterable.from(ImmutableList.copyOf(e.getStackTrace()))
                     .join(Joiner.on('\n')));
-            return null;
+            throw new RuntimeException(e);
         } finally {
             if(in != null) {
                 try {
