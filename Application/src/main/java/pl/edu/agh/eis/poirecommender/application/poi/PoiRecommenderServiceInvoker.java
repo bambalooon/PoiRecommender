@@ -26,8 +26,9 @@ public class PoiRecommenderServiceInvoker {
         this.actionStoreContextRequestCode = actionStoreContextRequestCode;
     }
 
-    public void ratePoi(long poiId, double poiRating) {
+    public void ratePoi(String userId, long poiId, double poiRating) {
         Intent actionIntent = new Intent(PoiRecommenderService.ACTION_RATE_POI);
+        actionIntent.putExtra(PoiRecommenderService.USER_ID_EXTRA, userId);
         actionIntent.putExtra(
                 PoiRecommenderService.POI_ID_EXTRA,
                 poiId);

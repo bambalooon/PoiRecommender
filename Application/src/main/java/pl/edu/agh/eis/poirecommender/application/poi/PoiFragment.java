@@ -106,7 +106,7 @@ public class PoiFragment extends Fragment implements LoaderManager.LoaderCallbac
         mSaveRatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mServiceInvoker.ratePoi(mPoi.getElement().getId(), mRatingBarDecorator.getRating());
+                mServiceInvoker.ratePoi("user_login", mPoi.getElement().getId(), mRatingBarDecorator.getRating());
                 mSaveRatingButton.setVisibility(View.INVISIBLE);
                 mProgressBar.setVisibility(View.VISIBLE);
                 mRatingBarDecorator.disable();
