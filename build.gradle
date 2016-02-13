@@ -14,5 +14,8 @@ allprojects {
         jcenter()
         mavenLocal()
         mavenCentral()
+        maven {
+            url "http://balon.biz.tm:9000/repository/maven-public/"
+        }
     }
 }
