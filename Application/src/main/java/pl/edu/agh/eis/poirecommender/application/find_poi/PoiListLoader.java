@@ -46,12 +46,12 @@ public class PoiListLoader extends AsyncTaskLoader<AsyncResult<? extends List<Po
     public AsyncResult<? extends List<PoiAtDistanceWithDirection>> loadInBackground() {
         Location location = locationHolder.getLocation();
 
-        if (location == null) {
-            return new AsyncResult<>(Optional.<List<PoiAtDistanceWithDirection>>absent(), Optional.of(R.string.location_absent));
-        }
-
         if (poiName == null) {
             return new AsyncResult<>(Optional.<List<PoiAtDistanceWithDirection>>absent(), Optional.<Integer>absent());
+        }
+
+        if (location == null) {
+            return new AsyncResult<>(Optional.<List<PoiAtDistanceWithDirection>>absent(), Optional.of(R.string.location_absent));
         }
 
         Constraint poiConstraint = new KeyValueSimilarConstraint("name", poiName);
