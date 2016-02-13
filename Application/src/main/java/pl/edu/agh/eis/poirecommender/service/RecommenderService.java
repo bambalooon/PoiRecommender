@@ -73,12 +73,7 @@ public class RecommenderService extends IntentService {
             return;
         }
 
-        final ImmutableList<WithStateElement> stateElements = ImmutableList.of(
-                new GenericContextPropertySymbolicStateAdapter(
-                        contextStorage.getContextProperty(PoiRecommenderContract.Contexts
-                                .PLUGIN_GOOGLE_ACTIVITY_RECOGNITION_TIMESTAMP),
-                        "activity",
-                        Google_AR_Provider.Google_Activity_Recognition_Data.ACTIVITY_NAME),
+        final ImmutableList<? extends WithStateElement> stateElements = ImmutableList.of(
                 new GenericContextPropertyNumericStateAdapter(
                         contextStorage.getContextProperty(PoiRecommenderContract.Contexts.PLUGIN_OPENWEATHER_TIMESTAMP),
                         "windInMPS",

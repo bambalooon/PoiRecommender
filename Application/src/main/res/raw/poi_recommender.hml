@@ -38,16 +38,6 @@
                 <value is="STRONG"/>
             </domain>
         </type>
-        <type id="tpe_6" name="activity_type" base="symbolic">
-            <domain ordered="no">
-                <value is="on_foot"/>
-                <value is="in_vehicle"/>
-                <value is="on_bicycle"/>
-                <value is="still"/>
-                <value is="unknown"/>
-                <value is="tilting"/>
-            </domain>
-        </type>
         <type id="tpe_8" name="poi_type" base="symbolic">
             <desc>Different points of interests</desc>
             <domain ordered="no">
@@ -87,7 +77,6 @@
         <attr id="att_xtt_4" type="tpe_11" name="rainVal" abbrev="rain1" class="simple" comm="io"/>
         <attr id="att_xtt_5" type="tpe_11" name="tempInC" abbrev="temp1" class="simple" comm="io"/>
         <attr id="att_xtt_6" type="tpe_10" name="tempName" abbrev="temp2" class="simple" comm="io"/>
-        <attr id="att_xtt_7" type="tpe_6" name="activity" abbrev="acti1" class="simple" comm="io"/>
         <attr id="att_xtt_8" type="tpe_9" name="hour" abbrev="hour" class="simple" comm="io"/>
         <attr id="att_xtt_10" type="tpe_11" name="windInMPS" abbrev="wind1" class="simple" comm="io"/>
         <attr id="att_xtt_11" type="tpe_5" name="windStrName" abbrev="wind2" class="simple" comm="io"/>
@@ -381,7 +370,6 @@
             <schm>
                 <precondition>
                     <attref ref="att_xtt_8"/>
-                    <attref ref="att_xtt_7"/>
                     <attref ref="att_xtt_3"/>
                 </precondition>
                 <conclusion>
@@ -394,12 +382,6 @@
                         <attref ref="att_xtt_8"/>
                         <set>
                             <value from="12.000" to="16.000"/>
-                        </set>
-                    </relation>
-                    <relation name="eq">
-                        <attref ref="att_xtt_7"/>
-                        <set>
-                            <value is="any"/>
                         </set>
                     </relation>
                     <relation name="in">
@@ -427,12 +409,6 @@
                             <value from="12.000" to="16.000"/>
                         </set>
                     </relation>
-                    <relation name="eq">
-                        <attref ref="att_xtt_7"/>
-                        <set>
-                            <value is="any"/>
-                        </set>
-                    </relation>
                     <relation name="in">
                         <attref ref="att_xtt_3"/>
                         <set>
@@ -449,38 +425,6 @@
                     </trans>
                 </decision>
             </rule>
-            <rule id="rul_12">
-                <condition>
-                    <relation name="in">
-                        <attref ref="att_xtt_8"/>
-                        <set>
-                            <value from="12.000" to="20.000"/>
-                        </set>
-                    </relation>
-                    <relation name="eq">
-                        <attref ref="att_xtt_7"/>
-                        <set>
-                            <value is="in_vehicle"/>
-                        </set>
-                    </relation>
-                    <relation name="in">
-                        <attref ref="att_xtt_3"/>
-                        <set>
-                            <value is="CLOSED"/>
-                            <value is="COVERED"/>
-                            <value is="OPEN"/>
-                        </set>
-                    </relation>
-                </condition>
-                <decision>
-                    <trans>
-                        <attref ref="att_xtt_12"/>
-                        <set>
-                            <value is="drivethrough-eating"/>
-                        </set>
-                    </trans>
-                </decision>
-            </rule>
             <rule id="rul_16">
                 <condition>
                     <relation name="in">
@@ -488,12 +432,6 @@
                         <set>
                             <value from="6.000" to="10.000"/>
                             <value from="16.000" to="20.000"/>
-                        </set>
-                    </relation>
-                    <relation name="eq">
-                        <attref ref="att_xtt_7"/>
-                        <set>
-                            <value is="any"/>
                         </set>
                     </relation>
                     <relation name="in">
@@ -522,12 +460,6 @@
                             <value from="16.000" to="20.000"/>
                         </set>
                     </relation>
-                    <relation name="eq">
-                        <attref ref="att_xtt_7"/>
-                        <set>
-                            <value is="any"/>
-                        </set>
-                    </relation>
                     <relation name="in">
                         <attref ref="att_xtt_3"/>
                         <set>
@@ -550,12 +482,6 @@
                         <attref ref="att_xtt_8"/>
                         <set>
                             <value is="18.000"/>
-                        </set>
-                    </relation>
-                    <relation name="eq">
-                        <attref ref="att_xtt_7"/>
-                        <set>
-                            <value is="any"/>
                         </set>
                     </relation>
                     <relation name="in">
@@ -583,12 +509,6 @@
                             <value is="18.000"/>
                         </set>
                     </relation>
-                    <relation name="eq">
-                        <attref ref="att_xtt_7"/>
-                        <set>
-                            <value is="any"/>
-                        </set>
-                    </relation>
                     <relation name="in">
                         <attref ref="att_xtt_3"/>
                         <set>
@@ -611,12 +531,6 @@
                         <attref ref="att_xtt_8"/>
                         <set>
                             <value is="18.000"/>
-                        </set>
-                    </relation>
-                    <relation name="eq">
-                        <attref ref="att_xtt_7"/>
-                        <set>
-                            <value is="any"/>
                         </set>
                     </relation>
                     <relation name="eq">
@@ -644,12 +558,6 @@
                         </set>
                     </relation>
                     <relation name="eq">
-                        <attref ref="att_xtt_7"/>
-                        <set>
-                            <value is="any"/>
-                        </set>
-                    </relation>
-                    <relation name="eq">
                         <attref ref="att_xtt_3"/>
                         <set>
                             <value is="any"/>
@@ -674,12 +582,6 @@
                         </set>
                     </relation>
                     <relation name="eq">
-                        <attref ref="att_xtt_7"/>
-                        <set>
-                            <value is="any"/>
-                        </set>
-                    </relation>
-                    <relation name="eq">
                         <attref ref="att_xtt_3"/>
                         <set>
                             <value is="any"/>
@@ -701,12 +603,6 @@
                         <attref ref="att_xtt_8"/>
                         <set>
                             <value from="7.000" to="21.000"/>
-                        </set>
-                    </relation>
-                    <relation name="eq">
-                        <attref ref="att_xtt_7"/>
-                        <set>
-                            <value is="any"/>
                         </set>
                     </relation>
                     <relation name="eq">

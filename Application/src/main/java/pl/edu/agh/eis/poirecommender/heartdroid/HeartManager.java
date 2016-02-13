@@ -16,9 +16,6 @@ import pl.edu.agh.eis.poirecommender.heartdroid.adapters.WithStateElement;
 
 import java.util.List;
 
-/**
- * Created by Krzysztof Balon on 2014-11-08.
- */
 public class HeartManager {
     public static final String RECOMMENDATIONS_TABLE_NAME = "RECOMMENDATIONS";
     private static final String[] XTT_TABLE_NAMES = new String[] {"WIND_STR", "PRECIP", "TEMPERATURE", "KIND_OF_SPACE", RECOMMENDATIONS_TABLE_NAME};
@@ -29,7 +26,7 @@ public class HeartManager {
         this.heartPreferences = new HeartPreferences(context);
     }
 
-    public WithPoiType inferencePreferredPoiType(List<WithStateElement> stateElements) {
+    public WithPoiType inferencePreferredPoiType(List<? extends WithStateElement> stateElements) {
         final XTTModel xttModel = heartPreferences.getXttModel();
         try {
             HeaRT.fixedOrderInference(xttModel, XTT_TABLE_NAMES,
@@ -44,7 +41,7 @@ public class HeartManager {
         }
     }
 
-    private State generateInitialState(List<WithStateElement> stateElements) {
+    private State generateInitialState(List<? extends WithStateElement> stateElements) {
         final State currentState = new State();
         for (WithStateElement withStateElement : stateElements) {
             currentState.addStateElement(withStateElement.getStateElement());
