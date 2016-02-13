@@ -16,18 +16,18 @@ import pl.edu.agh.eis.poirecommender.heartdroid.adapters.WithStateElement;
 
 import java.util.List;
 
-public class HeartManager {
+public class HeartRuleEngine {
     public static final String RECOMMENDATIONS_TABLE_NAME = "RECOMMENDATIONS";
     private static final String[] XTT_TABLE_NAMES = new String[] {"WIND_STR", "PRECIP", "TEMPERATURE", "KIND_OF_SPACE", RECOMMENDATIONS_TABLE_NAME};
     private static final String POI_ATTRIBUTE_NAME = "poi";
-    private HeartPreferences heartPreferences;
+    private RulesProvider rulesProvider;
 
-    public HeartManager(Context context) {
-        this.heartPreferences = new HeartPreferences(context);
+    public HeartRuleEngine(Context context) {
+        this.rulesProvider = new RulesProvider(context);
     }
 
     public WithPoiType inferencePreferredPoiType(List<? extends WithStateElement> stateElements) {
-        final XTTModel xttModel = heartPreferences.getXttModel();
+        final XTTModel xttModel = rulesProvider.getXttModel();
         try {
             HeaRT.fixedOrderInference(xttModel, XTT_TABLE_NAMES,
                     new Configuration.Builder()

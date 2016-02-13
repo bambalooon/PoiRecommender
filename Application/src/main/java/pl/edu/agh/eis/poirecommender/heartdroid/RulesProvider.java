@@ -14,12 +14,12 @@ import java.io.IOException;
 import java.io.InputStream;
 
 @Slf4j
-public class HeartPreferences {
+public class RulesProvider {
     public static final int BASIC_POI_RECOMMENDER_CONFIG = R.raw.poi_recommender;
 
     private final Resources resources;
 
-    public HeartPreferences(Context context) {
+    public RulesProvider(Context context) {
         this.resources = context.getResources();
     }
 
