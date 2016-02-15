@@ -13,6 +13,11 @@
     <string name="action_cancel">Cancel</string>
     <string name="action_find_poi">Find POI</string>
 
+    <!-- Auth -->
+    <string name="auth_activity">PoiRecommender-Authentication</string>
+    <string name="auth_success">Authentication success</string>
+    <string name="auth_canceled">You\'ve canceled authentication. Some of application features aren\'t available without authentication!</string>
+
     <!-- Recommendation -->
     <string name="emptyRecommendationList">Nothing to recommend…</string>
 

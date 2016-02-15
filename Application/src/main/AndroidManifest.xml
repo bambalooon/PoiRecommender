@@ -41,6 +41,14 @@
                 android:resource="@xml/searchable"
                 />
         </activity>
+        <activity android:name=".application.auth.AuthActivity"
+                  android:label="@string/auth_activity">
+            <intent-filter>
+                <action android:name="pl.edu.agh.eis.poirecommender.action.AUTHENTICATE"/>
+
+                <category android:name="android.intent.category.DEFAULT"/>
+            </intent-filter>
+        </activity>
 
         <service
             android:name=".service.RecommenderService"

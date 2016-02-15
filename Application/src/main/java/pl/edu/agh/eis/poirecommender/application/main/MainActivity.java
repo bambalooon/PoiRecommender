@@ -18,8 +18,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 import lombok.extern.slf4j.Slf4j;
 import pl.edu.agh.eis.poirecommender.R;
+import pl.edu.agh.eis.poirecommender.application.auth.AuthActivity;
 import pl.edu.agh.eis.poirecommender.application.debug.AwareFragment;
 import pl.edu.agh.eis.poirecommender.application.find_poi.FindPoiFragment;
 import pl.edu.agh.eis.poirecommender.application.recommender.RecommenderFragment;
@@ -34,6 +36,7 @@ import java.util.concurrent.Executors;
 public class MainActivity extends ActionBarActivity {
     private static final String SAVED_FRAGMENT_TITLE = "SAVED_FRAGMENT_TITLE";
     private static final String SAVED_SELECTED_FRAGMENT_INDEX = "SAVED_SELECTED_FRAGMENT_INDEX";
+    private static final int AUTH_REQUEST = 0;
     private static final int STARTUP_ITEM = 0;
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -92,6 +95,29 @@ public class MainActivity extends ActionBarActivity {
             }
         });
         log.debug("PoiRecommender::MainActivity started.");
+
+        startAuthentication();
+    }
+
+    private void startAuthentication() {
+        startActivityForResult(new Intent(AuthActivity.ACTION_AUTH), AUTH_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case AUTH_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    String token = data.getStringExtra(AuthActivity.AUTH_TOKEN_EXTRA);
+                    Toast.makeText(this, R.string.auth_success, Toast.LENGTH_LONG).show();
+                    log.debug("Authentication completed. Received token: {}", token);
+                } else {
+                    Toast.makeText(this, R.string.auth_canceled, Toast.LENGTH_LONG).show();
+                }
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     @Override

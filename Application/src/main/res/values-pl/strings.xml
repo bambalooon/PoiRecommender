@@ -13,6 +13,10 @@
     <string name="action_cancel">Anuluj</string>
     <string name="action_find_poi">Znajdź POI</string>
 
+    <!-- Auth -->
+    <string name="auth_success">Uwierzytelnienie zakończone powodzeniem</string>
+    <string name="auth_canceled">Anulowałeś uwierzytelnienie. Niektóre funkcję aplikacji mogą być nieaktywne bez uwierzytelnienia!</string>
+
     <!-- Recommendation -->
     <string name="emptyRecommendationList">Brak rekomendacji…</string>
 
