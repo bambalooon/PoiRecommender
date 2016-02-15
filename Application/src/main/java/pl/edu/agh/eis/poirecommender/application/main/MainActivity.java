@@ -18,6 +18,7 @@ import java.util.concurrent.Executors;
 @Slf4j
 public class MainActivity extends NavigationDrawerActivity {
     private static final int AUTH_REQUEST = 0;
+    private ApplicationPreferences preferences;
 
     public MainActivity() {
         super(R.layout.activity_recommender);
@@ -26,6 +27,7 @@ public class MainActivity extends NavigationDrawerActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        preferences = new ApplicationPreferences(getApplicationContext());
         //TODO: start activity with search action in find POI fragment
 
         ActionBar actionBar = getSupportActionBar();
@@ -45,11 +47,16 @@ public class MainActivity extends NavigationDrawerActivity {
         });
         log.debug("PoiRecommender::MainActivity started.");
 
-        startAuthentication();
+        authenticateIfNecessary();
     }
 
-    private void startAuthentication() {
-        startActivityForResult(new Intent(AuthActivity.ACTION_AUTH), AUTH_REQUEST);
+    private void authenticateIfNecessary() {
+        String authToken = preferences.getAuthToken();
+        if (authToken == null) {
+            startActivityForResult(new Intent(AuthActivity.ACTION_AUTH), AUTH_REQUEST);
+        } else {
+            log.debug("Authentication not necessary, auth token exists: {}", authToken);
+        }
     }
 
     @Override
@@ -58,6 +65,7 @@ public class MainActivity extends NavigationDrawerActivity {
             case AUTH_REQUEST:
                 if (resultCode == RESULT_OK) {
                     String token = data.getStringExtra(AuthActivity.AUTH_TOKEN_EXTRA);
+                    preferences.setAuthToken(token);
                     Toast.makeText(this, R.string.auth_success, Toast.LENGTH_LONG).show();
                     log.debug("Authentication completed. Received token: {}", token);
                 } else {
