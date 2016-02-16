@@ -17,5 +17,8 @@ allprojects {
         maven {
             url "http://balon.biz.tm:9000/repository/maven-public/"
         }
+        maven {
+            url "http://repo.spring.io/milestone"
+        }
     }
 }
