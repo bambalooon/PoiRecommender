@@ -52,7 +52,7 @@ public class MainActivity extends NavigationDrawerActivity {
     private void authenticateIfNecessary() {
         String authToken = preferences.getAuthToken();
         if (authToken == null) {
-            startActivityForResult(new Intent(LoginActivity.ACTION_LOGIN), AUTH_REQUEST);
+            startActivityForResult(new Intent(getApplicationContext(), LoginActivity.class), AUTH_REQUEST);
         } else {
             log.debug("Authentication not necessary, auth token exists: {}", authToken);
         }

@@ -16,7 +16,6 @@ import pl.edu.agh.eis.poirecommender.Config;
 import pl.edu.agh.eis.poirecommender.R;
 
 public class LoginActivity extends AppCompatActivity {
-    public static final String ACTION_LOGIN = "pl.edu.agh.eis.poirecommender.action.LOGIN";
     public static final String AUTH_TOKEN_EXTRA = "auth_token";
 
     private Config config;

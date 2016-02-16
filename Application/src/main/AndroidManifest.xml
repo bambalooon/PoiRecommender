@@ -43,11 +43,6 @@
         </activity>
         <activity android:name=".application.auth.LoginActivity"
                   android:label="@string/activity_login">
-            <intent-filter>
-                <action android:name="pl.edu.agh.eis.poirecommender.action.LOGIN"/>
-
-                <category android:name="android.intent.category.DEFAULT"/>
-            </intent-filter>
         </activity>
 
         <service
