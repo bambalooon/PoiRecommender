@@ -13,10 +13,16 @@
     <string name="action_cancel">Cancel</string>
     <string name="action_find_poi">Find POI</string>
 
-    <!-- Auth -->
-    <string name="auth_activity">PoiRecommender-Authentication</string>
-    <string name="auth_success">Authentication success</string>
-    <string name="auth_canceled">You\'ve canceled authentication. Some of application features aren\'t available without authentication!</string>
+    <!-- Login -->
+    <string name="activity_login">PoiRecommender-Login</string>
+    <string name="login_authenticating">Authenticating…</string>
+    <string name="login_failed">Login failed</string>
+    <string name="login_wrong_email">enter a valid e-mail address</string>
+    <string name="login_wrong_password">enter password</string>
+    <string name="login_email">E-mail</string>
+    <string name="login_password">Password</string>
+    <string name="login_login_button">Login</string>
+    <string name="login_signup_link">No account yet? Create one!</string>
 
     <!-- Recommendation -->
     <string name="emptyRecommendationList">Nothing to recommend…</string>

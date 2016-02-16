@@ -41,10 +41,10 @@
                 android:resource="@xml/searchable"
                 />
         </activity>
-        <activity android:name=".application.auth.AuthActivity"
-                  android:label="@string/auth_activity">
+        <activity android:name=".application.auth.LoginActivity"
+                  android:label="@string/activity_login">
             <intent-filter>
-                <action android:name="pl.edu.agh.eis.poirecommender.action.AUTHENTICATE"/>
+                <action android:name="pl.edu.agh.eis.poirecommender.action.LOGIN"/>
 
                 <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>

@@ -14,8 +14,13 @@
     <string name="action_find_poi">Znajdź POI</string>
 
     <!-- Auth -->
-    <string name="auth_success">Uwierzytelnienie zakończone powodzeniem</string>
-    <string name="auth_canceled">Anulowałeś uwierzytelnienie. Niektóre funkcję aplikacji mogą być nieaktywne bez uwierzytelnienia!</string>
+    <string name="login_authenticating">Uwierzytelnianie…</string>
+    <string name="login_failed">Logowanie zakończone niepowodzeniem</string>
+    <string name="login_wrong_email">wprowadź poprawny adres e-mail</string>
+    <string name="login_wrong_password">wprowadź hasło</string>
+    <string name="login_password">Hasło</string>
+    <string name="login_login_button">Zaloguj</string>
+    <string name="login_signup_link">Nie masz jeszcze konta? Zarejestruj się!</string>
 
     <!-- Recommendation -->
     <string name="emptyRecommendationList">Brak rekomendacji…</string>

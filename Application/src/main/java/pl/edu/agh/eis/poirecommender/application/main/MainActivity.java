@@ -5,10 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
-import android.widget.Toast;
 import lombok.extern.slf4j.Slf4j;
 import pl.edu.agh.eis.poirecommender.R;
-import pl.edu.agh.eis.poirecommender.application.auth.AuthActivity;
+import pl.edu.agh.eis.poirecommender.application.auth.LoginActivity;
 import pl.edu.agh.eis.poirecommender.application.find_poi.FindPoiFragment;
 import pl.edu.agh.eis.poirecommender.aware.AwareContextObservingService;
 
@@ -53,7 +52,7 @@ public class MainActivity extends NavigationDrawerActivity {
     private void authenticateIfNecessary() {
         String authToken = preferences.getAuthToken();
         if (authToken == null) {
-            startActivityForResult(new Intent(AuthActivity.ACTION_AUTH), AUTH_REQUEST);
+            startActivityForResult(new Intent(LoginActivity.ACTION_LOGIN), AUTH_REQUEST);
         } else {
             log.debug("Authentication not necessary, auth token exists: {}", authToken);
         }
@@ -64,12 +63,11 @@ public class MainActivity extends NavigationDrawerActivity {
         switch (requestCode) {
             case AUTH_REQUEST:
                 if (resultCode == RESULT_OK) {
-                    String token = data.getStringExtra(AuthActivity.AUTH_TOKEN_EXTRA);
+                    String token = data.getStringExtra(LoginActivity.AUTH_TOKEN_EXTRA);
                     preferences.setAuthToken(token);
-                    Toast.makeText(this, R.string.auth_success, Toast.LENGTH_LONG).show();
                     log.debug("Authentication completed. Received token: {}", token);
                 } else {
-                    Toast.makeText(this, R.string.auth_canceled, Toast.LENGTH_LONG).show();
+                    log.error("Authentication failed: {}", requestCode);
                 }
                 break;
             default:
