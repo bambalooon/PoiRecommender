@@ -3,14 +3,9 @@
 
     <!-- App -->
     <string name="app_name">PoiRecommender</string>
-    <string name="settings_name">Settings</string>
 
     <!-- Menu -->
-    <string name="action_settings">Settings</string>
     <string name="action_refresh">Refresh</string>
-    <string name="action_add">Add</string>
-    <string name="action_save">Save</string>
-    <string name="action_cancel">Cancel</string>
     <string name="action_find_poi">Find POI</string>
 
     <!-- Login -->
@@ -34,13 +29,6 @@
 
     <!-- Recommendation -->
     <string name="emptyRecommendationList">Nothing to recommend…</string>
-
-    <!-- Dialogs -->
-    <string name="ok">ok</string>
-    <string name="select_single_item_dialog">Select single item from list:</string>
-    <string name="select_items_dialog">Select items from list:</string>
-    <string name="enter_number_dialog">Enter number value:</string>
-    <string name="enter_range_dialog">Enter range:</string>
 
     <!-- Drawer -->
     <string name="drawer_open">Opened</string>

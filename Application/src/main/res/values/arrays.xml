@@ -11,26 +11,4 @@
         <item>@drawable/ic_action_search</item>
         <item>@drawable/ic_action_debug</item>
     </array>
-
-    <string-array name="operation_symbolic_array">
-        <item>eq</item>
-        <item>neq</item>
-        <item>in</item>
-        <item>notin</item>
-        <item>subset</item>
-        <item>supset</item>
-        <item>sim</item>
-        <item>notsim</item>
-    </string-array>
-
-    <string-array name="operation_numeric_array">
-        <item>eq</item>
-        <item>neq</item>
-        <item>in</item>
-        <item>notin</item>
-        <item>lt</item>
-        <item>gt</item>
-        <item>lte</item>
-        <item>gte</item>
-    </string-array>
 </resources>

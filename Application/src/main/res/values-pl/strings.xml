@@ -3,14 +3,9 @@
 
     <!-- App -->
     <string name="app_name">PoiRecommender</string>
-    <string name="settings_name">Ustawienia</string>
 
     <!-- Menu -->
-    <string name="action_settings">Ustawienia</string>
     <string name="action_refresh">Odśwież</string>
-    <string name="action_add">Dodaj</string>
-    <string name="action_save">Zapisz</string>
-    <string name="action_cancel">Anuluj</string>
     <string name="action_find_poi">Znajdź POI</string>
 
     <!-- Auth -->
@@ -31,13 +26,6 @@
 
     <!-- Recommendation -->
     <string name="emptyRecommendationList">Brak rekomendacji…</string>
-
-    <!-- Dialogs -->
-    <string name="ok">ok</string>
-    <string name="select_single_item_dialog">Wybierz jeden element z listy:</string>
-    <string name="select_items_dialog">Wybierz elementy z listy:</string>
-    <string name="enter_number_dialog">Wprowadź liczbę:</string>
-    <string name="enter_range_dialog">Wprowadź zakres:</string>
 
     <!-- Drawer -->
     <string name="drawer_open">Otwarte</string>
