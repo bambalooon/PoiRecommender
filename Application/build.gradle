@@ -40,6 +40,7 @@ dependencies {
     compile "com.awareframework:aware-poirecommender:${awarePluginPoiRecommender_version}@aar"
     compile "com.awareframework:aware-plugin-google_ActivityRecognition:${awarePluginActivityRecognition_version}@aar"
     compile "com.awareframework:aware-plugin-OpenWeather:${awarePluginOpenWeather_version}@aar"
+    compile "pl.edu.agh.eis.poirecommender:recommendation-model:${poiRecommenderSystem_version}"
     // android
     compile "com.android.support:appcompat-v7:${supportLibrary_version}"
     compile "com.android.support:design:${supportLibrary_version}"
