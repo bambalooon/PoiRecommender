@@ -22,6 +22,13 @@
     <string name="login_login_button">Zaloguj</string>
     <string name="login_signup_link">Nie masz jeszcze konta? Zarejestruj się!</string>
 
+    <!-- Sign Up -->
+    <string name="signup_creating_account">Rejestracja…</string>
+    <string name="signup_failed">Rejestracja zakończona niepowodzeniem</string>
+    <string name="signup_password_repeat">Powtórz hasło</string>
+    <string name="signup_signup_button">Zarejestruj</string>
+    <string name="signup_wrong_password_repeat">podane hasła nie są identyczne</string>
+
     <!-- Recommendation -->
     <string name="emptyRecommendationList">Brak rekomendacji…</string>
 

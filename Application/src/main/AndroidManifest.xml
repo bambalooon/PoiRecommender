@@ -44,6 +44,9 @@
         <activity android:name=".application.auth.LoginActivity"
                   android:label="@string/activity_login">
         </activity>
+        <activity android:name=".application.auth.SignUpActivity"
+                  android:label="@string/activity_signup">
+        </activity>
 
         <service
             android:name=".service.RecommenderService"

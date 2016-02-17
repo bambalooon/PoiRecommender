@@ -14,15 +14,23 @@
     <string name="action_find_poi">Find POI</string>
 
     <!-- Login -->
-    <string name="activity_login">PoiRecommender-Login</string>
+    <string name="activity_login" translatable="false">PoiRecommender-Login</string>
     <string name="login_authenticating">Authenticating…</string>
     <string name="login_failed">Login failed</string>
     <string name="login_wrong_email">enter a valid e-mail address</string>
     <string name="login_wrong_password">enter password</string>
-    <string name="login_email">E-mail</string>
+    <string name="login_email" translatable="false">E-mail</string>
     <string name="login_password">Password</string>
     <string name="login_login_button">Login</string>
     <string name="login_signup_link">No account yet? Create one!</string>
+
+    <!-- Sign Up -->
+    <string name="activity_signup" translatable="false">PoiRecommender-SignUp</string>
+    <string name="signup_creating_account">Creating Account…</string>
+    <string name="signup_failed">Sign Up failed</string>
+    <string name="signup_password_repeat">Repeat password</string>
+    <string name="signup_signup_button">Sign Up</string>
+    <string name="signup_wrong_password_repeat">passwords aren\'t identical</string>
 
     <!-- Recommendation -->
     <string name="emptyRecommendationList">Nothing to recommend…</string>

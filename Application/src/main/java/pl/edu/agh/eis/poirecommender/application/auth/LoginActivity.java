@@ -17,6 +17,7 @@ import pl.edu.agh.eis.poirecommender.R;
 
 public class LoginActivity extends AppCompatActivity {
     public static final String AUTH_TOKEN_EXTRA = "auth_token";
+    private static final int SIGNUP_REQUEST = 0;
 
     private Config config;
     private LoginTask activeLoginTask;
@@ -49,8 +50,29 @@ public class LoginActivity extends AppCompatActivity {
     public void onBackPressed() {
         if (activeLoginTask != null) {
             activeLoginTask.cancel(true);
+            activeLoginTask = null;
         }
         moveTaskToBack(true);
+    }
+
+    @OnClick(R.id.link_signup)
+    void signUp() {
+        Intent intent = new Intent(getApplicationContext(), SignUpActivity.class);
+        startActivityForResult(intent, SIGNUP_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        switch (requestCode) {
+            case SIGNUP_REQUEST:
+                if (resultCode == RESULT_OK) {
+                    setResult(RESULT_OK, data);
+                    finish();
+                }
+                break;
+            default:
+                super.onActivityResult(requestCode, resultCode, data);
+        }
     }
 
     @OnClick(R.id.btn_login)
