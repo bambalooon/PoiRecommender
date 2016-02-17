@@ -9,6 +9,8 @@ import lombok.Getter;
 public class Config extends AssetsProperties {
     @Property("poi_recommender_login_url")
     private String poiRecommenderLoginUrl;
+    @Property("poi_recommender_signup_url")
+    private String poiRecommenderSignUpUrl;
 
     public Config(Context context) {
         super(context);
