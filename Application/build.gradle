@@ -48,6 +48,7 @@ dependencies {
     // other
     compile "org.springframework.android:spring-android-rest-template:${springRestTemplate_version}"
     compile "com.github.fernandodev.androidproperties:androidproperties:${androidProperties_version}"
+    compile "nl.qbusict:cupboard:${cupboard_version}"
     compile "com.google.guava:guava:${guava_version}"
     compile "org.apache.commons:commons-lang3:${apacheCommonsLang3_version}"
     compile "com.google.code.gson:gson:${gson_version}"
