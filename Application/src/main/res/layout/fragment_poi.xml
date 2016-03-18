@@ -4,57 +4,57 @@
              android:layout_height="match_parent">
 
     <TableRow>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/poi_name"
-            />
 
         <TextView
-            android:id="@+id/poi_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/poi_name"
+                />
+
+        <TextView
+                android:id="@+id/poi_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
     </TableRow>
 
     <TableRow>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/poi_latitude"
-            />
 
         <TextView
-            android:id="@+id/poi_lat"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/poi_latitude"
+                />
+
+        <TextView
+                android:id="@+id/poi_lat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
     </TableRow>
 
     <TableRow>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/poi_longitude"
-            />
 
         <TextView
-            android:id="@+id/poi_lon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/poi_longitude"
+                />
+
+        <TextView
+                android:id="@+id/poi_lon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
     </TableRow>
 
     <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <TableRow
-            android:layout_gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
-            <RatingBar
+
+        <RatingBar
                 android:id="@+id/rating_bar"
+                android:layout_gravity="center"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:numStars="@integer/poi_rating_stars_count"
@@ -62,7 +62,22 @@
                 android:rating="@integer/poi_rating_stars_default"
                 />
 
-            <ImageButton
+        <ProgressBar
+                android:id="@+id/progress_bar"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_gravity="center"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="visible"/>
+    </FrameLayout>
+
+    <LinearLayout
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+        <ImageButton
                 android:id="@+id/save_rating_btn"
                 android:src="@drawable/ic_action_accept"
                 android:visibility="invisible"
@@ -70,23 +85,14 @@
                 android:layout_height="wrap_content"
                 android:contentDescription="@string/save_poi_rating"
                 />
-        </TableRow>
 
-        <ProgressBar
-            android:id="@+id/progress_bar"
-            style="?android:attr/progressBarStyleLarge"
-            android:layout_gravity="center"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            />
-    </FrameLayout>
-
-    <TableRow>
-        <Button
-            android:id="@+id/check_in_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/poi_check_in"
-            />
-    </TableRow>
+        <ImageButton
+                android:id="@+id/remove_rating_btn"
+                android:src="@drawable/ic_action_discard"
+                android:visibility="invisible"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="@string/remove_poi_rating"
+                />
+    </LinearLayout>
 </TableLayout>

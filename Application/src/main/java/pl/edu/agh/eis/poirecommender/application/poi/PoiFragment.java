@@ -1,26 +1,22 @@
 package pl.edu.agh.eis.poirecommender.application.poi;
 
-import android.database.Cursor;
 import android.location.Location;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.LoaderManager;
-import android.support.v4.content.CursorLoader;
-import android.support.v4.content.Loader;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
+import butterknife.Bind;
+import butterknife.ButterKnife;
 import com.aware.poirecommender.openstreetmap.model.response.Element;
-import com.aware.poirecommender.provider.PoiRecommenderContract;
 import com.aware.poirecommender.transform.Serializer;
 import com.google.common.base.Preconditions;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import pl.edu.agh.eis.poirecommender.R;
 import pl.edu.agh.eis.poirecommender.pois.model.OsmPoi;
 import pl.edu.agh.eis.poirecommender.pois.model.Poi;
@@ -32,25 +28,22 @@ import pl.edu.agh.eis.poirecommender.pois.model.Poi;
  * Created by BamBalooon
  */
 @Slf4j
-public class PoiFragment extends Fragment implements LoaderManager.LoaderCallbacks<Cursor> {
+public class PoiFragment extends Fragment {
     private static final String ARGUMENT_POI_ELEMENT = "ARGUMENT_POI_ELEMENT";
-    /**
-     * TODO: move request code constant to specific class with global request codes for pending intents
-     * because starting pending intent with same request code cancels or updates previous one
-     * According to: http://codetheory.in/android-pending-intents/
-     */
-    private static final int ACTION_RATE_POI_REQUEST_CODE = 0;
-    private static final int ACTION_STORE_CONTEXT_REQUEST_CODE = 1;
-    private static final int POI_RATING_LOADER = 0;
 
-    private Poi mPoi;
-    private PoiRecommenderServiceInvoker mServiceInvoker;
+    private Poi poi;
+    private LoadPoiRatingTask loadPoiRatingTask;
+    private SetPoiRatingTask setPoiRatingTask;
 
-    private ProgressBar mProgressBar;
-    private RatingBarDecorator mRatingBarDecorator;
-    private ImageButton mSaveRatingButton;
+    @Bind(R.id.poi_name) TextView nameText;
+    @Bind(R.id.poi_lat) TextView latitudeText;
+    @Bind(R.id.poi_lon) TextView longitudeText;
 
-    private Button mCheckInPoiButton;
+    @Bind(R.id.rating_bar) RatingBar ratingBar;
+    RatingBarDecorator ratingBarDecorator;
+    @Bind(R.id.save_rating_btn) ImageButton saveRatingButton;
+    @Bind(R.id.remove_rating_btn) ImageButton removeRatingButton;
+    @Bind(R.id.progress_bar) ProgressBar progressBar;
 
     public static PoiFragment newInstance(Element poiElement) {
         PoiFragment poiFragment = new PoiFragment();
@@ -66,94 +59,80 @@ public class PoiFragment extends Fragment implements LoaderManager.LoaderCallbac
         Element poiElement = new Serializer<>(Element.class)
                 .deserialize(getArguments().getString(ARGUMENT_POI_ELEMENT));
         Preconditions.checkNotNull(poiElement, "PoiFragment cannot be created without Element.");
-        mPoi = OsmPoi.fromOsmElement(poiElement);
-        mServiceInvoker = new PoiRecommenderServiceInvoker(
-                getActivity().getApplicationContext(),
-                ACTION_RATE_POI_REQUEST_CODE,
-                ACTION_STORE_CONTEXT_REQUEST_CODE);
-        log.debug("PoiFragment created for {}", mPoi);
+        poi = OsmPoi.fromOsmElement(poiElement);
+        log.debug("PoiFragment created for {}", poi);
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_poi, container, false);
-        //POI info
-        TextView poiNameTextView = (TextView) view.findViewById(R.id.poi_name);
-        TextView poiLatitudeTextView = (TextView) view.findViewById(R.id.poi_lat);
-        TextView poiLongitudeTextView = (TextView) view.findViewById(R.id.poi_lon);
-        //Rating menu
-        mProgressBar = (ProgressBar) view.findViewById(R.id.progress_bar);
-        RatingBar poiRatingBar = (RatingBar) view.findViewById(R.id.rating_bar);
-        mSaveRatingButton = (ImageButton) view.findViewById(R.id.save_rating_btn);
-        //Check In
-        mCheckInPoiButton = (Button) view.findViewById(R.id.check_in_btn);
+        final View view = inflater.inflate(R.layout.fragment_poi, container, false);
+        ButterKnife.bind(this, view);
 
-        getActivity().getSupportLoaderManager().restartLoader(POI_RATING_LOADER, null, this);
-
-        poiNameTextView.setText(mPoi.getName());
-        Location poiLocation = mPoi.getLocation();
-        poiLatitudeTextView.setText(Double.toString(poiLocation.getLatitude()));
-        poiLongitudeTextView.setText(Double.toString(poiLocation.getLongitude()));
-        poiRatingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+        nameText.setText(poi.getName());
+        Location poiLocation = poi.getLocation();
+        latitudeText.setText(Double.toString(poiLocation.getLatitude()));
+        longitudeText.setText(Double.toString(poiLocation.getLongitude()));
+        ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
-                mSaveRatingButton.setVisibility(View.VISIBLE);
+                saveRatingButton.setVisibility(View.VISIBLE);
             }
         });
 
-        mRatingBarDecorator = new RatingBarDecorator(poiRatingBar);
-        mRatingBarDecorator.disable();
-        mSaveRatingButton.setOnClickListener(new View.OnClickListener() {
+        ratingBarDecorator = new RatingBarDecorator(ratingBar);
+        ratingBarDecorator.disable();
+
+        saveRatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mServiceInvoker.ratePoi("user_login", mPoi.getElement().getId(), mRatingBarDecorator.getRating());
-                mSaveRatingButton.setVisibility(View.INVISIBLE);
-                mProgressBar.setVisibility(View.VISIBLE);
-                mRatingBarDecorator.disable();
+                setPoiRating(poi.getElement().getId(), ratingBarDecorator.getRating());
             }
         });
-        mCheckInPoiButton.setOnClickListener(new View.OnClickListener() {
+        removeRatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mServiceInvoker.storeContext(mPoi.getElement().getId());
-                //FIXME: message should be displayed after check in ended successfully
-                Toast.makeText(getActivity(), R.string.checked_in_message, Toast.LENGTH_SHORT).show();
+                setPoiRating(poi.getElement().getId(), null);
             }
         });
+
+        loadPoiRating(poi.getElement().getId());
         return view;
     }
 
-    @Override
-    public Loader<Cursor> onCreateLoader(int loaderId, Bundle args) {
-        switch (loaderId) {
-            case POI_RATING_LOADER:
-                return new CursorLoader(
-                        getActivity(),
-                        PoiRecommenderContract.PoisRating.CONTENT_URI,
-                        new String[]{PoiRecommenderContract.PoisRating.POI_RATING},
-                        PoiRecommenderContract.PoisRating.POI_ID + "=?",
-                        new String[]{Long.toString(mPoi.getElement().getId())},
-                        PoiRecommenderContract.PoisRating._ID + " DESC");
-            default:
-                return null;
+    private void setPoiRating(long poiId, Double rating) {
+        cancelSetRatingTask();
+        setPoiRatingTask = new SetPoiRatingTask(this);
+        setPoiRatingTask.execute(new ImmutablePair<>(poiId, rating));
+    }
+
+    private void cancelSetRatingTask() {
+        if (setPoiRatingTask != null) {
+            setPoiRatingTask.cancel(true);
+            setPoiRatingTask = null;
+        }
+    }
+
+    private void loadPoiRating(long poiId) {
+        cancelLoadRatingTask();
+        loadPoiRatingTask = new LoadPoiRatingTask(this);
+        loadPoiRatingTask.execute(poiId);
+    }
+
+    private void cancelLoadRatingTask() {
+        if (loadPoiRatingTask != null) {
+            loadPoiRatingTask.cancel(true);
+            loadPoiRatingTask = null;
         }
     }
 
     @Override
-    public void onLoadFinished(Loader<Cursor> loader, Cursor poiRatingCursor) {
-        if (poiRatingCursor != null && poiRatingCursor.moveToFirst()) {
-            int poiRatingColumnIndex = poiRatingCursor.getColumnIndex(PoiRecommenderContract.PoisRating.POI_RATING);
-            double poiRating = poiRatingCursor.getDouble(poiRatingColumnIndex);
-            mRatingBarDecorator.setRating(poiRating);
-            mSaveRatingButton.setVisibility(View.INVISIBLE);
-        } else { //No rating for selected POI
-            mSaveRatingButton.setVisibility(View.VISIBLE);
-        }
-        mProgressBar.setVisibility(View.INVISIBLE);
-        mRatingBarDecorator.enable();
+    public void onDestroy() {
+        cancelTasks();
+        super.onDestroy();
     }
 
-    @Override
-    public void onLoaderReset(Loader<Cursor> loader) {
+    private void cancelTasks() {
+        cancelLoadRatingTask();
+        cancelSetRatingTask();
     }
 }
