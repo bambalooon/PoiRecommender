@@ -5,6 +5,7 @@ import android.database.sqlite.SQLiteDatabase;
 import nl.qbusict.cupboard.DatabaseCompartment;
 import pl.edu.agh.eis.poirecommender.dao.DbHelper;
 import pl.edu.agh.eis.poirecommender.dao.PoiRating;
+import pl.edu.agh.eis.poirecommender.recommendation_entity.Rating;
 import pl.edu.agh.eis.poirecommender.utils.DateTimeProvider;
 
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
@@ -23,7 +24,7 @@ public class PoiRatingService {
                 .query(PoiRating.class).withSelection("poiId=?", poiId.toString()).get();
     }
 
-    public void ratePoi(long poiId, Double poiRating) {
+    public void ratePoi(long poiId, Rating poiRating) {
         DatabaseCompartment db = cupboard().withDatabase(this.db);
         PoiRating currentPoiRating = getPoiRating(poiId);
         if (currentPoiRating != null) {

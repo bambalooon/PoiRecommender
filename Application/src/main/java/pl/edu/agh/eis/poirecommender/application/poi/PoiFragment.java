@@ -20,6 +20,7 @@ import org.apache.commons.lang3.tuple.ImmutablePair;
 import pl.edu.agh.eis.poirecommender.R;
 import pl.edu.agh.eis.poirecommender.pois.model.OsmPoi;
 import pl.edu.agh.eis.poirecommender.pois.model.Poi;
+import pl.edu.agh.eis.poirecommender.recommendation_entity.Rating;
 
 /**
  * Name: PoiFragment
@@ -91,7 +92,7 @@ public class PoiFragment extends Fragment {
         removeRatingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                setPoiRating(poi.getElement().getId(), null);
+                setPoiRating(poi.getElement().getId(), Rating.NONE);
             }
         });
 
@@ -99,7 +100,7 @@ public class PoiFragment extends Fragment {
         return view;
     }
 
-    private void setPoiRating(long poiId, Double rating) {
+    private void setPoiRating(long poiId, Rating rating) {
         cancelSetRatingTask();
         setPoiRatingTask = new SetPoiRatingTask(this);
         setPoiRatingTask.execute(new ImmutablePair<>(poiId, rating));

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import nl.qbusict.cupboard.annotation.Index;
+import pl.edu.agh.eis.poirecommender.recommendation_entity.Rating;
 
 @Data
 @NoArgsConstructor
@@ -13,5 +14,5 @@ public class PoiRating {
     private Long timestamp;
     @Index(unique = true)
     private Long poiId;
-    private Double poiRating;
+    private Rating poiRating;
 }

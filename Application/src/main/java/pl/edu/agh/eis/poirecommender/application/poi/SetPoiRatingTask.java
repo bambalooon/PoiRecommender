@@ -5,9 +5,10 @@ import android.view.View;
 import lombok.RequiredArgsConstructor;
 import org.apache.commons.lang3.tuple.Pair;
 import pl.edu.agh.eis.poirecommender.poi_rating.PoiRatingService;
+import pl.edu.agh.eis.poirecommender.recommendation_entity.Rating;
 
 @RequiredArgsConstructor
-public class SetPoiRatingTask extends AsyncTask<Pair<Long, Double>, Void, SetPoiRatingTask.Result> {
+public class SetPoiRatingTask extends AsyncTask<Pair<Long, Rating>, Void, SetPoiRatingTask.Result> {
     private final PoiFragment poiFragment;
 
     @Override
@@ -19,11 +20,11 @@ public class SetPoiRatingTask extends AsyncTask<Pair<Long, Double>, Void, SetPoi
     }
 
     @Override
-    protected Result doInBackground(Pair<Long, Double>... params) {
+    protected Result doInBackground(Pair<Long, Rating>... params) {
         Long poiId = params[0].getLeft();
-        Double poiRating = params[0].getRight();
+        Rating poiRating = params[0].getRight();
         new PoiRatingService(poiFragment.getContext()).ratePoi(poiId, poiRating);
-        return poiRating == null ? Result.REMOVED : Result.SET;
+        return poiRating == Rating.NONE ? Result.REMOVED : Result.SET;
     }
 
     @Override

@@ -1,7 +1,7 @@
 package pl.edu.agh.eis.poirecommender.application.poi;
 
-import android.view.View;
 import android.widget.RatingBar;
+import pl.edu.agh.eis.poirecommender.recommendation_entity.Rating;
 
 /**
  * Name: RatingBarDecorator
@@ -18,12 +18,12 @@ public class RatingBarDecorator {
         this.ratingBar = ratingBar;
     }
 
-    public double getRating() {
-        return (ratingBar.getRating() - 1) / (ratingBar.getNumStars() - 1);
+    public Rating getRating() {
+        return Rating.valueOf((double) (ratingBar.getRating() - 1) / (ratingBar.getNumStars() - 1));
     }
 
-    public void setRating(double rating) {
-        ratingBar.setRating((float) rating * (ratingBar.getNumStars() - 1) + 1);
+    public void setRating(Rating rating) {
+        ratingBar.setRating(rating.getValue().floatValue() * (ratingBar.getNumStars() - 1) + 1);
     }
 
     public void disable() {
