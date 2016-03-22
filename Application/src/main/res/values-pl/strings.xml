@@ -5,7 +5,7 @@
     <string name="app_name">PoiRecommender</string>
 
     <!-- Menu -->
-    <string name="action_refresh">Odśwież</string>
+    <string name="action_sync">Synchronizuj</string>
     <string name="action_find_poi">Znajdź POI</string>
 
     <!-- Auth -->
@@ -26,6 +26,10 @@
 
     <!-- Recommendation -->
     <string name="emptyRecommendationList">Brak rekomendacji…</string>
+
+    <!-- Synchronization -->
+    <string name="sync_success">Synchronizacja zakończona powodzeniem!</string>
+    <string name="sync_failed">Błąd synchronizacji!</string>
 
     <!-- Drawer -->
     <string name="drawer_open">Otwarte</string>

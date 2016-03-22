@@ -2,10 +2,16 @@ package pl.edu.agh.eis.poirecommender.application.recommender;
 
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
-import android.view.*;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ListView;
 import pl.edu.agh.eis.poirecommender.R;
 import pl.edu.agh.eis.poirecommender.application.poi.PoiFragment;
+import pl.edu.agh.eis.poirecommender.application.sync.SyncTask;
 
 /**
  * Name: RecommenderFragment
@@ -32,8 +38,8 @@ public class RecommenderFragment extends ListFragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_refresh:
-                poiListAdapter.notifyDataSetChanged();
+            case R.id.action_sync:
+                SyncTask.create(getContext()).execute();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
