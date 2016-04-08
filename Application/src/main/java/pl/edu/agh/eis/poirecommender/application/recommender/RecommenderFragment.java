@@ -1,5 +1,6 @@
 package pl.edu.agh.eis.poirecommender.application.recommender;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
@@ -13,6 +14,7 @@ import pl.edu.agh.eis.poirecommender.R;
 import pl.edu.agh.eis.poirecommender.application.poi.PoiFragment;
 import pl.edu.agh.eis.poirecommender.application.sync.RatingsSyncTask;
 import pl.edu.agh.eis.poirecommender.application.sync.RecommendationsSyncTask;
+import pl.edu.agh.eis.poirecommender.application.sync.SyncResultJoinNotifier;
 
 /**
  * Name: RecommenderFragment
@@ -40,8 +42,10 @@ public class RecommenderFragment extends ListFragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_sync:
-                RatingsSyncTask.create(getContext()).execute();
-                RecommendationsSyncTask.create(getContext()).execute();
+                Context context = getContext();
+                SyncResultJoinNotifier syncResultJoinNotifier = new SyncResultJoinNotifier(context);
+                RatingsSyncTask.create(context, syncResultJoinNotifier).execute();
+                RecommendationsSyncTask.create(context, syncResultJoinNotifier).execute();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
