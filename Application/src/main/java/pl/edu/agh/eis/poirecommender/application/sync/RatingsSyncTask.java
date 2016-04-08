@@ -27,7 +27,7 @@ import pl.edu.agh.eis.poirecommender.utils.gson.PoiRatingGsonHttpMessageConverte
 
 @Slf4j
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-public class SyncTask extends AsyncTask<Void, Void, SyncTask.SyncResult> {
+public class RatingsSyncTask extends AsyncTask<Void, Void, RatingsSyncTask.SyncResult> {
     private final Context context;
     private final PoiRatingService poiRatingService;
     private final PoiRatingSync poiRatingSync;
@@ -42,7 +42,7 @@ public class SyncTask extends AsyncTask<Void, Void, SyncTask.SyncResult> {
             ResponseEntity<PoiRatingDto[]> response = new RestTemplate(ImmutableList
                     .<HttpMessageConverter<?>>of(new PoiRatingGsonHttpMessageConverter()))
                     .exchange(
-                            config.getPoiRecommenderSyncUrl(),
+                            config.getPoiRecommenderRatingsSyncUrl(),
                             HttpMethod.POST,
                             new HttpEntity<>(currentPoiRatings, createHeaders()),
                             PoiRatingDto[].class
@@ -86,9 +86,9 @@ public class SyncTask extends AsyncTask<Void, Void, SyncTask.SyncResult> {
         SUCCESS, FAIL
     }
 
-    public static SyncTask create(Context context) {
+    public static RatingsSyncTask create(Context context) {
         PoiRatingService poiRatingService = new PoiRatingService(context);
-        return new SyncTask(
+        return new RatingsSyncTask(
                 context,
                 poiRatingService,
                 new PoiRatingSync(poiRatingService),
