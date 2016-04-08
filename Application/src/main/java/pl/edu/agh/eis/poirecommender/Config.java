@@ -13,6 +13,8 @@ public class Config extends AssetsProperties {
     private String poiRecommenderSignUpUrl;
     @Property("poi_recommender_ratings_sync_url")
     private String poiRecommenderRatingsSyncUrl;
+    @Property("poi_recommender_recommendations_sync_url")
+    private String poiRecommenderRecommendationsSyncUrl;
 
     public Config(Context context) {
         super(context);

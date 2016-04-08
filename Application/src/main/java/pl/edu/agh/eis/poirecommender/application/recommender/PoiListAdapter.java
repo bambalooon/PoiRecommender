@@ -14,6 +14,7 @@ import pl.edu.agh.eis.poirecommender.pois.PoiManager;
 import pl.edu.agh.eis.poirecommender.pois.PoiStorage;
 import pl.edu.agh.eis.poirecommender.pois.model.PoiAtDistance;
 import pl.edu.agh.eis.poirecommender.pois.model.PoiAtDistanceWithDirection;
+import pl.edu.agh.eis.poirecommender.pois.model.RecommendedPoi;
 import pl.edu.agh.eis.poirecommender.utils.AsyncResult;
 import pl.edu.agh.eis.poirecommender.utils.LocationHolder;
 
@@ -58,7 +59,7 @@ public class PoiListAdapter extends AbstractPoiListAdapter {
             poiList = new AsyncResult<>(Optional.of(FluentIterable.from(poiStorage.getPoiList())
                     .transform(new PoiAtDistance.AttachLocationToPoi(location))
                     .transform(PoiAtDistanceWithDirection.ATTACH_DIRECTION_TO_POI)
-                    .toSortedList(PoiAtDistanceWithDirection.DISTANCE_COMPARATOR)),
+                    .toSortedList(RecommendedPoi.DESC_RATING_COMPARATOR)),
                     Optional.<Integer>absent());
         }
     }

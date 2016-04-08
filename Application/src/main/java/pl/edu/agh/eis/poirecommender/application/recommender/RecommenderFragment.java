@@ -12,6 +12,7 @@ import android.widget.ListView;
 import pl.edu.agh.eis.poirecommender.R;
 import pl.edu.agh.eis.poirecommender.application.poi.PoiFragment;
 import pl.edu.agh.eis.poirecommender.application.sync.RatingsSyncTask;
+import pl.edu.agh.eis.poirecommender.application.sync.RecommendationsSyncTask;
 
 /**
  * Name: RecommenderFragment
@@ -40,6 +41,7 @@ public class RecommenderFragment extends ListFragment {
         switch (item.getItemId()) {
             case R.id.action_sync:
                 RatingsSyncTask.create(getContext()).execute();
+                RecommendationsSyncTask.create(getContext()).execute();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
