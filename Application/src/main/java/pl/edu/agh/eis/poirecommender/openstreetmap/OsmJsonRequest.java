@@ -3,6 +3,9 @@ package pl.edu.agh.eis.poirecommender.openstreetmap;
 import android.location.Location;
 import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.CompositeConstraint;
 import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.Constraint;
+import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.IdConstraint;
+
+import java.util.List;
 
 public class OsmJsonRequest implements OsmRequest {
     private static final String REQUEST_START = "[out:json];";
@@ -14,6 +17,10 @@ public class OsmJsonRequest implements OsmRequest {
 
     public OsmJsonRequest(Constraint constraint, Location location) {
         this(new OsmXmlRequest(constraint, location));
+    }
+
+    public OsmJsonRequest(List<IdConstraint> idConstraints) {
+        this(new OsmXmlRequest(idConstraints));
     }
 
     protected OsmJsonRequest(OsmXmlRequest xmlRequest) {

@@ -6,6 +6,7 @@ import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
 import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.CompositeConstraint;
 import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.Constraint;
+import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.IdConstraint;
 import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.Query;
 
 import java.util.Collections;
@@ -23,6 +24,12 @@ public class OsmXmlRequest implements OsmRequest {
 
     public OsmXmlRequest(Constraint constraint, Location location) {
         this(Collections.singletonList(constraint), location);
+    }
+
+    public OsmXmlRequest(List<IdConstraint> idConstraints) {
+        this.queries = FluentIterable.from(idConstraints)
+                .transform(new ToNodeWithNoArea())
+                .toList();
     }
 
     //TODO: ToNodeWithAroundArea should be extracted outside to avoid classes coupling
