@@ -3,20 +3,12 @@ package pl.edu.agh.eis.poirecommender.pois.model;
 import android.location.Location;
 import com.aware.poirecommender.openstreetmap.model.response.Element;
 import com.google.common.base.Function;
+import lombok.RequiredArgsConstructor;
 
-/**
- * Name: PoiAtDistance
- * Description: PoiAtDistance
- * Date: 2014-11-11
- * Created by BamBalooon
- */
-public class PoiAtDistance implements Poi, AtDistance {
-    private final Poi poi;
+@RequiredArgsConstructor
+public class PoiAtDistance implements Poi, AtDistance, WithEstimatedRating {
+    private final RecommendedPoi poi;
     private final Location currentLocation;
-    public PoiAtDistance(Poi poi, Location location) {
-        this.poi = poi;
-        this.currentLocation = location;
-    }
 
     @Override
     public String getName() {
@@ -42,6 +34,11 @@ public class PoiAtDistance implements Poi, AtDistance {
         return currentLocation;
     }
 
+    @Override
+    public Double getEstimatedRating() {
+        return poi.getEstimatedRating();
+    }
+
     public static class AttachLocationToPoi implements Function<Poi, PoiAtDistance> {
         private final Location location;
 
@@ -51,7 +48,9 @@ public class PoiAtDistance implements Poi, AtDistance {
 
         @Override
         public PoiAtDistance apply(Poi poi) {
-            return new PoiAtDistance(poi, location);
+            return poi instanceof RecommendedPoi
+                    ? new PoiAtDistance((RecommendedPoi) poi, location)
+                    : new PoiAtDistance(new RecommendedPoi(poi, null), location);
         }
     }
 }

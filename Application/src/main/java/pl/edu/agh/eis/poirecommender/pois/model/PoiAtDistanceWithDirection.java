@@ -7,7 +7,14 @@ import com.google.common.base.Function;
 import java.util.Comparator;
 
 import static java.lang.Math.abs;
-import static pl.edu.agh.eis.poirecommender.pois.model.CardinalDirection.*;
+import static pl.edu.agh.eis.poirecommender.pois.model.CardinalDirection.E;
+import static pl.edu.agh.eis.poirecommender.pois.model.CardinalDirection.N;
+import static pl.edu.agh.eis.poirecommender.pois.model.CardinalDirection.NE;
+import static pl.edu.agh.eis.poirecommender.pois.model.CardinalDirection.NW;
+import static pl.edu.agh.eis.poirecommender.pois.model.CardinalDirection.S;
+import static pl.edu.agh.eis.poirecommender.pois.model.CardinalDirection.SE;
+import static pl.edu.agh.eis.poirecommender.pois.model.CardinalDirection.SW;
+import static pl.edu.agh.eis.poirecommender.pois.model.CardinalDirection.W;
 
 /**
  * Name: PoiAtDistanceWithDirection
@@ -15,7 +22,7 @@ import static pl.edu.agh.eis.poirecommender.pois.model.CardinalDirection.*;
  * Date: 2014-11-11
  * Created by BamBalooon
  */
-public class PoiAtDistanceWithDirection implements Poi, AtDistance, WithDirection {
+public class PoiAtDistanceWithDirection implements Poi, AtDistance, WithDirection, WithEstimatedRating {
     private static final double INTERCORDINAL_MIN = 0.4245;
     private static final double INTERCORDINAL_MAX = 2.3559;
     private final PoiAtDistance poi;
@@ -42,6 +49,11 @@ public class PoiAtDistanceWithDirection implements Poi, AtDistance, WithDirectio
     @Override
     public double getDistance() {
         return poi.getDistance();
+    }
+
+    @Override
+    public Double getEstimatedRating() {
+        return poi.getEstimatedRating();
     }
 
     @Override
