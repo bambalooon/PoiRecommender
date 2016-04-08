@@ -2,29 +2,19 @@ package pl.edu.agh.eis.poirecommender.service;
 
 import android.app.IntentService;
 import android.content.Intent;
-import android.location.Location;
 import com.aware.context.property.GenericContextProperty;
 import com.aware.context.provider.Context;
 import com.aware.context.storage.ContextStorage;
 import com.aware.context.transform.ContextPropertySerialization;
 import com.aware.plugin.openweather.Provider;
-import com.aware.poirecommender.openstreetmap.model.response.OsmResponse;
 import com.aware.poirecommender.provider.PoiRecommenderContract;
 import com.google.common.collect.ImmutableList;
 import lombok.extern.slf4j.Slf4j;
-import pl.edu.agh.eis.poirecommender.aware.AwareLocationHolder;
 import pl.edu.agh.eis.poirecommender.heartdroid.HeartRuleEngine;
 import pl.edu.agh.eis.poirecommender.heartdroid.adapters.GenericContextPropertyNumericStateAdapter;
 import pl.edu.agh.eis.poirecommender.heartdroid.adapters.TimeHourAdapter;
 import pl.edu.agh.eis.poirecommender.heartdroid.adapters.WithStateElement;
-import pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType;
-import pl.edu.agh.eis.poirecommender.openstreetmap.OsmExecutor;
-import pl.edu.agh.eis.poirecommender.openstreetmap.OsmJsonRequest;
-import pl.edu.agh.eis.poirecommender.openstreetmap.OsmRequest;
-import pl.edu.agh.eis.poirecommender.openstreetmap.PoiTypeToConstraintMap;
 import pl.edu.agh.eis.poirecommender.pois.PoiManager;
-import pl.edu.agh.eis.poirecommender.pois.PoiStorage;
-import pl.edu.agh.eis.poirecommender.utils.LocationHolder;
 
 import java.util.Date;
 
@@ -38,7 +28,6 @@ import java.util.Date;
 public class RecommenderService extends IntentService {
     private static final String RECOMMENDER_SERVICE_NAME = "PoiRecommender::Service";
     private ContextStorage<GenericContextProperty> contextStorage;
-    private LocationHolder locationHolder;
     private HeartRuleEngine heartRuleEngine;
     private PoiManager poiManager;
 
@@ -57,7 +46,6 @@ public class RecommenderService extends IntentService {
         android.content.Context appContext = getApplicationContext();
         contextStorage = new Context(appContext.getContentResolver(),
                 new ContextPropertySerialization<>(GenericContextProperty.class));
-        locationHolder = new AwareLocationHolder(contextStorage);
         heartRuleEngine = new HeartRuleEngine(appContext);
         poiManager = new PoiManager(appContext);
     }
@@ -65,11 +53,6 @@ public class RecommenderService extends IntentService {
     @Override
     protected void onHandleIntent(final Intent intent) {
         debugInfo();
-
-        final Location location = locationHolder.getLocation();
-        if (location == null) {
-            return;
-        }
 
         final ImmutableList<? extends WithStateElement> stateElements = ImmutableList.of(
                 new GenericContextPropertyNumericStateAdapter(
@@ -86,18 +69,8 @@ public class RecommenderService extends IntentService {
                         Provider.OpenWeather_Data.RAIN),
                 new TimeHourAdapter(new Date()));
 
-        final PoiType recommendedPoiType = heartRuleEngine.inferencePreferredPoiType(stateElements)
-                .getPoiType();
-
-        if (recommendedPoiType != null) {
-            log.debug("Recommendation poi type: " + recommendedPoiType.getText());
-            final OsmRequest osmRequest = new OsmJsonRequest(PoiTypeToConstraintMap.getConstraint(recommendedPoiType), location);
-            OsmResponse osmResponse = new OsmExecutor().execute(osmRequest, getApplicationContext());
-            if (osmResponse != null) {
-                final PoiStorage poiStorage = PoiStorage.fromOsmResponse(osmResponse);
-                this.poiManager.setPoiStorage(poiStorage);
-            }
-        }
+        //TODO: infer preferred POI types / not acceptable POI types
+        //TODO: filter or create new list of recommended POIs with new estimated rating and save
     }
 
     private void debugInfo() {
