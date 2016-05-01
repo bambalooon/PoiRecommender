@@ -3,6 +3,7 @@ package pl.edu.agh.eis.poirecommender.openstreetmap.model.request;
 import com.google.common.base.Function;
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
+import pl.edu.agh.eis.poirecommender.pois.model.Poi;
 
 import java.util.List;
 
@@ -23,5 +24,15 @@ public class CompoundConstraint implements Constraint {
                         return constraint.createQueryPart();
                     }
                 }).join(CONSTRAINTS_AND_JOINER);
+    }
+
+    @Override
+    public boolean eval(Poi poi) {
+        for (Constraint constraint : constraints) {
+            if (!constraint.eval(poi)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

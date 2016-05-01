@@ -15,7 +15,7 @@ import java.io.InputStream;
 
 @Slf4j
 public class RulesProvider {
-    public static final int BASIC_POI_RECOMMENDER_CONFIG = R.raw.poi_recommender;
+    public static final int BASIC_POI_RECOMMENDER_CONFIG = R.raw.poi_rules;
 
     private final Resources resources;
 

@@ -41,7 +41,7 @@ public class PoiRecommendationSync {
         if (osmResponse != null) {
             PoiStorage recommendedPois = new PoiStorage(
                     createPoisWithEstimatedRating(poiRecommendationDtos, PoiStorage.fromOsmResponse(osmResponse)));
-            poiManager.setPoiStorage(recommendedPois);
+            poiManager.setRecommendedPois(recommendedPois);
         }
     }
 

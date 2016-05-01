@@ -1,9 +1,11 @@
 package pl.edu.agh.eis.poirecommender.openstreetmap.model.request;
 
+import pl.edu.agh.eis.poirecommender.pois.model.Poi;
+
 import java.util.LinkedList;
 import java.util.List;
 
-public class CompositeConstraint {
+public class CompositeConstraint implements Evaluable {
     private final List<Constraint> constraints = new LinkedList<>();
 
     private CompositeConstraint() {
@@ -11,6 +13,16 @@ public class CompositeConstraint {
 
     public List<Constraint> getConstraints() {
         return constraints;
+    }
+
+    @Override
+    public boolean eval(Poi poi) {
+        for (Constraint constraint : constraints) {
+            if (constraint.eval(poi)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public static class Builder {

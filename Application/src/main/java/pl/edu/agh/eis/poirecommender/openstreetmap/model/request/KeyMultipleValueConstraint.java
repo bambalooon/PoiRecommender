@@ -2,6 +2,7 @@ package pl.edu.agh.eis.poirecommender.openstreetmap.model.request;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.FluentIterable;
+import pl.edu.agh.eis.poirecommender.pois.model.Poi;
 
 import java.util.List;
 
@@ -28,5 +29,11 @@ public class KeyMultipleValueConstraint implements Constraint {
                 FluentIterable.from(values).join(VALUES_JOINER),
                 CONSTRAINT_VALUE_END,
                 CONSTRAINT_REQUEST_PART_END);
+    }
+
+    @Override
+    public boolean eval(Poi poi) {
+        String tagValue = poi.getElement().getTags().get(key);
+        return tagValue != null && values.contains(tagValue);
     }
 }

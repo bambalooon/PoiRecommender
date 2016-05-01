@@ -17,8 +17,7 @@ import pl.edu.agh.eis.poirecommender.heartdroid.adapters.WithStateElement;
 import java.util.List;
 
 public class HeartRuleEngine {
-    public static final String RECOMMENDATIONS_TABLE_NAME = "RECOMMENDATIONS";
-    private static final String[] XTT_TABLE_NAMES = new String[] {"WIND_STR", "PRECIP", "TEMPERATURE", "KIND_OF_SPACE", RECOMMENDATIONS_TABLE_NAME};
+    private static final String[] XTT_TABLE_NAMES = new String[] {"poi"};
     private static final String POI_ATTRIBUTE_NAME = "poi";
     private RulesProvider rulesProvider;
 

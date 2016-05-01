@@ -1,9 +1,9 @@
 package pl.edu.agh.eis.poirecommender.openstreetmap.model.request;
 
-public class KeyValueConstraint implements Constraint {
+public abstract class KeyValueConstraint implements Constraint {
     private final char assignmentSign;
-    private final String key;
-    private final String value;
+    protected final String key;
+    protected final String value;
 
     public KeyValueConstraint(char assignmentSign, String key, String value) {
         this.assignmentSign = assignmentSign;

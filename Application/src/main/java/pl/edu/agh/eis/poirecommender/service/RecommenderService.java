@@ -8,15 +8,30 @@ import com.aware.context.storage.ContextStorage;
 import com.aware.context.transform.ContextPropertySerialization;
 import com.aware.plugin.openweather.Provider;
 import com.aware.poirecommender.provider.PoiRecommenderContract;
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableList;
+import lombok.AccessLevel;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import pl.edu.agh.eis.poirecommender.heartdroid.HeartRuleEngine;
-import pl.edu.agh.eis.poirecommender.heartdroid.adapters.GenericContextPropertyNumericStateAdapter;
-import pl.edu.agh.eis.poirecommender.heartdroid.adapters.TimeHourAdapter;
+import pl.edu.agh.eis.poirecommender.heartdroid.adapters.DayPartAdapter;
+import pl.edu.agh.eis.poirecommender.heartdroid.adapters.RainAdapter;
+import pl.edu.agh.eis.poirecommender.heartdroid.adapters.TemperatureAdapter;
+import pl.edu.agh.eis.poirecommender.heartdroid.adapters.WeekDayAdapter;
+import pl.edu.agh.eis.poirecommender.heartdroid.adapters.WindAdapter;
 import pl.edu.agh.eis.poirecommender.heartdroid.adapters.WithStateElement;
+import pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType;
+import pl.edu.agh.eis.poirecommender.openstreetmap.PoiTypeToConstraintMap;
+import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.CompositeConstraint;
+import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.Evaluable;
 import pl.edu.agh.eis.poirecommender.pois.PoiManager;
+import pl.edu.agh.eis.poirecommender.pois.PoiStorage;
+import pl.edu.agh.eis.poirecommender.pois.model.Poi;
+import pl.edu.agh.eis.poirecommender.utils.DateTimeProvider;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Name: RecommenderService
@@ -27,6 +42,7 @@ import java.util.Date;
 @Slf4j
 public class RecommenderService extends IntentService {
     private static final String RECOMMENDER_SERVICE_NAME = "PoiRecommender::Service";
+    private final DateTimeProvider dateTimeProvider = new DateTimeProvider();
     private ContextStorage<GenericContextProperty> contextStorage;
     private HeartRuleEngine heartRuleEngine;
     private PoiManager poiManager;
@@ -54,26 +70,39 @@ public class RecommenderService extends IntentService {
     protected void onHandleIntent(final Intent intent) {
         debugInfo();
 
-        final ImmutableList<? extends WithStateElement> stateElements = ImmutableList.of(
-                new GenericContextPropertyNumericStateAdapter(
-                        contextStorage.getContextProperty(PoiRecommenderContract.Contexts.PLUGIN_OPENWEATHER_TIMESTAMP),
-                        "windInMPS",
-                        Provider.OpenWeather_Data.WIND_SPEED),
-                new GenericContextPropertyNumericStateAdapter(
-                        contextStorage.getContextProperty(PoiRecommenderContract.Contexts.PLUGIN_OPENWEATHER_TIMESTAMP),
-                        "tempInC",
-                        Provider.OpenWeather_Data.TEMPERATURE),
-                new GenericContextPropertyNumericStateAdapter(
-                        contextStorage.getContextProperty(PoiRecommenderContract.Contexts.PLUGIN_OPENWEATHER_TIMESTAMP),
-                        "rainVal",
-                        Provider.OpenWeather_Data.RAIN),
-                new TimeHourAdapter(new Date()));
+        GenericContextProperty weatherContextProperty = contextStorage
+                .getContextProperty(PoiRecommenderContract.Contexts.PLUGIN_OPENWEATHER_TIMESTAMP);
+        Date date = dateTimeProvider.getDate();
+        final List<? extends WithStateElement> stateElements = ImmutableList.of(
+                new DayPartAdapter(date),
+                new WeekDayAdapter(date),
+                new TemperatureAdapter(weatherContextProperty, Provider.OpenWeather_Data.TEMPERATURE),
+                new WindAdapter(weatherContextProperty, Provider.OpenWeather_Data.WIND_SPEED),
+                new RainAdapter(weatherContextProperty, Provider.OpenWeather_Data.RAIN));
 
-        //TODO: infer preferred POI types / not acceptable POI types
-        //TODO: filter or create new list of recommended POIs with new estimated rating and save
+        PoiType recommendedPoiType = heartRuleEngine.inferencePreferredPoiType(stateElements).getPoiType();
+        CompositeConstraint recommendedPoisConstraint = PoiTypeToConstraintMap.getConstraint(recommendedPoiType);
+
+        PoiStorage recommendedPois = poiManager.getRecommendedPois();
+
+        List<? extends Poi> filteredRecommendedPois = FluentIterable.from(recommendedPois.getPoiList())
+                .filter(new EvaluablePredicate(recommendedPoisConstraint))
+                .toList();
+
+        poiManager.setFilteredRecommendedPois(new PoiStorage(filteredRecommendedPois));
     }
 
     private void debugInfo() {
         log.debug(contextStorage.getContextProperties().toString());
+    }
+
+    @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+    private class EvaluablePredicate implements Predicate<Poi> {
+        private final Evaluable evaluable;
+
+        @Override
+        public boolean apply(Poi poi) {
+            return evaluable.eval(poi);
+        }
     }
 }

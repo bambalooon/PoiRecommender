@@ -1,5 +1,7 @@
 package pl.edu.agh.eis.poirecommender.openstreetmap.model.request;
 
+import pl.edu.agh.eis.poirecommender.pois.model.Poi;
+
 public class KeyConstraint implements Constraint {
     private final String key;
 
@@ -15,5 +17,10 @@ public class KeyConstraint implements Constraint {
                 key,
                 CONSTRAINT_VALUE_END,
                 CONSTRAINT_REQUEST_PART_END);
+    }
+
+    @Override
+    public boolean eval(Poi poi) {
+        return poi.getElement().getTags().containsKey(key);
     }
 }

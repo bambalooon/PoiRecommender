@@ -1,0 +1,1810 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hml version="2.0">
+    <types>
+        <type id="tpe_rain" name="rain" base="symbolic">
+            <domain>
+                <value is="light"/>
+                <value is="none"/>
+                <value is="heavy"/>
+            </domain>
+        </type>
+        <type id="tpe_temperature" name="temperature" base="symbolic">
+            <domain>
+                <value is="mild"/>
+                <value is="cool"/>
+                <value is="cold"/>
+                <value is="hot"/>
+            </domain>
+        </type>
+        <type id="tpe_weekday" name="weekday" base="symbolic">
+            <domain>
+                <value is="thu"/>
+                <value is="tue"/>
+                <value is="wed"/>
+                <value is="sat"/>
+                <value is="fri"/>
+                <value is="mon"/>
+                <value is="sun"/>
+            </domain>
+        </type>
+        <type id="tpe_poi" name="poi" base="symbolic">
+            <domain>
+                <value is="indoor-sports"/>
+                <value is="outdoor-eating"/>
+                <value is="museum"/>
+                <value is="indoor-eating"/>
+                <value is="theatre-cinema"/>
+                <value is="monuments"/>
+                <value is="indoor-entertainment"/>
+                <value is="shopping-center"/>
+                <value is="outdoor-entertainment"/>
+                <value is="outdoor-sports"/>
+            </domain>
+        </type>
+        <type id="tpe_day_part" name="day_part" base="symbolic">
+            <domain>
+                <value is="ee"/>
+                <value is="lm"/>
+                <value is="la"/>
+                <value is="le"/>
+                <value is="ea"/>
+                <value is="n"/>
+            </domain>
+        </type>
+        <type id="tpe_windy" name="windy" base="symbolic">
+            <domain>
+                <value is="false"/>
+                <value is="true"/>
+            </domain>
+        </type>
+    </types>
+    <attributes>
+        <attr id="rain" type="tpe_rain" name="rain" clb=" " abbrev="rain" class="simple" comm="io"/>
+        <attr id="temperature" type="tpe_temperature" name="temperature" clb=" " abbrev="temperature" class="simple"
+              comm="io"/>
+        <attr id="weekday" type="tpe_weekday" name="weekday" clb=" " abbrev="weekday" class="simple" comm="io"/>
+        <attr id="poi" type="tpe_poi" name="poi" clb=" " abbrev="poi" class="simple" comm="io"/>
+        <attr id="day_part" type="tpe_day_part" name="day_part" clb=" " abbrev="day_part" class="simple" comm="io"/>
+        <attr id="windy" type="tpe_windy" name="windy" clb=" " abbrev="windy" class="simple" comm="io"/>
+    </attributes>
+    <xtt>
+        <table id="id_poi" name="poi">
+            <schm>
+                <precondition>
+                    <attref ref="rain"/>
+                    <attref ref="temperature"/>
+                    <attref ref="weekday"/>
+                    <attref ref="day_part"/>
+                    <attref ref="windy"/>
+                </precondition>
+                <conclusion>
+                    <attref ref="poi"/>
+                </conclusion>
+            </schm>
+            <rule id="rule_1336233599">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="none"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="mild"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="thu"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="ee"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="false"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="indoor-entertainment"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_-1593314658">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="tue"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="ee"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="shopping-center"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_1129551384">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="wed"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="ee"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="indoor-sports"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_909684358">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="mon"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="ee"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="indoor-sports"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_1366903315">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="sat"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="lm"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="outdoor-sports"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_1311091082">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="fri"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="lm"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="outdoor-sports"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_-1737957177">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="none"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="hot"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="sun"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="lm"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="true"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="indoor-sports"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_-754245324">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="none"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="mild"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="sun"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="lm"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="false"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="indoor-sports"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_1093164855">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="light"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="sat"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="la"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="outdoor-sports"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_-2010837409">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="none"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="mild"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="sat"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="la"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="true"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="outdoor-sports"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_268682477">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="none"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="mild"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="sat"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="la"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="false"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="outdoor-sports"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_656570153">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="none"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="cool"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="sat"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="la"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="indoor-eating"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_-1284292570">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="none"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="hot"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="sat"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="la"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="true"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="indoor-eating"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_-1253550986">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="none"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="hot"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="sat"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="la"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="false"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="outdoor-sports"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_-134197226">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="none"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="mild"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="fri"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="la"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="true"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="outdoor-sports"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_1991207622">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="none"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="mild"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="fri"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="la"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="false"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="outdoor-sports"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_-237360184">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="cool"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="fri"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="la"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="indoor-eating"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_-1094420182">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="hot"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="fri"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="la"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="true"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="indoor-eating"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_741583354">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="none"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="hot"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="fri"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="la"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="false"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="outdoor-sports"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_-526078680">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="light"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="sun"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="la"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="shopping-center"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_1522842488">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="none"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="sun"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="la"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="true"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="shopping-center"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_-2090845866">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="none"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="sun"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="la"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="false"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="indoor-eating"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_-345279759">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="heavy"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="sun"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="la"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="shopping-center"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_41336652">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="le"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="indoor-entertainment"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_1778301740">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="mild"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="thu"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="ea"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="indoor-eating"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_893662012">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="mild"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="tue"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="ea"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="indoor-eating"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_1345659664">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="mild"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="wed"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="ea"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="indoor-eating"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_-1479375618">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="mild"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="sat"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="ea"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="outdoor-sports"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_802152985">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="mild"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="fri"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="ea"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="outdoor-sports"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_1000206859">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="none"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="mild"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="sun"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="ea"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="false"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="indoor-sports"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_-49936329">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="cool"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="ea"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="indoor-eating"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_1080915093">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="cold"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="ea"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="indoor-eating"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_-1987671883">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="hot"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="thu"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="ea"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="indoor-eating"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_1357918387">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="hot"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="tue"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="ea"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="indoor-eating"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_85761048">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="hot"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="wed"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="ea"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="indoor-eating"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_-136725705">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="hot"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="sat"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="ea"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="outdoor-sports"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_934950854">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="hot"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="fri"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="ea"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="outdoor-sports"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_-1756784898">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="none"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="hot"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="sun"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="ea"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="true"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="indoor-sports"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_941595694">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="hot"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="sun"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="ea"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="false"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="indoor-eating"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="rule_-984166855">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="n"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="indoor-sports"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+            <rule id="fake_rule">
+                <condition>
+                    <relation name="eq">
+                        <attref ref="rain"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="temperature"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="weekday"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="day_part"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                    <relation name="eq">
+                        <attref ref="windy"/>
+                        <set>
+                            <value is="any"/>
+                        </set>
+                    </relation>
+                </condition>
+                <decision>
+                    <trans>
+                        <attref ref="poi"/>
+                        <set>
+                            <value is="theatre-cinema"/>
+                        </set>
+                    </trans>
+                </decision>
+            </rule>
+        </table>
+    </xtt>
+    <callbacks/>
+</hml>
+

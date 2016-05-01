@@ -48,7 +48,7 @@ public class PoiListAdapter extends AbstractPoiListAdapter {
     }
 
     private void updatePoiList() {
-        final PoiStorage poiStorage = poiManager.getPoiStorage();
+        final PoiStorage poiStorage = poiManager.getFilteredRecommendedPois();
         final Location location = locationHolder.getLocation();
         //TODO: should accept no location - it'd show POIs without distance and direction
         if (poiStorage == null) {
