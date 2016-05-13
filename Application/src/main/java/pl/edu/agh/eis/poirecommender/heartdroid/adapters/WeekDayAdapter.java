@@ -28,7 +28,7 @@ public class WeekDayAdapter extends AbstractSymbolicStateAdapter<Date> {
     }
 
     @Override
-    protected String adaptValue() {
+    public String adaptValue() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(getAdaptee());
         int weekday = calendar.get(Calendar.DAY_OF_WEEK);

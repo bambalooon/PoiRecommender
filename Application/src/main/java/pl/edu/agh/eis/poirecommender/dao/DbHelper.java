@@ -10,10 +10,11 @@ import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
 public class DbHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "poi_recommender.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     static {
         cupboard().register(PoiRating.class);
+        cupboard().register(Visit.class);
     }
 
     public DbHelper(Context context) {

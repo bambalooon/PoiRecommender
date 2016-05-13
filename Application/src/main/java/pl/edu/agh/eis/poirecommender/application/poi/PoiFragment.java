@@ -23,6 +23,7 @@ import pl.edu.agh.eis.poirecommender.R;
 import pl.edu.agh.eis.poirecommender.pois.model.OsmPoi;
 import pl.edu.agh.eis.poirecommender.pois.model.Poi;
 import pl.edu.agh.eis.poirecommender.recommendation_entity.Rating;
+import pl.edu.agh.eis.poirecommender.visit.VisitService;
 
 /**
  * Name: PoiFragment
@@ -33,17 +34,11 @@ import pl.edu.agh.eis.poirecommender.recommendation_entity.Rating;
 @Slf4j
 public class PoiFragment extends Fragment {
     private static final String ARGUMENT_POI_ELEMENT = "ARGUMENT_POI_ELEMENT";
-    /**
-     * TODO: move request code constant to specific class with global request codes for pending intents
-     * because starting pending intent with same request code cancels or updates previous one
-     * According to: http://codetheory.in/android-pending-intents/
-     */
-    private static final int ACTION_STORE_CONTEXT_REQUEST_CODE = 0;
 
     private Poi poi;
     private LoadPoiRatingTask loadPoiRatingTask;
     private SetPoiRatingTask setPoiRatingTask;
-    private PoiRecommenderServiceInvoker mServiceInvoker;
+    private VisitService visitService;
 
     @Bind(R.id.poi_name) TextView nameText;
     @Bind(R.id.poi_lat) TextView latitudeText;
@@ -71,9 +66,7 @@ public class PoiFragment extends Fragment {
                 .deserialize(getArguments().getString(ARGUMENT_POI_ELEMENT));
         Preconditions.checkNotNull(poiElement, "PoiFragment cannot be created without Element.");
         poi = OsmPoi.fromOsmElement(poiElement);
-        mServiceInvoker = new PoiRecommenderServiceInvoker(
-                getActivity().getApplicationContext(),
-                ACTION_STORE_CONTEXT_REQUEST_CODE);
+        visitService = new VisitService(getContext());
         log.debug("PoiFragment created for {}", poi);
     }
 
@@ -111,9 +104,13 @@ public class PoiFragment extends Fragment {
         mCheckInPoiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mServiceInvoker.storeContext(poi.getElement().getId());
-                //FIXME: message should be displayed after check in ended successfully
-                Toast.makeText(getActivity(), R.string.checked_in_message, Toast.LENGTH_SHORT).show();
+                try {
+                    visitService.visit(poi);
+                    Toast.makeText(getActivity(), R.string.check_in_success, Toast.LENGTH_SHORT).show();
+                } catch (Exception e) {
+                    log.error("Error while saving POI visit.", e);
+                    Toast.makeText(getActivity(), R.string.check_in_failure, Toast.LENGTH_SHORT).show();
+                }
             }
         });
 

@@ -29,7 +29,7 @@ public class RainAdapter extends AbstractSymbolicStateAdapter<GenericContextProp
     }
 
     @Override
-    protected String adaptValue() {
+    public String adaptValue() {
         GenericContextProperty contextProperty = getAdaptee();
         if (contextProperty == null) {
             return null;

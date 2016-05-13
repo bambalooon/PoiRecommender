@@ -31,7 +31,7 @@ public class DayPartAdapter extends AbstractSymbolicStateAdapter<Date> {
     }
 
     @Override
-    protected String adaptValue() {
+    public String adaptValue() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(getAdaptee());
         int hour = calendar.get(Calendar.HOUR_OF_DAY);

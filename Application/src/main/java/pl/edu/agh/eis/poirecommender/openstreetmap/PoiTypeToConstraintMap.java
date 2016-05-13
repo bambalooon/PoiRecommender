@@ -3,11 +3,27 @@ package pl.edu.agh.eis.poirecommender.openstreetmap;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType;
-import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.*;
+import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.CompositeConstraint;
+import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.KeyConstraint;
+import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.KeyMultipleValueConstraint;
+import pl.edu.agh.eis.poirecommender.openstreetmap.model.request.KeyValueEqualConstraint;
+import pl.edu.agh.eis.poirecommender.pois.model.Poi;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
-import static pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType.*;
+import static pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType.DRIVETHROUGH_EATING;
+import static pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType.INDOOR_EATING;
+import static pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType.INDOOR_ENTERTAINMENT;
+import static pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType.INDOOR_SPORTS;
+import static pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType.MONUMENTS;
+import static pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType.MUSEUM;
+import static pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType.OUTDOOR_EATING;
+import static pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType.OUTDOOR_ENTERTAINMENT;
+import static pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType.OUTDOOR_SPORTS;
+import static pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType.SHOPPING_CENTER;
+import static pl.edu.agh.eis.poirecommender.heartdroid.model.PoiType.THEATRE_CINEMA;
 
 public class PoiTypeToConstraintMap {
     public static CompositeConstraint getConstraint(PoiType poiType) {
@@ -64,4 +80,14 @@ public class PoiTypeToConstraintMap {
                 ).or(new KeyMultipleValueConstraint("shop",
                     ImmutableList.<String>builder().add("department_store", "general", "mall", "supermarket").build())).build()
             ).build();
+
+    public static List<PoiType> getPoiType(Poi poi) {
+        List<PoiType> poiTypes = new ArrayList<>();
+        for (Map.Entry<PoiType, CompositeConstraint> poiTypeToConstraint : MAP.entrySet()) {
+            if (poiTypeToConstraint.getValue().eval(poi)) {
+                poiTypes.add(poiTypeToConstraint.getKey());
+            }
+        }
+        return poiTypes;
+    }
 }

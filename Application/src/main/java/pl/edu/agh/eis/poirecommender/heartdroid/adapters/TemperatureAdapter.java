@@ -10,10 +10,10 @@ public class TemperatureAdapter extends AbstractSymbolicStateAdapter<GenericCont
     private static final String TEMPERATURE_ATTRIBUTE = "temperature";
     private static final Map<Range<Double>, String> TEMPERATURE_CLASSIFICATION = ImmutableMap.
             <Range<Double>, String>builder()
-            .put(Range.atMost(3.0), "cold")
-            .put(Range.closed(4.0, 14.0), "cool")
-            .put(Range.closed(15.0, 24.0), "mild")
-            .put(Range.atLeast(25.0), "hot")
+            .put(Range.lessThan(4.0), "cold")
+            .put(Range.closedOpen(4.0, 15.0), "cool")
+            .put(Range.closedOpen(15.0, 24.0), "mild")
+            .put(Range.atLeast(24.0), "hot")
             .build();
 
     private final String contextPropertyAttributeName;
@@ -30,15 +30,15 @@ public class TemperatureAdapter extends AbstractSymbolicStateAdapter<GenericCont
     }
 
     @Override
-    protected String adaptValue() {
+    public String adaptValue() {
         GenericContextProperty contextProperty = getAdaptee();
         if (contextProperty == null) {
             return null;
         }
-        Double rainValue = (Double) contextProperty.getAttributes().get(contextPropertyAttributeName);
+        Double temperatureValue = (Double) contextProperty.getAttributes().get(contextPropertyAttributeName);
 
         for (Range<Double> rainRange : TEMPERATURE_CLASSIFICATION.keySet()) {
-            if (rainRange.contains(rainValue)) {
+            if (rainRange.contains(temperatureValue)) {
                 return TEMPERATURE_CLASSIFICATION.get(rainRange);
             }
         }

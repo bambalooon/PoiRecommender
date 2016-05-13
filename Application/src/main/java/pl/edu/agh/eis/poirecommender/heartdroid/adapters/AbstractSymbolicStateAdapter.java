@@ -30,7 +30,7 @@ public abstract class AbstractSymbolicStateAdapter<T> implements WithStateElemen
 
     protected abstract String getAttributeName();
 
-    protected abstract String adaptValue();
+    public abstract String adaptValue();
 
     protected abstract float calculateCertainty();
 

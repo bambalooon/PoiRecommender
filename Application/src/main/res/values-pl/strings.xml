@@ -42,7 +42,8 @@
     <string name="poi_check_in">Zgłoś się</string>
     <string name="save_poi_rating">Zapisz ocenę punktu POI</string>
     <string name="remove_poi_rating">Usuń ocenę punktu POI</string>
-    <string name="checked_in_message">Twoja pozycja została zgłoszona!</string>
+    <string name="check_in_success">Twoja pozycja została zgłoszona!</string>
+    <string name="check_in_failure">Zgłoszenie pozycji zakończone niepowodzeniem!</string>
 
     <!-- Find POI Fragment -->
     <string name="poi_search_hint">Nazwa punktu POI</string>
