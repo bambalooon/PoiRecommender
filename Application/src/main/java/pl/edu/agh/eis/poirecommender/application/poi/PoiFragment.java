@@ -6,10 +6,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.aware.poirecommender.openstreetmap.model.response.Element;
@@ -31,10 +33,17 @@ import pl.edu.agh.eis.poirecommender.recommendation_entity.Rating;
 @Slf4j
 public class PoiFragment extends Fragment {
     private static final String ARGUMENT_POI_ELEMENT = "ARGUMENT_POI_ELEMENT";
+    /**
+     * TODO: move request code constant to specific class with global request codes for pending intents
+     * because starting pending intent with same request code cancels or updates previous one
+     * According to: http://codetheory.in/android-pending-intents/
+     */
+    private static final int ACTION_STORE_CONTEXT_REQUEST_CODE = 0;
 
     private Poi poi;
     private LoadPoiRatingTask loadPoiRatingTask;
     private SetPoiRatingTask setPoiRatingTask;
+    private PoiRecommenderServiceInvoker mServiceInvoker;
 
     @Bind(R.id.poi_name) TextView nameText;
     @Bind(R.id.poi_lat) TextView latitudeText;
@@ -45,6 +54,7 @@ public class PoiFragment extends Fragment {
     @Bind(R.id.save_rating_btn) ImageButton saveRatingButton;
     @Bind(R.id.remove_rating_btn) ImageButton removeRatingButton;
     @Bind(R.id.progress_bar) ProgressBar progressBar;
+    @Bind(R.id.check_in_btn) Button mCheckInPoiButton;
 
     public static PoiFragment newInstance(Element poiElement) {
         PoiFragment poiFragment = new PoiFragment();
@@ -61,6 +71,9 @@ public class PoiFragment extends Fragment {
                 .deserialize(getArguments().getString(ARGUMENT_POI_ELEMENT));
         Preconditions.checkNotNull(poiElement, "PoiFragment cannot be created without Element.");
         poi = OsmPoi.fromOsmElement(poiElement);
+        mServiceInvoker = new PoiRecommenderServiceInvoker(
+                getActivity().getApplicationContext(),
+                ACTION_STORE_CONTEXT_REQUEST_CODE);
         log.debug("PoiFragment created for {}", poi);
     }
 
@@ -93,6 +106,14 @@ public class PoiFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 setPoiRating(poi.getElement().getId(), Rating.NONE);
+            }
+        });
+        mCheckInPoiButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mServiceInvoker.storeContext(poi.getElement().getId());
+                //FIXME: message should be displayed after check in ended successfully
+                Toast.makeText(getActivity(), R.string.checked_in_message, Toast.LENGTH_SHORT).show();
             }
         });
 
