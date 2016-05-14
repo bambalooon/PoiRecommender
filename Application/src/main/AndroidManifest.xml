@@ -53,6 +53,10 @@
             android:exported="false" />
 
         <service
+            android:name=".service.RuleGeneratorService"
+            android:exported="false" />
+
+        <service
             android:name=".aware.AwareContextObservingService"
             android:exported="false"/>
 

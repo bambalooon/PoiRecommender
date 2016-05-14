@@ -26,7 +26,7 @@ public class HeartRuleEngine {
     }
 
     public WithPoiType inferencePreferredPoiType(List<? extends WithStateElement> stateElements) {
-        final XTTModel xttModel = rulesProvider.getXttModel();
+        final XTTModel xttModel = rulesProvider.loadXttModel();
         try {
             HeaRT.fixedOrderInference(xttModel, XTT_TABLE_NAMES,
                     new Configuration.Builder()

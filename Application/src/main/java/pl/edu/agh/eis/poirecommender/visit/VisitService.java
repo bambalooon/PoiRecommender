@@ -7,6 +7,7 @@ import com.aware.context.storage.ContextStorage;
 import com.aware.context.transform.ContextPropertySerialization;
 import com.aware.plugin.openweather.Provider;
 import com.aware.poirecommender.provider.PoiRecommenderContract;
+import pl.edu.agh.eis.poirecommender.dao.CupboardHelper;
 import pl.edu.agh.eis.poirecommender.dao.DbHelper;
 import pl.edu.agh.eis.poirecommender.dao.Visit;
 import pl.edu.agh.eis.poirecommender.heartdroid.adapters.DayPartAdapter;
@@ -20,6 +21,7 @@ import pl.edu.agh.eis.poirecommender.pois.model.Poi;
 import pl.edu.agh.eis.poirecommender.utils.DateTimeProvider;
 
 import java.util.Date;
+import java.util.List;
 
 import static nl.qbusict.cupboard.CupboardFactory.cupboard;
 
@@ -53,5 +55,10 @@ public class VisitService {
                     new RainAdapter(weatherContextProperty, Provider.OpenWeather_Data.RAIN).adaptValue(),
                     poiType));
         }
+    }
+
+    public List<Visit> getVisits() {
+        return CupboardHelper.getListFromQueryResultIterator(cupboard().withDatabase(db)
+                .query(Visit.class).query());
     }
 }
