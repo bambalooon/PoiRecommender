@@ -1,0 +1,42 @@
+<rule id="default_rule">
+    <condition>
+        <relation name="eq">
+            <attref ref="rain"/>
+            <set>
+                <value is="any"/>
+            </set>
+        </relation>
+        <relation name="eq">
+            <attref ref="temperature"/>
+            <set>
+                <value is="any"/>
+            </set>
+        </relation>
+        <relation name="eq">
+            <attref ref="weekday"/>
+            <set>
+                <value is="any"/>
+            </set>
+        </relation>
+        <relation name="eq">
+            <attref ref="day_part"/>
+            <set>
+                <value is="any"/>
+            </set>
+        </relation>
+        <relation name="eq">
+            <attref ref="windy"/>
+            <set>
+                <value is="any"/>
+            </set>
+        </relation>
+    </condition>
+    <decision>
+        <trans>
+            <attref ref="poi"/>
+            <set>
+                <value is="indoor-eating"/>
+            </set>
+        </trans>
+    </decision>
+</rule>

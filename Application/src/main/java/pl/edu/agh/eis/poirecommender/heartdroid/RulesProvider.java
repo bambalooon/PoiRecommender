@@ -21,7 +21,6 @@ import java.io.InputStream;
 @Slf4j
 @RequiredArgsConstructor
 public class RulesProvider {
-    private static final int BASIC_POI_RECOMMENDER_CONFIG = R.raw.poi_rules;
     private static final String POI_RULES_FILENAME = "poi_rules.hml";
 
     private final Context context;
@@ -37,7 +36,7 @@ public class RulesProvider {
                 throw new IllegalStateException(e);
             }
         } else {
-            xttModelInputStream = context.getResources().openRawResource(BASIC_POI_RECOMMENDER_CONFIG);
+            xttModelInputStream = context.getResources().openRawResource(R.raw.basic_rules);
         }
 
         try {

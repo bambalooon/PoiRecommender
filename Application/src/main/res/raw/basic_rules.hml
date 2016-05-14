@@ -1761,7 +1761,7 @@
                     </trans>
                 </decision>
             </rule>
-            <rule id="fake_rule">
+            <rule id="default_rule">
                 <condition>
                     <relation name="eq">
                         <attref ref="rain"/>
@@ -1798,7 +1798,7 @@
                     <trans>
                         <attref ref="poi"/>
                         <set>
-                            <value is="theatre-cinema"/>
+                            <value is="indoor-eating"/>
                         </set>
                     </trans>
                 </decision>

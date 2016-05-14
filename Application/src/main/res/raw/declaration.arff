@@ -1,0 +1,10 @@
+@relation poi.symbolic
+
+@attribute day_part {em, lm, ea, la, ee, le, n}
+@attribute weekday {mon, tue, wed, thu, fri, sat, sun}
+@attribute temperature {hot, mild, cool, cold}
+@attribute windy {true, false}
+@attribute rain {none, light, heavy}
+@attribute poi {indoor-eating, outdoor-eating, indoor-sports, outdoor-sports, theatre-cinema, monuments, indoor-entertainment, outdoor-entertainment, museum, shopping-center}
+
+@data

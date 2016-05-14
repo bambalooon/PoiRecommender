@@ -8,7 +8,9 @@ import agh.UncertainEntropyEvaluator;
 import android.app.IntentService;
 import android.content.Context;
 import android.content.Intent;
+import com.google.common.io.ByteStreams;
 import lombok.extern.slf4j.Slf4j;
+import pl.edu.agh.eis.poirecommender.R;
 import pl.edu.agh.eis.poirecommender.dao.Visit;
 import pl.edu.agh.eis.poirecommender.heartdroid.RulesProvider;
 import pl.edu.agh.eis.poirecommender.visit.VisitService;
@@ -19,58 +21,6 @@ import java.util.List;
 @Slf4j
 public class RuleGeneratorService extends IntentService {
     private static final String RULE_GENERATOR_SERVICE_NAME = "PoiRecommender::RuleGenService";
-    private static final String ARFF_DECLARATION = "@relation poi.symbolic\n" +
-            "\n" +
-            "@attribute day_part {em, lm, ea, la, ee, le, n}\n" +
-            "@attribute weekday {mon, tue, wed, thu, fri, sat, sun}\n" +
-            "@attribute temperature {hot, mild, cool, cold}\n" +
-            "@attribute windy {true, false}\n" +
-            "@attribute rain {none, light, heavy}\n" +
-            "@attribute poi {indoor-eating, outdoor-eating, indoor-sports, outdoor-sports, theatre-cinema, monuments, indoor-entertainment, outdoor-entertainment, museum, shopping-center}\n" +
-            "\n" +
-            "@data";
-    private static final String DEFAULT_RULE = "<rule id=\"default_rule\">\n" +
-            "                <condition>\n" +
-            "                    <relation name=\"eq\">\n" +
-            "                        <attref ref=\"rain\"/>\n" +
-            "                        <set>\n" +
-            "                            <value is=\"any\"/>\n" +
-            "                        </set>\n" +
-            "                    </relation>\n" +
-            "                    <relation name=\"eq\">\n" +
-            "                        <attref ref=\"temperature\"/>\n" +
-            "                        <set>\n" +
-            "                            <value is=\"any\"/>\n" +
-            "                        </set>\n" +
-            "                    </relation>\n" +
-            "                    <relation name=\"eq\">\n" +
-            "                        <attref ref=\"weekday\"/>\n" +
-            "                        <set>\n" +
-            "                            <value is=\"any\"/>\n" +
-            "                        </set>\n" +
-            "                    </relation>\n" +
-            "                    <relation name=\"eq\">\n" +
-            "                        <attref ref=\"day_part\"/>\n" +
-            "                        <set>\n" +
-            "                            <value is=\"any\"/>\n" +
-            "                        </set>\n" +
-            "                    </relation>\n" +
-            "                    <relation name=\"eq\">\n" +
-            "                        <attref ref=\"windy\"/>\n" +
-            "                        <set>\n" +
-            "                            <value is=\"any\"/>\n" +
-            "                        </set>\n" +
-            "                    </relation>\n" +
-            "                </condition>\n" +
-            "                <decision>\n" +
-            "                    <trans>\n" +
-            "                        <attref ref=\"poi\"/>\n" +
-            "                        <set>\n" +
-            "                            <value is=\"indoor-eating\"/>\n" +
-            "                        </set>\n" +
-            "                    </trans>\n" +
-            "                </decision>\n" +
-            "            </rule>";
     private VisitService visitService;
     private RulesProvider rulesProvider;
 
@@ -101,7 +51,7 @@ public class RuleGeneratorService extends IntentService {
         }
     }
 
-    private String generateRules() throws ParseException {
+    private String generateRules() throws ParseException, IOException {
         Data data = Data.parseUArffFromString(prepareArff());
         Tree result = UId3.growTree(data, new UncertainEntropyEvaluator());
         String generatedRules = result.toHML();
@@ -110,9 +60,11 @@ public class RuleGeneratorService extends IntentService {
         return finalRules;
     }
 
-    private String prepareArff() {
+    private String prepareArff() throws IOException {
         List<Visit> visits = visitService.getVisits();
-        StringBuilder arffBuilder = new StringBuilder(ARFF_DECLARATION);
+        String arffDeclaration = new String(ByteStreams.toByteArray(getResources().openRawResource(R.raw.declaration)));
+
+        StringBuilder arffBuilder = new StringBuilder(arffDeclaration);
         for (Visit visit : visits) {
             arffBuilder.append("\n").append(visitToArffDataLine(visit));
         }
@@ -128,9 +80,16 @@ public class RuleGeneratorService extends IntentService {
                 + visit.getPoiType().getText();
     }
 
-    private String addDefaultRuleAndRemoveCertaintyFromDecisions(String generatedRules) {
+    /**
+     * Thanks to adding additional rule to the end of HML file, it works like default rule
+     * it's invoked only when no rule has met its conditions.
+     * It's necessary to remove information about certainty from decisions,
+     * because current version of HeaRTDroid does not support it.
+     */
+    private String addDefaultRuleAndRemoveCertaintyFromDecisions(String generatedRules) throws IOException {
+        String defaultRule = new String(ByteStreams.toByteArray(getResources().openRawResource(R.raw.default_rule)));
         return generatedRules
-                .replaceAll("</rule>\\s+</table>", "</rule>" + DEFAULT_RULE + "</table>")
+                .replaceAll("</rule>\\s+</table>", "</rule>" + defaultRule + "</table>")
                 .replaceAll("\\(#[\\d\\.]+\\)", "");
     }
 }
