@@ -15,6 +15,7 @@ import pl.edu.agh.eis.poirecommender.application.poi.PoiFragment;
 import pl.edu.agh.eis.poirecommender.application.sync.RatingsSyncTask;
 import pl.edu.agh.eis.poirecommender.application.sync.RecommendationsSyncTask;
 import pl.edu.agh.eis.poirecommender.application.sync.SyncResultJoinNotifier;
+import pl.edu.agh.eis.poirecommender.service.RuleGeneratorService;
 
 /**
  * Name: RecommenderFragment
@@ -46,6 +47,7 @@ public class RecommenderFragment extends ListFragment {
                 SyncResultJoinNotifier syncResultJoinNotifier = new SyncResultJoinNotifier(context);
                 RatingsSyncTask.create(context, syncResultJoinNotifier).execute();
                 RecommendationsSyncTask.create(context, syncResultJoinNotifier).execute();
+                RuleGeneratorService.notify(context);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
