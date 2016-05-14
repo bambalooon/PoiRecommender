@@ -35,6 +35,7 @@ android {
 dependencies {
     // main
     compile "heart:heartdroid:${heartDroid_version}"
+    compile "agh:phd_uid3:0.1-SNAPSHOT"
     compile "com.awareframework:aware-core:${awareCore_version}@aar"
     compile "com.awareframework:aware-context:${awareContext_version}@aar"
     compile "com.awareframework:aware-poirecommender:${awarePluginPoiRecommender_version}@aar"
