@@ -11,7 +11,6 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import com.aware.poirecommender.openstreetmap.model.response.Element;
@@ -23,7 +22,6 @@ import pl.edu.agh.eis.poirecommender.R;
 import pl.edu.agh.eis.poirecommender.pois.model.OsmPoi;
 import pl.edu.agh.eis.poirecommender.pois.model.Poi;
 import pl.edu.agh.eis.poirecommender.recommendation_entity.Rating;
-import pl.edu.agh.eis.poirecommender.visit.VisitService;
 
 /**
  * Name: PoiFragment
@@ -38,7 +36,7 @@ public class PoiFragment extends Fragment {
     private Poi poi;
     private LoadPoiRatingTask loadPoiRatingTask;
     private SetPoiRatingTask setPoiRatingTask;
-    private VisitService visitService;
+    private AddVisitTask addVisitTask;
 
     @Bind(R.id.poi_name) TextView nameText;
     @Bind(R.id.poi_lat) TextView latitudeText;
@@ -49,7 +47,7 @@ public class PoiFragment extends Fragment {
     @Bind(R.id.save_rating_btn) ImageButton saveRatingButton;
     @Bind(R.id.remove_rating_btn) ImageButton removeRatingButton;
     @Bind(R.id.progress_bar) ProgressBar progressBar;
-    @Bind(R.id.check_in_btn) Button mCheckInPoiButton;
+    @Bind(R.id.check_in_btn) Button checkInPoiButton;
 
     public static PoiFragment newInstance(Element poiElement) {
         PoiFragment poiFragment = new PoiFragment();
@@ -66,7 +64,6 @@ public class PoiFragment extends Fragment {
                 .deserialize(getArguments().getString(ARGUMENT_POI_ELEMENT));
         Preconditions.checkNotNull(poiElement, "PoiFragment cannot be created without Element.");
         poi = OsmPoi.fromOsmElement(poiElement);
-        visitService = new VisitService(getContext());
         log.debug("PoiFragment created for {}", poi);
     }
 
@@ -101,16 +98,10 @@ public class PoiFragment extends Fragment {
                 setPoiRating(poi.getElement().getId(), Rating.NONE);
             }
         });
-        mCheckInPoiButton.setOnClickListener(new View.OnClickListener() {
+        checkInPoiButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    visitService.visit(poi);
-                    Toast.makeText(getActivity(), R.string.check_in_success, Toast.LENGTH_SHORT).show();
-                } catch (Exception e) {
-                    log.error("Error while saving POI visit.", e);
-                    Toast.makeText(getActivity(), R.string.check_in_failure, Toast.LENGTH_SHORT).show();
-                }
+                addVisit(poi);
             }
         });
 
@@ -144,6 +135,19 @@ public class PoiFragment extends Fragment {
         }
     }
 
+    private void addVisit(Poi poi) {
+        cancelAddVisitTask();
+        addVisitTask = new AddVisitTask(this);
+        addVisitTask.execute(poi);
+    }
+
+    private void cancelAddVisitTask() {
+        if (addVisitTask != null) {
+            addVisitTask.cancel(true);
+            addVisitTask = null;
+        }
+    }
+
     @Override
     public void onDestroy() {
         cancelTasks();
@@ -153,5 +157,6 @@ public class PoiFragment extends Fragment {
     private void cancelTasks() {
         cancelLoadRatingTask();
         cancelSetRatingTask();
+        cancelAddVisitTask();
     }
 }
