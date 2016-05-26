@@ -46,7 +46,7 @@ public class PoiTypeToConstraintMap {
                 ).or(new KeyValueEqualConstraint("amenity", "gym")).build())
             .put(OUTDOOR_SPORTS,
                 new CompositeConstraint.Builder(new KeyMultipleValueConstraint("sport",
-                    ImmutableList.<String>builder().add("american_football", "badminton", "baseball", "basketball", "beachvolleyball", "canoe", "cliff_diving", "climbing", "climbing_adventure", "equestrian", "fishing", "free_flying", "golf", "karting", "kitesurfing", "motocross", "motor", "orienteering", "paragliding", "sailing", "scuba_diving", "skiing", "soccer", "surfing", "swimming", "tennis").build())).build())
+                    ImmutableList.<String>builder().add("american_football", "badminton", "baseball", "basketball", "beachvolleyball", "canoe", "cliff_diving", "climbing", "climbing_adventure", "equestrian", "fishing", "free_flying", "golf", "karting", "kayak", "kitesurfing", "motocross", "motor", "orienteering", "paragliding", "sailing", "scuba_diving", "skiing", "soccer", "surfing", "swimming", "tennis").build())).build())
             .put(THEATRE_CINEMA,
                 new CompositeConstraint.Builder(new KeyMultipleValueConstraint("amenity",
                     ImmutableList.<String>builder().add("cinema", "community_centre", "planetarium", "theatre").build())).build())
